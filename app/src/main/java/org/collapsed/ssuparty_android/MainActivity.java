@@ -18,8 +18,6 @@ public class MainActivity extends AppCompatActivity {
         mArray = new ArrayList<>();
 
         mArray.add("Test");
-        mArray.add("Test2");
-
 
         Log.d("TAG", mArray.get(0));
     }
