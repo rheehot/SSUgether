@@ -4,15 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.collapsed.ssuparty_android.MainActivity">
+    tools:context="org.collapsed.ssuparty_android.ui.main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BullShit Jihoon!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary"
+            android:elevation="3dp">
+
+            <org.collapsed.ssuparty_android.customview.CustomFontTextView
+                android:id="@+id/main_toolbar_title_txt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                android:text="@string/app_name"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                app:customFont="@string/naum_square_bold" />
+        </android.support.v7.widget.Toolbar>
+
+        <org.collapsed.ssuparty_android.customview.MainViewPager
+            android:id="@+id/main_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/main_bottom_navigation"
+            android:layout_below="@id/main_toolbar"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_above="@id/main_bottom_navigation"
+            android:background="#ffeeeeee">
+
+        </LinearLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/main_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:elevation="3dp"
+            app:itemBackground="@color/colorWhite"
+            app:itemIconTint="@color/bottom_navi_selector"
+            app:itemTextColor="@color/bottom_navi_selector"
+            app:menu="@menu/bottom_navigation">
+
+        </android.support.design.widget.BottomNavigationView>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
