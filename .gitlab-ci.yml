@@ -25,4 +25,4 @@ build:
 unitTests:
   stage: test
   script:
-    - ./gradlew test --info
+    - ./gradlew test
