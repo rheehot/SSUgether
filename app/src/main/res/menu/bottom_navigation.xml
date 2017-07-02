@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bn_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_dashboard_white_24dp"
+        android:title="@string/section_home_title"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bn_myparty"
+        android:icon="@drawable/ic_view_list_white_24dp"
+        android:title="@string/section_myparty_title"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bn_findparty"
+        android:enabled="true"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/section_findparty_title"
+        app:showAsAction="ifRoom" />
+</menu>
