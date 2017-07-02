@@ -1,16 +1,23 @@
 image: instantsolutions/gitlab-ci-android-runner:latest
 
 before_script:
-  - export ANDROID_HOME=$PWD/android-sdk-linux
-  - echo y | chmod +x ./gradlew
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - mkdir -p $GRADLE_USER_HOME
+    - chmod +x ./gradlew
+
+cache:
+  paths:
+     - .gradle/wrapper
+     - .gradle/caches
 
 stages:
   - build
   - test
 
 build:
+  stage: build
   script:
-    - ./gradlew assembleDebug
+    - ./gradlew assemble
   artifacts:
     paths:
     - app/build/outputs/
