@@ -22,6 +22,6 @@ public class FindPartyPresenterTest {
 
     @Test
     public void defalutTest() {
-
+        assertEquals(4, 1 + 2);
     }
 }

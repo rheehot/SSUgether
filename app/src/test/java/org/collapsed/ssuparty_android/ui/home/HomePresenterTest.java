@@ -23,6 +23,6 @@ public class HomePresenterTest {
 
     @Test
     public void defalutTest() {
-
+        assertEquals(3, 1 + 2);
     }
 }
