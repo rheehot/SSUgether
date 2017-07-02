@@ -22,7 +22,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void defalutTest() {
+    public void defaultTest() {
         assertEquals(3, 1 + 2);
     }
 }
