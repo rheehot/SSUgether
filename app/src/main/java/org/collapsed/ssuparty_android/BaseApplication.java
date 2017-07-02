@@ -24,6 +24,7 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         this.mGlobalAppContext = getApplicationContext();
+        KakaoSDK.init(new KakaoSDKAdapter());
         initNetworkClient();
         initFontSetup();
         mConfig = new Config();
@@ -35,10 +36,6 @@ public class BaseApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
-    }
-
-    public void initKaKaoSDK() {
-        KakaoSDK.init(new KakaoSDKAdapter());
     }
 
     @Override
