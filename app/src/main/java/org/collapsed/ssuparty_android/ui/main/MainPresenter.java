@@ -18,8 +18,6 @@ public class MainPresenter implements MainContract.UserActionListener {
 
     public MainPresenter(@NonNull MainActivity view) {
         this.mView = checkNotNull(view);
-
-        getUserInfoFromKaKao();
     }
 
     public void getUserInfoFromKaKao() {
