@@ -29,6 +29,7 @@ android {
 
 repositories {
     mavenCentral()
+    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
 }
 
 dependencies {
@@ -60,5 +61,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:' + rootProject.butterknifeVersion;
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterknifeVersion;
 
+    compile group: 'com.kakao.sdk', name: 'usermgmt', version: '1.4.1'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 }
