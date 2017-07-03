@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">SSUParty</string>
 
+    <!-- Auth -->
+    <string name="kakao_app_key"> 1e4c209b64037f8af87fc39c618b91f0</string>
+
     <!-- Font -->
     <string name="naum_square_light">fonts/NanumSquareOTFLight.otf</string>
     <string name="naum_square_regular">fonts/NanumSquareOTFRegular.otf</string>
@@ -11,5 +14,6 @@
     <string name="section_home_title">Home</string>
     <string name="section_myparty_title">My Party</string>
     <string name="section_findparty_title">Find Party</string>
+    <string name="title_activity_account">AccountActivity</string>
 
 </resources>

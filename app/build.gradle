@@ -29,6 +29,7 @@ android {
 
 repositories {
     mavenCentral()
+    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
 }
 
 dependencies {
@@ -43,7 +44,6 @@ dependencies {
     androidTestCompile 'org.hamcrest:hamcrest-library:' + rootProject.hamcrestVersion;
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion;
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:' + rootProject.supportLibVersion;
     compile 'com.android.support:support-annotations:' + rootProject.supportLibVersion;
     compile 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion;
@@ -53,12 +53,14 @@ dependencies {
     compile 'com.google.firebase:firebase-core:' + rootProject.firebaseVersion;
     compile 'com.google.firebase:firebase-crash:' + rootProject.firebaseVersion;
     compile 'com.google.guava:guava:' + rootProject.guavaVersion;
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'org.jsoup:jsoup:1.10.2'
-    compile 'com.android.volley:volley:1.0.0'
 
     compile 'com.jakewharton:butterknife:' + rootProject.butterknifeVersion;
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterknifeVersion;
 
+    compile group: 'com.kakao.sdk', name: 'usermgmt', version: '1.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'org.jsoup:jsoup:1.10.2'
+    compile 'com.android.volley:volley:1.0.0'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 }
