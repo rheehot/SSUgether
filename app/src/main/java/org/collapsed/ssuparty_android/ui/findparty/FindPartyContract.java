@@ -1,6 +1,6 @@
 package org.collapsed.ssuparty_android.ui.findparty;
 
-public class FindPartyContract {
+public interface FindPartyContract {
     interface View {
     }
 
