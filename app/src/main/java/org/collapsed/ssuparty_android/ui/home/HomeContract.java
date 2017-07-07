@@ -1,6 +1,6 @@
 package org.collapsed.ssuparty_android.ui.home;
 
-public class HomeContract {
+public interface HomeContract {
     interface View {
     }
 

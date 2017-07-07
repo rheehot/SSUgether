@@ -1,6 +1,6 @@
 package org.collapsed.ssuparty_android.ui.myparty;
 
-public class MyPartyContract {
+public interface MyPartyContract {
     interface View {
     }
 
