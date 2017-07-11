@@ -1,6 +1,7 @@
 package org.collapsed.ssuparty_android.ui.home;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.ExampleAdBanner;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.List;
 
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
@@ -38,5 +43,24 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onViewCreated(rootView, savedInstanceState);
 
         mPresenter = new HomePresenter(this);
+
+        initView(rootView);
+    }
+
+    @Override
+    public void initView(View rootView) {
+        Button fetchExampleBtn = rootView.findViewById(R.id.home_fetch_test_btn);
+        fetchExampleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.fetchNetworkingExample();
+            }
+        });
+    }
+
+    public void showBannersDataWithToast(List<ExampleAdBanner> bannerDatas) {
+        for (ExampleAdBanner banner : bannerDatas) {
+            Toast.makeText(getActivity(), banner.getName(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
