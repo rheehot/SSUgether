@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -51,6 +52,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
     compile 'com.android.support:cardview-v7:' + rootProject.supportLibVersion;
     compile 'com.google.firebase:firebase-core:' + rootProject.firebaseVersion;
+    compile 'com.google.firebase:firebase-messaging:' + rootProject.firebaseVersion;
     compile 'com.google.firebase:firebase-crash:' + rootProject.firebaseVersion;
     compile 'com.google.guava:guava:' + rootProject.guavaVersion;
 
@@ -58,6 +60,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterknifeVersion;
 
     compile group: 'com.kakao.sdk', name: 'usermgmt', version: '1.4.0'
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.2'

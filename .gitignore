@@ -128,8 +128,6 @@ fabric.properties
 
 ### AndroidStudio Patch ###
 # Google Services plugin
-google-services.json
-
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/androidstudio

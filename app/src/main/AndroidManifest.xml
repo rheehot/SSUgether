@@ -27,6 +27,22 @@
         <activity android:name=".ui.account.AccountActivity">
 
         </activity>
+
+        <service
+            android:name=".service.SPFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.SPFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+
     </application>
 
 </manifest>
