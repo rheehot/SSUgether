@@ -1,8 +1,5 @@
 package org.collapsed.ssuparty_android.service;
 
-/**
- * Created by JHKim on 2017-07-15.
- */
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
