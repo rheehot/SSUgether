@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.collapsed.ssuparty_android.ui.main.MainActivity"
+    >
+
+    <ImageView
+        android:id="@+id/partyImg"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/partyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="파티명"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            />
+
+        <TextView
+            android:id="@+id/partyMember"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="파티원 수"
+            android:textSize="15dp"
+            android:gravity="right"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
     private static final String TAG = HomeFragment.class.getSimpleName();
