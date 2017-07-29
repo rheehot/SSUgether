@@ -24,23 +24,4 @@ class FindPartyPresenter implements FindPartyContract.UserActionListener {
         this.mView = checkNotNull(view);
     }
 
-    public void getPartyInfo(Context context) {
-        mDialogView = (View) View.inflate(context,
-                R.layout.dialog_createparty, null);
-        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-        dlg.setTitle("그룹 정보 입력");
-        dlg.setView(mDialogView);
-        dlg.setPositiveButton("생성",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        EditText dTitle = mDialogView.findViewById(R.id.dlgTitle);
-                        EditText dMember = mDialogView.findViewById(R.id.dlgMember);
-                        mView.newParty(dTitle.getText().toString(), dMember.getText().toString());
-                        }
-                    });
-        dlg.setNegativeButton("취소",
-                null);
-        dlg.show();
-    }
 }

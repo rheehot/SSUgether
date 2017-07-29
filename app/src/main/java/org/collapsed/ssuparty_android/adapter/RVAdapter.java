@@ -28,7 +28,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row,parent,false);
         return new ViewHolder(view);
     }
 
@@ -48,6 +48,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         return mPartyList.size();
     }
 
+    public void addItem(List<Party> PartyList){
+        mPartyList = PartyList;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView img;
@@ -57,9 +62,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         public ViewHolder(View itemView){
             super(itemView);
 
-            img = (ImageView) itemView.findViewById(R.id.partyImg);
-            textTitle = (TextView) itemView.findViewById(R.id.partyTitle);
-            textMember = (TextView) itemView.findViewById(R.id.partyMember);
+            img = itemView.findViewById(R.id.partyImg);
+            textTitle = itemView.findViewById(R.id.partyTitle);
+            textMember = itemView.findViewById(R.id.partyMember);
         }
 
     }

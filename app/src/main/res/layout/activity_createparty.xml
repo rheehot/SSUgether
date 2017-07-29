@@ -1,6 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txt_group_titlebar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="새 모임"
+        android:textSize="15dp"
+        fontPath="fonts/NanumSquareOTFLight.otf"/>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="#00FF0000"
+        android:text="등록"
+        android:textSize="15dp"
+        android:textColor="#46B8FF"
+        fontPath="fonts/NanumSquareOTFLight.otf"/>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
+        android:background="#00FF0000"
+        android:text="취소"
+        android:textSize="15dp"
+        android:textColor="#46B8FF"
+        fontPath="fonts/NanumSquareOTFLight.otf"/>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="#00FF0000"
+        android:text="확인"
+        android:textSize="15dp"
+        android:textColor="#46B8FF"
+        fontPath="fonts/NanumSquareOTFLight.otf"/>
+
+    <LinearLayout
+        android:id="@+id/bar_title"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/txt_group_titlebar"
+        android:layout_marginTop="10dp"
+        android:background="#ffeeeeee" />
+
+    <RelativeLayout
+        android:id="@+id/layout_group_contentfield"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar_title"
+        android:layout_margin="@dimen/groupActity_boudary_margin"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <ImageView
+            android:id="@+id/img_group_title"
+            android:layout_width="@dimen/groupActity_img_dp"
+            android:layout_height="@dimen/groupActity_img_dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_border_color_black_24dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_edt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <EditText
+                android:id="@+id/edt_group_title"
+                android:layout_width="@dimen/groupActity_content_width"
+                android:layout_height="@dimen/groupActity_content_height"
+                android:hint="모임 제목을 입력해주세요"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:textColorHint="#828282"
+                android:maxLength="15"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/img_group_category"
+            android:layout_width="@dimen/groupActity_img_dp"
+            android:layout_height="@dimen/groupActity_img_dp"
+            android:layout_below="@id/img_group_title"
+            android:layout_marginTop="@dimen/groupActity_img_marginTop"
+            android:src="@drawable/ic_view_list_black_24dp" />
+
+        <Spinner
+            android:id="@+id/spn_group_category"
+            android:layout_width="@dimen/groupActity_content_width"
+            android:layout_height="@dimen/groupActity_content_height"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/layout_edt_title"
+            android:layout_marginTop="@dimen/groupActity_content_marginTop" />
+
+        <ImageView
+            android:id="@+id/img_group_membernum"
+            android:layout_width="@dimen/groupActity_img_dp"
+            android:layout_height="@dimen/groupActity_img_dp"
+            android:layout_below="@id/img_group_category"
+            android:layout_marginTop="@dimen/groupActity_img_marginTop"
+            android:src="@drawable/ic_person_add_black_24dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_edt_membernum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/spn_group_category"
+            android:layout_marginTop="@dimen/groupActity_content_marginTop">
+
+            <EditText
+                android:id="@+id/edt_group_membernum"
+                android:layout_width="@dimen/groupActity_content_width"
+                android:layout_height="@dimen/groupActity_content_height"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:hint="모집할 인원수를 입력해주세요"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:textColorHint="#828282" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/img_group_deadline"
+            android:layout_width="@dimen/groupActity_img_dp"
+            android:layout_height="@dimen/groupActity_img_dp"
+            android:layout_below="@id/img_group_membernum"
+            android:layout_marginTop="@dimen/groupActity_img_marginTop"
+            android:src="@drawable/ic_date_range_black_24dp" />
+
+        <TextView
+            android:id="@+id/txt_group_deadline"
+            android:layout_width="@dimen/groupActity_content_width"
+            android:layout_height="@dimen/groupActity_content_height"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/layout_edt_membernum"
+            android:layout_marginTop="@dimen/groupActity_content_marginTop"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="마감날짜를 입력해 주세요"
+            android:textColor="#828282"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
