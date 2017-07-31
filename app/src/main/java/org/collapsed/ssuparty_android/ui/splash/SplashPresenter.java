@@ -22,7 +22,7 @@ public class SplashPresenter implements SplashContract.UserActionListener {
     }
 
     @Override
-    public void getIntentForNextActivity() {
+    public void startActivityDependOnLoginState() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onSessionClosed(ErrorResult errorResult) {

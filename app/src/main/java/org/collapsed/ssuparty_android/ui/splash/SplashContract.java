@@ -7,6 +7,6 @@ interface SplashContract {
 
     interface UserActionListener {
 
-        void getIntentForNextActivity();
+        void startActivityDependOnLoginState();
     }
 }

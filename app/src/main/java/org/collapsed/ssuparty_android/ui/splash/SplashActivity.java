@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                mPresenter.getIntentForNextActivity();
+                mPresenter.startActivityDependOnLoginState();
             }
         };
 
