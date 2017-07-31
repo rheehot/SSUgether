@@ -18,31 +18,27 @@
             android:value="@string/kakao_app_key" />
 
         <activity android:name=".ui.main.MainActivity">
+        </activity>
+        <activity android:name=".ui.account.AccountActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.account.AccountActivity">
 
-        </activity>
-
-        <service
-            android:name=".service.SPFirebaseMessagingService">
+        <service android:name=".service.SPFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.SPFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service
-            android:name=".service.SPFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
-
+        <activity android:name=".ui.splash.SplashActivity"></activity>
     </application>
 
 </manifest>
