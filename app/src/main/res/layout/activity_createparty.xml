@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txt_group_titlebar"
+        android:id="@+id/createparty_toolbar_title_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -15,7 +15,7 @@
         fontPath="fonts/NanumSquareOTFLight.otf"/>
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/createparty_register_party_btn"
         android:layout_width="40dp"
         android:layout_height="20dp"
         android:layout_alignParentRight="true"
@@ -27,7 +27,7 @@
         fontPath="fonts/NanumSquareOTFLight.otf"/>
 
     <Button
-        android:id="@+id/btn_cancel"
+        android:id="@+id/createparty_cancel_party_btn"
         android:layout_width="40dp"
         android:layout_height="20dp"
         android:layout_alignParentLeft="true"
@@ -39,7 +39,7 @@
         fontPath="fonts/NanumSquareOTFLight.otf"/>
 
     <Button
-        android:id="@+id/btn_confirm"
+        android:id="@+id/createparty_confirm_btn"
         android:layout_width="40dp"
         android:layout_height="20dp"
         android:layout_alignParentRight="true"
@@ -51,39 +51,39 @@
         fontPath="fonts/NanumSquareOTFLight.otf"/>
 
     <LinearLayout
-        android:id="@+id/bar_title"
+        android:id="@+id/createparty_toolbar"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/txt_group_titlebar"
+        android:layout_below="@id/createparty_toolbar_title_txt"
         android:layout_marginTop="10dp"
         android:background="#ffeeeeee" />
 
     <RelativeLayout
-        android:id="@+id/layout_group_contentfield"
+        android:id="@+id/createparty_partycontent_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bar_title"
-        android:layout_margin="@dimen/groupActity_boudary_margin"
+        android:layout_below="@id/createparty_toolbar"
+        android:layout_margin="@dimen/createactivity_boudary_margin"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
         <ImageView
-            android:id="@+id/img_group_title"
-            android:layout_width="@dimen/groupActity_img_dp"
-            android:layout_height="@dimen/groupActity_img_dp"
+            android:id="@+id/createparty_title_image_img"
+            android:layout_width="@dimen/createactivity_img_dp"
+            android:layout_height="@dimen/createactivity_img_dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_border_color_black_24dp" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_edt_title"
+            android:id="@+id/createparty_input_title_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true">
 
             <EditText
-                android:id="@+id/edt_group_title"
-                android:layout_width="@dimen/groupActity_content_width"
-                android:layout_height="@dimen/groupActity_content_height"
+                android:id="@+id/createparty_input_title_edt"
+                android:layout_width="@dimen/createactivity_content_width"
+                android:layout_height="@dimen/createactivity_content_height"
                 android:hint="모임 제목을 입력해주세요"
                 android:inputType="text"
                 android:textSize="15dp"
@@ -94,41 +94,41 @@
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
-            android:id="@+id/img_group_category"
-            android:layout_width="@dimen/groupActity_img_dp"
-            android:layout_height="@dimen/groupActity_img_dp"
-            android:layout_below="@id/img_group_title"
-            android:layout_marginTop="@dimen/groupActity_img_marginTop"
+            android:id="@+id/createparty_category_image_img"
+            android:layout_width="@dimen/createactivity_img_dp"
+            android:layout_height="@dimen/createactivity_img_dp"
+            android:layout_below="@id/createparty_title_image_img"
+            android:layout_marginTop="@dimen/createactivity_img_marginTop"
             android:src="@drawable/ic_view_list_black_24dp" />
 
         <Spinner
-            android:id="@+id/spn_group_category"
-            android:layout_width="@dimen/groupActity_content_width"
-            android:layout_height="@dimen/groupActity_content_height"
+            android:id="@+id/createparty_select_category_spn"
+            android:layout_width="@dimen/createactivity_content_width"
+            android:layout_height="@dimen/createactivity_content_height"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/layout_edt_title"
-            android:layout_marginTop="@dimen/groupActity_content_marginTop" />
+            android:layout_below="@id/createparty_input_title_layout"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop" />
 
         <ImageView
-            android:id="@+id/img_group_membernum"
-            android:layout_width="@dimen/groupActity_img_dp"
-            android:layout_height="@dimen/groupActity_img_dp"
-            android:layout_below="@id/img_group_category"
-            android:layout_marginTop="@dimen/groupActity_img_marginTop"
+            android:id="@+id/createparty_input_membernum_img"
+            android:layout_width="@dimen/createactivity_img_dp"
+            android:layout_height="@dimen/createactivity_img_dp"
+            android:layout_below="@id/createparty_category_image_img"
+            android:layout_marginTop="@dimen/createactivity_img_marginTop"
             android:src="@drawable/ic_person_add_black_24dp" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_edt_membernum"
+            android:id="@+id/createparty_input_membernum_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/spn_group_category"
-            android:layout_marginTop="@dimen/groupActity_content_marginTop">
+            android:layout_below="@id/createparty_select_category_spn"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop">
 
             <EditText
-                android:id="@+id/edt_group_membernum"
-                android:layout_width="@dimen/groupActity_content_width"
-                android:layout_height="@dimen/groupActity_content_height"
+                android:id="@+id/creatparty_input_membernum_edt"
+                android:layout_width="@dimen/createactivity_content_width"
+                android:layout_height="@dimen/createactivity_content_height"
                 android:digits="0123456789"
                 android:inputType="number"
                 android:hint="모집할 인원수를 입력해주세요"
@@ -139,20 +139,20 @@
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
-            android:id="@+id/img_group_deadline"
-            android:layout_width="@dimen/groupActity_img_dp"
-            android:layout_height="@dimen/groupActity_img_dp"
-            android:layout_below="@id/img_group_membernum"
-            android:layout_marginTop="@dimen/groupActity_img_marginTop"
+            android:id="@+id/creatparty_deadline_image_img"
+            android:layout_width="@dimen/createactivity_img_dp"
+            android:layout_height="@dimen/createactivity_img_dp"
+            android:layout_below="@id/createparty_input_membernum_img"
+            android:layout_marginTop="@dimen/createactivity_img_marginTop"
             android:src="@drawable/ic_date_range_black_24dp" />
 
         <TextView
-            android:id="@+id/txt_group_deadline"
-            android:layout_width="@dimen/groupActity_content_width"
-            android:layout_height="@dimen/groupActity_content_height"
+            android:id="@+id/createparty_select_deadline_txt"
+            android:layout_width="@dimen/createactivity_content_width"
+            android:layout_height="@dimen/createactivity_content_height"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/layout_edt_membernum"
-            android:layout_marginTop="@dimen/groupActity_content_marginTop"
+            android:layout_below="@id/createparty_input_membernum_layout"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop"
             android:clickable="true"
             android:focusable="true"
             android:text="마감날짜를 입력해 주세요"

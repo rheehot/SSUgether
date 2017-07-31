@@ -9,7 +9,7 @@
     >
 
     <ImageView
-        android:id="@+id/partyImg"
+        android:id="@+id/partylist_main_image_img"
         android:layout_width="70dp"
         android:layout_height="70dp"
         />
@@ -21,7 +21,7 @@
         >
 
         <TextView
-            android:id="@+id/partyTitle"
+            android:id="@+id/partylist_title_txt"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:textSize="25dp"
@@ -30,7 +30,7 @@
             />
 
         <TextView
-            android:id="@+id/partyMember"
+            android:id="@+id/partylist_member_num_txt"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textSize="15dp"

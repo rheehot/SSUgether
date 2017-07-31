@@ -1,9 +1,9 @@
 package org.collapsed.ssuparty_android.model;
 
 public class Party {
-    public int mImage;
-    public String mTitle;
-    public String mMemberNum;
+    private int mImage;
+    private String mTitle;
+    private String mMemberNum;
 
     public Party(int image, String title, String memberNum){
         mImage = image;

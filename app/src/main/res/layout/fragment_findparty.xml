@@ -10,17 +10,17 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/findparty_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
          />
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/myFAB"
+            android:id="@+id/findparty_btn_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_group_white_24dp"
             app:elevation="4dp"
-            app:layout_anchor="@id/recycler_view"
+            app:layout_anchor="@id/findparty_recycler_view"
             app:layout_anchorGravity="right|bottom"
         />
 

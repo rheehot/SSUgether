@@ -18,7 +18,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private List<Party> mPartyList;
     private Context mContext;
-    private int lastPosition = -1;
 
     public RVAdapter(List<Party> items, Context context) {
         mPartyList = items;
@@ -45,11 +44,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return mPartyList.size();
+        return this.mPartyList.size();
     }
 
-    public void addItem(List<Party> PartyList){
-        mPartyList = PartyList;
+    public void addItem(List<Party> partyList){
+        mPartyList = partyList;
         notifyDataSetChanged();
     }
 
@@ -62,9 +61,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         public ViewHolder(View itemView){
             super(itemView);
 
-            img = itemView.findViewById(R.id.partyImg);
-            textTitle = itemView.findViewById(R.id.partyTitle);
-            textMember = itemView.findViewById(R.id.partyMember);
+            img = itemView.findViewById(R.id.partylist_main_image_img);
+            textTitle = itemView.findViewById(R.id.partylist_title_txt);
+            textMember = itemView.findViewById(R.id.partylist_member_num_txt);
         }
 
     }

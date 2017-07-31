@@ -17,7 +17,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 class FindPartyPresenter implements FindPartyContract.UserActionListener {
     private static final String TAG = FindPartyPresenter.class.getSimpleName();
 
-    private View mDialogView;
     private FindPartyFragment mView;
 
     public FindPartyPresenter(@NonNull FindPartyFragment view) {

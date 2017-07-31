@@ -48,17 +48,7 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_findparty, container, false);
-        mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.scrollToPosition(0);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mFab = view.findViewById(R.id.myFAB);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_findparty, container, false);
     }
 
     @Override
@@ -66,19 +56,26 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
         super.onViewCreated(rootView, savedInstanceState);
 
         mPresenter = new FindPartyPresenter(this);
+
         initView(rootView);
     }
 
     private void initData() {
         mDataSet = new ArrayList<>();
         mDataSet.add(new Party(R.drawable.ic_mood_black_24dp, "공모전 파티 구함", "4/5"));
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new RVAdapter(mDataSet, getActivity());
-        mAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void initView(View rootView) {
+        mRecyclerView = rootView.findViewById(R.id.findparty_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.scrollToPosition(0);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mFab = rootView.findViewById(R.id.findparty_btn_fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,9 +83,13 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
                 startActivityForResult(intent, 1);
             }
         });
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new RVAdapter(mDataSet, getActivity());
+        mAdapter.notifyDataSetChanged();
     }
 
-    public void newParty(String title, String member) {
+    public void addNewParty(String title, String member) {
         mDataSet.add(new Party(R.drawable.ic_mood_black_24dp, title, "0/" + member));
         mAdapter.addItem(mDataSet);
         mAdapter.notifyDataSetChanged();
