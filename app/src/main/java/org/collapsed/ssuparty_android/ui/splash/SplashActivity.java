@@ -1,12 +1,10 @@
 package org.collapsed.ssuparty_android.ui.splash;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.ui.account.AccountActivity;
 
 public class SplashActivity extends AppCompatActivity implements SplashContract.View {
 
@@ -25,13 +23,12 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                Intent intent = mPresenter.getIntentForNextActivity();
-                startActivity(intent);
+                mPresenter.getIntentForNextActivity();
             }
         };
 
         mHandler = new Handler();
-        mHandler.postDelayed(mRunnable, 5000);
+        mHandler.postDelayed(mRunnable, 2000);
     }
 
     @Override

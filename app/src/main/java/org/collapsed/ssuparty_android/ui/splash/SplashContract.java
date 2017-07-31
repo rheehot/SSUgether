@@ -1,7 +1,5 @@
 package org.collapsed.ssuparty_android.ui.splash;
 
-import android.content.Intent;
-
 interface SplashContract {
     interface View {
 
@@ -9,6 +7,6 @@ interface SplashContract {
 
     interface UserActionListener {
 
-        Intent getIntentForNextActivity();
+        void getIntentForNextActivity();
     }
 }

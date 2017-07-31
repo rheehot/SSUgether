@@ -20,11 +20,6 @@
         <activity android:name=".ui.main.MainActivity">
         </activity>
         <activity android:name=".ui.account.AccountActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service android:name=".service.SPFirebaseMessagingService">
@@ -38,7 +33,13 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.splash.SplashActivity"></activity>
+        <activity android:name=".ui.splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
