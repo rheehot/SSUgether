@@ -6,14 +6,17 @@ import org.collapsed.ssuparty_android.ui.BaseFragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.List;
+import com.kakao.auth.Session;
+import com.kakao.usermgmt.response.model.UserProfile;
 
+import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -54,6 +57,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             @Override
             public void onClick(View view) {
                 mPresenter.fetchNetworkingExample();
+
+                Log.d(TAG, "cache userNickname : "+ UserProfile.loadFromCache().getNickname());
+                Log.d(TAG, "getAccessToken : "+ Session.getCurrentSession().getTokenInfo().getAccessToken());
+                Log.d(TAG, "getRefreshToken : "+ Session.getCurrentSession().getTokenInfo().getRefreshToken());
+                Log.d(TAG, "Expire Time : "+ Session.getCurrentSession().getTokenInfo().getRemainedExpiresInAccessTokenTime());
             }
         });
     }

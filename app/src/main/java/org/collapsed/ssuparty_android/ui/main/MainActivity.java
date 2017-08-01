@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ButterKnife.bind(this);
 
         mPresenter = new MainPresenter(this);
+        mPresenter.initMain();
 
         initView();
     }

@@ -11,9 +11,9 @@ import org.collapsed.ssuparty_android.utils.KakaoSDKAdapter;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class BaseApplication extends Application {
+public class GlobalApplication extends Application {
     private static RequestQueue mQueue;
-    private Config mConfig;
+    private static AppConfig mAppConfig;
 
     @Override
     public void onCreate() {
@@ -22,7 +22,11 @@ public class BaseApplication extends Application {
         KakaoSDK.init(new KakaoSDKAdapter(getApplicationContext()));
         initNetworkClient();
         initFontSetup();
-        mConfig = new Config();
+        mAppConfig = new AppConfig();
+    }
+
+    public static AppConfig getConfig() {
+        return mAppConfig;
     }
 
     private void initFontSetup() {

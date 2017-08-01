@@ -5,6 +5,6 @@ public interface MainContract {
     }
 
     interface UserActionListener {
-        void getUserInfoFromKaKao();
+        void initMain();
     }
 }
