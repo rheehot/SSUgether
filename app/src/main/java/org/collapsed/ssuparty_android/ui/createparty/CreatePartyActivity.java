@@ -147,7 +147,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                         Intent returnIntent = new Intent();
                         setResult(Activity.RESULT_OK, returnIntent);
                         finish();*/
-/*
+
                         if(checkInputData()){
                             mPartyInfoObeject = new NewPartyInfo(mPartyTitle, mPartyMemberNum,
                                     mPartyCategory, mPartyDeadline, mPartyInfo, mPartyTags);
@@ -157,7 +157,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                             Log.d("data",mPartyInfoObeject.getInformation());
                             Log.d("data",mPartyInfoObeject.getMemberNum());
                             Log.d("data",""+mPartyInfoObeject.getTags().size());
-                        }*/
+                        }
 
                         break;
 
@@ -254,7 +254,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                 mDateLisner, mYear, mMonth, mDay).show();
     }
 
-   /* boolean checkInputData(){
+   boolean checkInputData(){
         boolean testValue = false;
         if(checkTextLength(mTitleEditText)) {
             mPartyTitle = mTitleEditText.getText().toString();
@@ -309,7 +309,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         }
         else
             return false;
-    }*/
+    }
 
     void setTouchListner(View view){
         view.setOnTouchListener(mTouchListner);

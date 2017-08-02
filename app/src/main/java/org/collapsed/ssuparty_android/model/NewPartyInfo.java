@@ -1,8 +1,9 @@
 package org.collapsed.ssuparty_android.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class NewPartyInfo {
+public class NewPartyInfo implements Serializable {
     private int mImage;
     private String mTitle;
     private String mMemberNum;
