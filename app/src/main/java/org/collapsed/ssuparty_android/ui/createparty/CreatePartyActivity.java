@@ -9,40 +9,60 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.NewPartyInfo;
+import org.collapsed.ssuparty_android.utils.TagsEditText;
 
-public class CreatePartyActivity extends AppCompatActivity implements CreatePartyContract.View{
+import java.util.List;
 
-    private final int EDIT_MAX_NUMBER = 15;
+public class CreatePartyActivity extends AppCompatActivity implements CreatePartyContract.View {
+
+    private static final int TITLE_MAX_LENGTH = 15;
+    private static final int INFORMATION_MAX_LENGTH = 60;
 
     private CreatePartyPresenter mPresenter;
 
-    private Button mCancelParty, mRegisterParty, mConfirmInfo;
-    private EditText mInputTitle, mInputMemberNum;
-    private TextView mTxtDeadline, mToolbarTitle;
-    private Spinner mSelectCategory;
-    private TextInputLayout mInputTitleLayout;
+    private NewPartyInfo mPartyInfoObeject;
+
+    private RelativeLayout mContentLayout;
+
+    private Button mPartyCancelBtn, mPartyRegisterBtn, mInfoConfirmBtn;
+    private EditText mTitleEditText, mMemberNumEditText, mPartyInfoEditText;
+    private TextView mToolbarTitleText ,mDeadlineText;
+    private Spinner mCategorySelectSpinner;
+    private TextInputLayout mInputTitleLayout, mInputInformationLayout;
+    private TagsEditText mTagEditText;
 
     private View.OnClickListener mClickListner;
     private View.OnFocusChangeListener mFocusListner;
+    private View.OnTouchListener mTouchListner;
     private DatePickerDialog.OnDateSetListener mDateLisner;
 
     private InputMethodManager mImManager;
 
     private ArrayAdapter mCategoryAdapter;
 
-    private String mStrTitle, mStrMemberNum;
+    private String mPartyTitle, mPartyMemberNum, mPartyCategory, mPartyInfo, mPartyDeadline;
+    private List<String> mPartyTags;
+
     private int mYear, mMonth, mDay;
-    private int [] mDateData;
+    private int[] mDateData;
+
+    private boolean mDeadlineChecker;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,68 +73,96 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         initView();
     }
 
-    public void initView(){
+    public void initView() {
 
-        mCancelParty = (Button) findViewById(R.id.createparty_cancel_party_btn);
-        mRegisterParty = (Button) findViewById(R.id.createparty_register_party_btn);
-        mConfirmInfo = (Button) findViewById(R.id.createparty_confirm_btn);
+        mContentLayout = (RelativeLayout) findViewById(R.id.createparty_partycontent_layout);
 
-        mInputTitle = (EditText) findViewById(R.id.createparty_input_title_edt);
-        mInputMemberNum = (EditText) findViewById(R.id.creatparty_input_membernum_edt);
+        mPartyCancelBtn = (Button) findViewById(R.id.createparty_cancel_party_btn);
+        mPartyRegisterBtn = (Button) findViewById(R.id.createparty_register_party_btn);
+        mInfoConfirmBtn = (Button) findViewById(R.id.createparty_confirm_btn);
 
-        mTxtDeadline = (TextView) findViewById(R.id.createparty_select_deadline_txt);
-        mToolbarTitle = (TextView) findViewById(R.id.createparty_toolbar_title_txt);
+        mTitleEditText = (EditText) findViewById(R.id.createparty_input_title_edt);
+        mMemberNumEditText = (EditText) findViewById(R.id.createparty_input_membernum_edt);
+        mPartyInfoEditText = (EditText) findViewById(R.id.createparty_input_information_edt);
+        mTagEditText = (TagsEditText) findViewById(R.id.createparty_tag_edt);
+
+        mToolbarTitleText = (TextView) findViewById(R.id.createparty_toolbar_title_txt);
+        mDeadlineText = (TextView) findViewById(R.id.createparty_select_deadline_txt);
 
         mInputTitleLayout = (TextInputLayout) findViewById(R.id.createparty_input_title_layout);
+        mInputInformationLayout = (TextInputLayout) findViewById(R.id.createparty_input_information_layout);
 
-        mSelectCategory = (Spinner) findViewById(R.id.createparty_select_category_spn);
+        mCategorySelectSpinner = (Spinner) findViewById(R.id.createparty_select_category_spn);
 
-        mCategoryAdapter = ArrayAdapter.createFromResource(CreatePartyActivity.this,R.array.group_category,
+        mCategoryAdapter = ArrayAdapter.createFromResource(CreatePartyActivity.this, R.array.group_category,
                 android.R.layout.simple_spinner_dropdown_item);
 
-        mImManager =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        mImManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        mConfirmInfo.setVisibility(View.GONE);
-        mToolbarTitle.setFocusableInTouchMode(true);
-        mSelectCategory.setAdapter(mCategoryAdapter);
+        mInfoConfirmBtn.setVisibility(View.GONE);
+
+        mToolbarTitleText.setFocusableInTouchMode(true);
+        mCategorySelectSpinner.setAdapter(mCategoryAdapter);
+
         mInputTitleLayout.setCounterEnabled(true);
-        mInputTitleLayout.setCounterMaxLength(EDIT_MAX_NUMBER);
-        mInputMemberNum.setOnFocusChangeListener(mFocusListner);
+        mInputTitleLayout.setCounterMaxLength(TITLE_MAX_LENGTH);
+        mInputInformationLayout.setCounterEnabled(true);
+        mInputInformationLayout.setCounterMaxLength(INFORMATION_MAX_LENGTH);
 
-        mDateData = mPresenter.getCalenderData();
+        mTagEditText.setTagsWithSpacesEnabled(true);
+        mTagEditText.setThreshold(1);
 
-        mYear = mDateData[0];
-        mMonth = mDateData[1];
-        mDay = mDateData[2];
+        mDeadlineChecker = false;
 
-        mDateLisner = new DatePickerDialog.OnDateSetListener(){
+        mTouchListner = new View.OnTouchListener(){
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                mYear = year;
-                mMonth = month;
-                mDay = day;
-                mTxtDeadline.setText(mYear+"."+mMonth+"."+mDay);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (view.getId()){
+                    case R.id.createparty_partycontent_layout:
+                        hideVirtualKeyboard(mContentLayout);
+                        break;
+
+                    case R.id.createparty_select_category_spn:
+                        hideVirtualKeyboard(mCategorySelectSpinner);
+                        break;
+
+                    default:
+                        break;
+                }
+                return false;
             }
         };
+
+        setTouchListner(mContentLayout);
+        setTouchListner(mCategorySelectSpinner);
 
         mClickListner = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
-
                     case R.id.createparty_register_party_btn:
-                        mStrTitle = mInputTitle.getText().toString();
-                        mStrMemberNum = mInputMemberNum.getText().toString();
+                        /*
+                        mTitle = mTitleEditText.getText().toString();
+                        mMemberNum = mMemberNumEditText.getText().toString();
                         Intent returnIntent = new Intent();
-                        returnIntent.putExtra("title", mStrTitle);
-                        returnIntent.putExtra("memberNum", mStrMemberNum);
                         setResult(Activity.RESULT_OK, returnIntent);
-                        finish();
+                        finish();*/
+/*
+                        if(checkInputData()){
+                            mPartyInfoObeject = new NewPartyInfo(mPartyTitle, mPartyMemberNum,
+                                    mPartyCategory, mPartyDeadline, mPartyInfo, mPartyTags);
+                            Log.d("data",mPartyInfoObeject.getTitle());
+                            Log.d("data",mPartyInfoObeject.getCategory());
+                            Log.d("data",mPartyInfoObeject.getDeadline());
+                            Log.d("data",mPartyInfoObeject.getInformation());
+                            Log.d("data",mPartyInfoObeject.getMemberNum());
+                            Log.d("data",""+mPartyInfoObeject.getTags().size());
+                        }*/
+
                         break;
 
                     case R.id.createparty_confirm_btn:
-                        mToolbarTitle.requestFocus();
-                        mImManager.hideSoftInputFromWindow(mConfirmInfo.getWindowToken(), 0);
+                        hideVirtualKeyboard(mInfoConfirmBtn);
                         break;
 
                     case R.id.createparty_cancel_party_btn:
@@ -122,43 +170,156 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                         break;
 
                     case R.id.createparty_select_deadline_txt:
-                        new DatePickerDialog(CreatePartyActivity.this,
-                                mDateLisner, mYear, mMonth, mDay).show();;
+                        showDatePickerDialog();
+                        hideVirtualKeyboard(mDeadlineText);
+                        break;
+
+                    default:
                         break;
                 }
             }
         };
 
-        mConfirmInfo.setOnClickListener(mClickListner);
-        mCancelParty.setOnClickListener(mClickListner);
-        mRegisterParty.setOnClickListener(mClickListner);
-        mTxtDeadline.setOnClickListener(mClickListner);
+        setClickListner(mInfoConfirmBtn);
+        setClickListner(mPartyCancelBtn);
+        setClickListner(mDeadlineText);
+        setClickListner(mPartyRegisterBtn);
 
-        mFocusListner = new View.OnFocusChangeListener(){
+        mFocusListner = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean getFocus) {
-
-                if(getFocus){
+                if (getFocus) {
                     switch (view.getId()) {
                         case R.id.createparty_input_title_edt:
-                            mToolbarTitle.setText("제목");
+                            mToolbarTitleText.setText("모임명");
                             break;
-                        case R.id.creatparty_input_membernum_edt:
-                            mToolbarTitle.setText("모집인원");
+                        case R.id.createparty_input_membernum_edt:
+                            mToolbarTitleText.setText("모집인원");
+                            break;
+                        case R.id.createparty_input_information_edt:
+                            mToolbarTitleText.setText("모임소개");
+                            break;
+                        case R.id.createparty_tag_edt:
+                            mToolbarTitleText.setText("태그추가");
+                            break;
+                        case R.id.createparty_select_category_spn:
+                            mToolbarTitleText.setText("카테고리 선택");
+                            break;
+                        default:
                             break;
                     }
-                    mRegisterParty.setVisibility(View.GONE);
-                    mConfirmInfo.setVisibility(View.VISIBLE);
-                }
-                else{
-                    mToolbarTitle.setText("새 모임");
-                    mRegisterParty.setVisibility(View.VISIBLE);
-                    mConfirmInfo.setVisibility(View.GONE);
+                    mPartyRegisterBtn.setVisibility(View.GONE);
+                    mPartyCancelBtn.setVisibility(View.GONE);
+                    mInfoConfirmBtn.setVisibility(View.VISIBLE);
+                } else {
+                    mToolbarTitleText.setText("새 모임");
+                    mPartyRegisterBtn.setVisibility(View.VISIBLE);
+                    mPartyCancelBtn.setVisibility(View.VISIBLE);
+                    mInfoConfirmBtn.setVisibility(View.GONE);
                 }
             }
         };
 
-        mInputTitle.setOnFocusChangeListener(mFocusListner);
-        mInputMemberNum.setOnFocusChangeListener(mFocusListner);
+        setFocusListner(mTitleEditText);
+        setFocusListner(mMemberNumEditText);
+        setFocusListner(mPartyInfoEditText);
+        setFocusListner(mTagEditText);
+    }
+
+    void hideVirtualKeyboard(View view){
+        mToolbarTitleText.requestFocus();
+        mImManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    void showDatePickerDialog(){
+        mDeadlineChecker = true;
+
+        mDateData = mPresenter.getCalenderData();
+
+        mYear = mDateData[0];
+        mMonth = mDateData[1];
+        mDay = mDateData[2];
+
+        mDateLisner = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                mYear = year;
+                mMonth = month + 1;
+                mDay = day;
+                mDeadlineText.setText(mYear + "." + mMonth + "." + mDay);
+            }
+        };
+
+        new DatePickerDialog(CreatePartyActivity.this,
+                mDateLisner, mYear, mMonth, mDay).show();
+    }
+
+   /* boolean checkInputData(){
+        boolean testValue = false;
+        if(checkTextLength(mTitleEditText)) {
+            mPartyTitle = mTitleEditText.getText().toString();
+        }
+        else{
+            Toast.makeText(this,"모임명이 누락되었습니다!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(mCategorySelectSpinner.getSelectedItem().toString().equals("카테고리선택")){
+            Toast.makeText(this,"카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else{
+            mPartyCategory = mCategorySelectSpinner.getSelectedItem().toString();
+        }
+
+        if(mDeadlineChecker){
+            mPartyDeadline = mDeadlineText.getText().toString();
+        }
+        else{
+            Toast.makeText(this,"마감 기한을 선택해주세요.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(checkTextLength(mMemberNumEditText)) {
+            mPartyMemberNum = mMemberNumEditText.getText().toString();
+        }
+        else{
+            Toast.makeText(this,"모집인원이 누락되었습니다!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(checkTextLength(mPartyInfoEditText)) {
+            mPartyInfo = mPartyInfoEditText.getText().toString();
+        }
+        else{
+            Toast.makeText(this,"모임 소개가 누락되었습니다!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(checkTextLength(mTitleEditText)) {
+            mPartyTags = mTagEditText.getTags();
+        }
+
+        return true;
+    }
+
+    boolean checkTextLength(EditText view){
+        if(view.getText().toString().length() >= 1){
+            return true;
+        }
+        else
+            return false;
+    }*/
+
+    void setTouchListner(View view){
+        view.setOnTouchListener(mTouchListner);
+    }
+
+    void setClickListner(View view){
+        view.setOnClickListener(mClickListner);
+    }
+
+    void setFocusListner(View view){
+        view.setOnFocusChangeListener(mFocusListner);
     }
 }

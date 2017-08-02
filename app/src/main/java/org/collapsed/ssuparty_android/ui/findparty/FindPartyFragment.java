@@ -2,7 +2,7 @@ package org.collapsed.ssuparty_android.ui.findparty;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.adapter.RVAdapter;
-import org.collapsed.ssuparty_android.model.Party;
+import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 
@@ -28,7 +28,7 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     private RecyclerView mRecyclerView;
     private RVAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Party> mDataSet;
+    private ArrayList<NewPartyInfo> mDataSet;
 
     private FloatingActionButton mFab;
 
@@ -62,8 +62,6 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
 
     private void initData() {
         mDataSet = new ArrayList<>();
-        mDataSet.add(new Party(R.drawable.ic_mood_black_24dp, "공모전 파티 구함", "4/5"));
-
     }
 
     @Override
@@ -80,7 +78,7 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 
@@ -90,7 +88,6 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     }
 
     public void addNewParty(String title, String member) {
-        mDataSet.add(new Party(R.drawable.ic_mood_black_24dp, title, "0/" + member));
         mAdapter.addItem(mDataSet);
         mAdapter.notifyDataSetChanged();
     }

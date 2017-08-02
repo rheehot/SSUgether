@@ -10,58 +10,55 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.Party;
+import org.collapsed.ssuparty_android.model.NewPartyInfo;
 
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
-    private List<Party> mPartyList;
+    private List<NewPartyInfo> mNewPartyInfoList;
     private Context mContext;
 
-    public RVAdapter(List<Party> items, Context context) {
-        mPartyList = items;
+    public RVAdapter(List<NewPartyInfo> items, Context context) {
+        mNewPartyInfoList = items;
         mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_partylist,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        Party item = mPartyList.get(position);
+        NewPartyInfo item = mNewPartyInfoList.get(position);
         viewHolder.textTitle.setText(item.getTitle());
         viewHolder.textMember.setText(item.getMemberNum());
-        viewHolder.img.setBackgroundResource(item.getImage());
         viewHolder.itemView.setTag(item);
 
     }
 
     @Override
     public int getItemCount() {
-        return this.mPartyList.size();
+        return this.mNewPartyInfoList.size();
     }
 
-    public void addItem(List<Party> partyList){
-        mPartyList = partyList;
+    public void addItem(List<NewPartyInfo> newPartyInfoList){
+        mNewPartyInfoList = newPartyInfoList;
         notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView img;
         public TextView textTitle;
         public TextView textMember;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            img = itemView.findViewById(R.id.partylist_main_image_img);
             textTitle = itemView.findViewById(R.id.partylist_title_txt);
             textMember = itemView.findViewById(R.id.partylist_member_num_txt);
         }
