@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
 
+<resources>
+<string-array name="group_category">
+    <item>카테고리선택</item>
+    <item>공모전</item>
+    <item>스터디</item>
+    <item>동아리</item>
+    <item>프로젝트</item>
+</string-array>
 </resources>

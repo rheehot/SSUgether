@@ -19,7 +19,7 @@
             android:background="@color/colorPrimary"
             android:elevation="3dp">
 
-            <org.collapsed.ssuparty_android.customview.CustomFontTextView
+            <org.collapsed.ssuparty_android.ui.customview.CustomFontTextView
                 android:id="@+id/main_toolbar_title_txt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -30,7 +30,7 @@
                 app:customFont="@string/naum_square_bold" />
         </android.support.v7.widget.Toolbar>
 
-        <org.collapsed.ssuparty_android.customview.MainViewPager
+        <org.collapsed.ssuparty_android.ui.customview.MainViewPager
             android:id="@+id/main_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

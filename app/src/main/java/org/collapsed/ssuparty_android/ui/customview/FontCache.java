@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.customview;
+package org.collapsed.ssuparty_android.ui.customview;
 
 import android.content.Context;
 import android.graphics.Typeface;

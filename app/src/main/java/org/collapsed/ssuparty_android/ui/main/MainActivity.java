@@ -1,6 +1,8 @@
 package org.collapsed.ssuparty_android.ui.main;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -19,8 +21,8 @@ import android.view.SubMenu;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.customview.CustomTypefaceSpan;
-import org.collapsed.ssuparty_android.customview.MainViewPager;
+import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
+import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
 import org.collapsed.ssuparty_android.helper.BottomNavigationViewHelper;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.findparty.FindPartyFragment;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private MainPresenter mPresenter;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
+    FindPartyFragment mFindPartyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mPresenter = new MainPresenter(this);
 
         initView();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            String mTitle = data.getStringExtra("title");
+            String mMemberNum = data.getStringExtra("memberNum");
+            mFindPartyFragment = (FindPartyFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.main_pager);
+            mFindPartyFragment.addNewParty(mTitle,mMemberNum);
+        }
     }
 
     @Override
@@ -97,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 return false;
             }
         });
-
     }
 
     @Override
