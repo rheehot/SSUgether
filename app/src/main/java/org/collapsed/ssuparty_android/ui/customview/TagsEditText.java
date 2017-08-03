@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.utils;
+package org.collapsed.ssuparty_android.ui.customview;
 
 import android.annotation.TargetApi;
 import android.content.Context;

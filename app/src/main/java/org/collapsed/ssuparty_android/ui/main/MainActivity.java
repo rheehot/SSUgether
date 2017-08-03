@@ -21,8 +21,8 @@ import android.view.SubMenu;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.customview.CustomTypefaceSpan;
-import org.collapsed.ssuparty_android.customview.MainViewPager;
+import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
+import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
 import org.collapsed.ssuparty_android.helper.BottomNavigationViewHelper;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.findparty.FindPartyFragment;

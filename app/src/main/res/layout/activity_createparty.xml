@@ -136,7 +136,7 @@
                 android:layout_marginTop="@dimen/createactivity_content_marginTop"
                 app:hintTextAppearance="@style/TextLabel2">
 
-                <org.collapsed.ssuparty_android.utils.TagsEditText
+                <org.collapsed.ssuparty_android.ui.customview.TagsEditText
                     android:id="@+id/createparty_tag_edt"
                     style="@style/CreatePartyEditTextTheme"
                     android:hint="태그 입력"
