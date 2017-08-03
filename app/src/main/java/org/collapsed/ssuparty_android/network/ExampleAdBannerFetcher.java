@@ -8,8 +8,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.collapsed.ssuparty_android.BaseApplication;
-import org.collapsed.ssuparty_android.Config;
+import org.collapsed.ssuparty_android.GlobalApplication;
+import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.ui.home.HomeContract;
 
 public class ExampleAdBannerFetcher {
@@ -19,12 +19,12 @@ public class ExampleAdBannerFetcher {
     private HomeContract.OnDataFetchedListener mListener;
 
     public ExampleAdBannerFetcher(HomeContract.OnDataFetchedListener listener) {
-        mQueue = BaseApplication.getRequestQueue();
+        mQueue = GlobalApplication.getRequestQueue();
         mListener = listener;
     }
 
     public void executeFetch() {
-        StringRequest request = new StringRequest(Request.Method.GET, Config.BASE_BANNER_ADDRESS, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, AppConfig.BASE_BANNER_ADDRESS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 mListener.onBannerDataFetched(response);
