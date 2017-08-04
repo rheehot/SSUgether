@@ -24,6 +24,7 @@ import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.customview.TagsEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreatePartyActivity extends AppCompatActivity implements CreatePartyContract.View {

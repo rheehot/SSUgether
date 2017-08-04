@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
@@ -35,10 +34,21 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         NewPartyInfo item = mNewPartyInfoList.get(position);
-        viewHolder.textTitle.setText(item.getTitle());
-        viewHolder.textMember.setText(item.getMemberNum());
-        viewHolder.itemView.setTag(item);
 
+        viewHolder.mTitleText.setText(item.getTitle());
+        viewHolder.mCategoryText.setText(item.getCategory());
+        viewHolder.mDeadlineText.setText(item.getDeadline());
+        viewHolder.mMemberText.setText(item.getMemberNum());
+
+        List<String>  mTagList = item.getTags();
+        String mTagText ="";
+
+        for(String tag : mTagList){
+            mTagText +="#"+tag+" ";
+        }
+
+        viewHolder.mTagText.setText(mTagText);
+        viewHolder.itemView.setTag(item);
     }
 
     @Override
@@ -53,14 +63,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView textTitle;
-        public TextView textMember;
+        public TextView mTitleText, mMemberText, mCategoryText, mDeadlineText, mTagText;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            textTitle = itemView.findViewById(R.id.partylist_title_txt);
-            textMember = itemView.findViewById(R.id.partylist_member_num_txt);
+            mTitleText = itemView.findViewById(R.id.partylist_title_txt);
+            mMemberText = itemView.findViewById(R.id.partylist_member_num_txt);
+            mCategoryText = itemView.findViewById(R.id.partylist_category);
+            mDeadlineText = itemView.findViewById(R.id.partylist_deadline_txt);
+            mTagText = itemView.findViewById(R.id.partylist_tag_txt);
         }
 
     }

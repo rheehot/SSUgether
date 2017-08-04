@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FindPartyFragment extends BaseFragment implements FindPartyContract.View {
@@ -26,11 +27,11 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     private FindPartyPresenter mPresenter;
 
     private RecyclerView mRecyclerView;
-    private RVAdapter mAdapter;
+    private RVAdapter mPartyListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<NewPartyInfo> mDataSet;
 
-    private FloatingActionButton mFab;
+    private FloatingActionButton mAddPartyButton;
 
     public static FindPartyFragment newInstance() {
         FindPartyFragment fragment = new FindPartyFragment();
@@ -61,20 +62,25 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     }
 
     private void initData() {
+        List<String> dummyTag = new ArrayList<String>(){
+            {
+                add("UX");
+                add("UI");
+                add("JAVA");
+            }
+        };
+
+        NewPartyInfo dummyClass = new NewPartyInfo("소공전 버스기사 구합니다","3/10","공모전","D - 37","모임소개입니다.",dummyTag);
+
         mDataSet = new ArrayList<>();
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
     }
 
     @Override
     public void initView(View rootView) {
-        mRecyclerView = rootView.findViewById(R.id.findparty_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.scrollToPosition(0);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mFab = rootView.findViewById(R.id.findparty_btn_fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
+        mAddPartyButton = rootView.findViewById(R.id.findparty_btn_fab);
+        mAddPartyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
@@ -82,13 +88,21 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
             }
         });
 
+
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new RVAdapter(mDataSet, getActivity());
-        mAdapter.notifyDataSetChanged();
+        mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
+        mPartyListAdapter.notifyDataSetChanged();
+
+        mRecyclerView = rootView.findViewById(R.id.findparty_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.scrollToPosition(0);
+        mRecyclerView.setAdapter(mPartyListAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     public void addNewParty(String title, String member) {
-        mAdapter.addItem(mDataSet);
-        mAdapter.notifyDataSetChanged();
+        mPartyListAdapter.addItem(mDataSet);
+        mPartyListAdapter.notifyDataSetChanged();
     }
 }
