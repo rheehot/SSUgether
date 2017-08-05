@@ -6,6 +6,7 @@ import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -75,6 +76,8 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
         mDataSet = new ArrayList<>();
         mDataSet.add(dummyClass);
         mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -101,7 +104,8 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void addNewParty(String title, String member) {
+    public void addNewParty(NewPartyInfo object) {
+        mDataSet.add(object);
         mPartyListAdapter.addItem(mDataSet);
         mPartyListAdapter.notifyDataSetChanged();
     }

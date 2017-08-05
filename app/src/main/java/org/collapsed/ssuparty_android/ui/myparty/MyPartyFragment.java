@@ -6,7 +6,6 @@ import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,19 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class MyPartyFragment extends BaseFragment implements MyPartyContract.View {
     private static final String TAG = MyPartyFragment.class.getSimpleName();
 
     private MypartyPresenter mPresenter;
 
-    private RecyclerView mPartyListView;
+    private RecyclerView mCreatedPartyList, mJoinedPartyList;
 
-    private LinearLayoutManager mLayoutManager;
+    private LinearLayoutManager mTopLayoutManager, mBottomLayoutManager;
 
     private RVAdapter mPartyListAdapter;
 
@@ -63,7 +59,8 @@ public class MyPartyFragment extends BaseFragment implements MyPartyContract.Vie
 
     public void initView(View rootView){
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mTopLayoutManager = new LinearLayoutManager(getActivity());
+        mBottomLayoutManager = new LinearLayoutManager(getActivity());
         mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
 
         List<String> dummyTag = new ArrayList<String>(){
@@ -79,18 +76,32 @@ public class MyPartyFragment extends BaseFragment implements MyPartyContract.Vie
         mDataSet = new ArrayList<>();
         mDataSet.add(dummyClass);
         mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
+        mDataSet.add(dummyClass);
         mPartyListAdapter.addItem(mDataSet);
         mPartyListAdapter.notifyDataSetChanged();
 
-        mPartyListView = rootView.findViewById(R.id.myparty_recycler_view);
-        mPartyListView.setHasFixedSize(true);
-        mPartyListView.setLayoutManager(mLayoutManager);
-        mPartyListView.scrollToPosition(0);
-        mPartyListView.setAdapter(mPartyListAdapter);
-        mPartyListView.setItemAnimator(new DefaultItemAnimator());
+        mCreatedPartyList = rootView.findViewById(R.id.myparty_created_party_list);
+        mCreatedPartyList.setHasFixedSize(true);
+        mCreatedPartyList.setLayoutManager(mTopLayoutManager);
+        mCreatedPartyList.scrollToPosition(0);
+        mCreatedPartyList.setAdapter(mPartyListAdapter);
+        mCreatedPartyList.setItemAnimator(new DefaultItemAnimator());
+
+        mCreatedPartyList = rootView.findViewById(R.id.myparty_joined_party_list);
+        mCreatedPartyList.setHasFixedSize(true);
+        mCreatedPartyList.setLayoutManager(mBottomLayoutManager);
+        mCreatedPartyList.scrollToPosition(0);
+        mCreatedPartyList.setAdapter(mPartyListAdapter);
+        mCreatedPartyList.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void addMyParty(){
-
+    public void addMyParty(NewPartyInfo object){
+        mDataSet.add(object);
+        mPartyListAdapter.addItem(mDataSet);
     }
 }

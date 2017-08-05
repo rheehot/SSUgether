@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.NewPartyInfo;
@@ -16,6 +19,7 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private List<NewPartyInfo> mNewPartyInfoList;
+
     private Context mContext;
 
     public RVAdapter(List<NewPartyInfo> items, Context context) {
@@ -31,7 +35,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
         NewPartyInfo item = mNewPartyInfoList.get(position);
 
@@ -48,7 +52,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         }
 
         viewHolder.mTagText.setText(mTagText);
+
+        viewHolder.mRootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, position+" yes!!!!!!!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         viewHolder.itemView.setTag(item);
+
     }
 
     @Override
@@ -64,6 +77,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView mTitleText, mMemberText, mCategoryText, mDeadlineText, mTagText;
+        public LinearLayout mRootView;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -73,6 +87,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
             mCategoryText = itemView.findViewById(R.id.partylist_category);
             mDeadlineText = itemView.findViewById(R.id.partylist_deadline_txt);
             mTagText = itemView.findViewById(R.id.partylist_tag_txt);
+
+            mRootView = itemView.findViewById(R.id.item_root_layout);
         }
 
     }
