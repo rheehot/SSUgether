@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="org.collapsed.ssuparty_android.ui.account.AccountActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo" />
+
     <com.kakao.usermgmt.LoginButton
         android:id="@+id/com_kakao_login"
         android:layout_width="match_parent"

@@ -17,13 +17,9 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".ui.main.MainActivity"></activity>
-        <activity android:name=".ui.createparty.CreatePartyActivity">
-
-        </activity>
-        <activity android:name=".ui.account.AccountActivity">
-
-        </activity>
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.createparty.CreatePartyActivity"></activity>
+        <activity android:name=".ui.account.AccountActivity" />
 
         <service android:name=".service.SPFirebaseMessagingService">
             <intent-filter>
@@ -37,14 +33,17 @@
         </service>
 
         <activity android:name=".ui.splash.SplashActivity">
+        </activity>
+
+        <receiver android:name=".TokenExpiredChecker" />
+
+        <activity android:name=".ui.signup.SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".TokenExpiredChecker"/>
     </application>
 
 </manifest>
