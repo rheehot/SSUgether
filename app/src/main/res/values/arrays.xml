@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-<string-array name="group_category">
-    <item>카테고리선택</item>
-    <item>공모전</item>
-    <item>스터디</item>
-    <item>동아리</item>
-    <item>프로젝트</item>
-</string-array>
+    <string-array name="group_category">
+        <item>카테고리선택</item>
+        <item>공모전</item>
+        <item>스터디</item>
+        <item>동아리</item>
+        <item>프로젝트</item>
+    </string-array>
+
+    <string-array name="signup_major">
+        <item>컴퓨터학부</item>
+        <item>글로벌미디어학부</item>
+        <item>전자정보공학부</item>
+        <item>소프트웨어학부</item>
+        <item>스마트시스템소프트웨어학부</item>
+    </string-array>
+
+    <string-array name="signup_grade">
+        <item>1학년</item>
+        <item>2학년</item>
+        <item>3학년</item>
+        <item>4학년</item>
+        <item>졸업 및 수료생</item>
+    </string-array>
+
+    <string-array name="signup_gender">
+        <item>남성</item>
+        <item>여성</item>
+    </string-array>
 </resources>
