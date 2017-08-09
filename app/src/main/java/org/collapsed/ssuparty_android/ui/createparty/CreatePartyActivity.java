@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,7 +35,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
     private CreatePartyPresenter mPresenter;
 
-    private NewPartyInfo mPartyInfoObeject;
     private Context mContext;
 
     private RelativeLayout mContentLayout;
@@ -58,9 +56,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     private Intent mIntentForResult;
 
     private ArrayAdapter mCategoryAdapter;
-
-    private String mPartyTitle, mPartyMemberNum, mPartyCategory, mPartyInfo, mPartyDeadline;
-    private List<String> mPartyTags;
 
     private int mYear, mMonth, mDay;
     private int[] mDateData;
@@ -146,9 +141,15 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.createparty_register_party_btn:
-                        if (checkInputData()) {
-                            putDatatoIntent();
+                        if (mPresenter.checkInputData(mTitleEditText,mCategorySelectSpinner,
+                                mDeadlineText, mMemberNumEditText,mPartyInfoEditText, mTagEditText)) {
+                            mIntentForResult = mPresenter.putDataToIntent();
+                            setResult(Activity.RESULT_OK, mIntentForResult);
                             finish();
+                        }
+                        else{
+                            Toast.makeText(CreatePartyActivity.this,
+                                    "입력되지 않은 정보가 있습니다!", Toast.LENGTH_SHORT).show();
                         }
 
                         break;
@@ -246,67 +247,10 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                 mDateLisner, mYear, mMonth, mDay).show();
     }
 
-    void putDatatoIntent(){
-        Intent intent = new Intent();
-        intent.putExtra("title",mPartyTitle);
-        intent.putExtra("category",mPartyCategory);
-        intent.putExtra("deadline",mPartyDeadline);
-        intent.putExtra("info",mPartyInfo);
-        intent.putExtra("memberNum",mPartyMemberNum);
-        intent.putStringArrayListExtra("tag",(ArrayList<String>)mPartyTags);
-        setResult(Activity.RESULT_OK, intent);
-    }
 
-    boolean checkInputData() {
-        boolean testValue = false;
-        if (checkTextLength(mTitleEditText)) {
-            mPartyTitle = mTitleEditText.getText().toString();
-        } else {
-            Toast.makeText(this, "모임명이 누락되었습니다!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
-        if (mCategorySelectSpinner.getSelectedItem().toString().equals("카테고리선택")) {
-            Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            mPartyCategory = mCategorySelectSpinner.getSelectedItem().toString();
-        }
 
-        if (mDeadlineChecker) {
-            mPartyDeadline = mDeadlineText.getText().toString();
-        } else {
-            Toast.makeText(this, "마감 기한을 선택해주세요.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
-        if (checkTextLength(mMemberNumEditText)) {
-            mPartyMemberNum = mMemberNumEditText.getText().toString();
-        } else {
-            Toast.makeText(this, "모집인원이 누락되었습니다!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (checkTextLength(mPartyInfoEditText)) {
-            mPartyInfo = mPartyInfoEditText.getText().toString();
-        } else {
-            Toast.makeText(this, "모임 소개가 누락되었습니다!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (checkTextLength(mTitleEditText)) {
-            mPartyTags = mTagEditText.getTags();
-        }
-
-        return true;
-    }
-
-    boolean checkTextLength(EditText view) {
-        if (view.getText().toString().length() >= 1) {
-            return true;
-        } else
-            return false;
-    }
 
     void setTouchListner(View view) {
         view.setOnTouchListener(mTouchListner);
@@ -319,4 +263,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     void setFocusListner(View view) {
         view.setOnFocusChangeListener(mFocusListner);
     }
+
+    boolean getDeadlineChecker(){ return mDeadlineChecker; }
 }

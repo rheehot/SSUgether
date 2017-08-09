@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -31,7 +30,6 @@ import org.collapsed.ssuparty_android.ui.findparty.FindPartyFragment;
 import org.collapsed.ssuparty_android.ui.home.HomeFragment;
 import org.collapsed.ssuparty_android.ui.myparty.MyPartyFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private static final int FONT_BOLD = 1;
     private static final int FONT_REGULAR = 0;
 
+
     @BindView(R.id.main_pager)
     MainViewPager mViewPager;
     @BindView(R.id.main_bottom_navigation)
@@ -65,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private MyPartyFragment mMyPartyFragment;
     private NewPartyInfo mPartyInfoObject;
 
-    private String mTitle, mCategory, mDeadline, mInfo, mMemberNum;
-    private List<String> mTags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK){
-            putDatatoList(data);
+            mPresenter.getDataFromCreateActivity(data);
         }
     }
 
@@ -98,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mViewPager.setOffscreenPageLimit(PAGE_COUNT);
         mViewPager.setPagingEnabled(false);
         mViewPager.addOnPageChangeListener(this);
+
+
 
         applyFontToBottomNavigationView(mBottomNavigationView, FONT_BOLD);
         applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, INDEX_HOME);
@@ -216,20 +215,4 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    void putDatatoList(Intent intent){
-        mTitle = intent.getStringExtra("title");
-        mCategory = intent.getStringExtra("category");
-        mDeadline = intent.getStringExtra("deadline");
-        mMemberNum = intent.getStringExtra("memberNum");
-        mInfo = intent.getStringExtra("info");
-        mTags = intent.getStringArrayListExtra("tag");
-
-        mPartyInfoObject = new NewPartyInfo(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
-        mFindPartyFragment = (FindPartyFragment) getSupportFragmentManager().
-                findFragmentById(R.id.main_pager);
-       // mMyPartyFragment = (MyPartyFragment) getSupportFragmentManager().
-         //       findFragmentById(R.id.main_pager);
-        mFindPartyFragment.addNewParty(mPartyInfoObject);
-        //mMyPartyFragment.addMyParty(mPartyInfoObject);
-    }
 }

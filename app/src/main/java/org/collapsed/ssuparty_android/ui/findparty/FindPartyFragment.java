@@ -44,7 +44,6 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
     }
 
     @Override
@@ -60,24 +59,6 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
         mPresenter = new FindPartyPresenter(this);
 
         initView(rootView);
-    }
-
-    private void initData() {
-        List<String> dummyTag = new ArrayList<String>(){
-            {
-                add("UX");
-                add("UI");
-                add("JAVA");
-            }
-        };
-
-        NewPartyInfo dummyClass = new NewPartyInfo("소공전 버스기사 구합니다","3/10","공모전","D - 37","모임소개입니다.",dummyTag);
-
-        mDataSet = new ArrayList<>();
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
     }
 
     @Override

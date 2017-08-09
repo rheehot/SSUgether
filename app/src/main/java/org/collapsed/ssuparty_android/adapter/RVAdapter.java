@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,19 +38,19 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
         NewPartyInfo item = mNewPartyInfoList.get(position);
 
-        viewHolder.mTitleText.setText(item.getTitle());
-        viewHolder.mCategoryText.setText(item.getCategory());
-        viewHolder.mDeadlineText.setText(item.getDeadline());
-        viewHolder.mMemberText.setText(item.getMemberNum());
+        viewHolder.titleText.setText(item.getTitle());
+        viewHolder.categoryText.setText(item.getCategory());
+        viewHolder.deadlineText.setText(item.getDeadline());
+        viewHolder.memberText.setText(item.getMemberNum());
 
-        List<String>  mTagList = item.getTags();
-        String mTagText ="";
+        List<String>  tagList = item.getTags();
+        String tagText ="";
 
-        for(String tag : mTagList){
-            mTagText +="#"+tag+" ";
+        for(String tag : tagList){
+            tagText +="#"+tag+" ";
         }
 
-        viewHolder.mTagText.setText(mTagText);
+        viewHolder.tagText.setText(tagText);
 
         viewHolder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,17 +75,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView mTitleText, mMemberText, mCategoryText, mDeadlineText, mTagText;
+        public TextView titleText, memberText, categoryText, deadlineText, tagText;
         public LinearLayout mRootView;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            mTitleText = itemView.findViewById(R.id.partylist_title_txt);
-            mMemberText = itemView.findViewById(R.id.partylist_member_num_txt);
-            mCategoryText = itemView.findViewById(R.id.partylist_category);
-            mDeadlineText = itemView.findViewById(R.id.partylist_deadline_txt);
-            mTagText = itemView.findViewById(R.id.partylist_tag_txt);
+            titleText = itemView.findViewById(R.id.partylist_title_txt);
+            memberText = itemView.findViewById(R.id.partylist_member_num_txt);
+            categoryText = itemView.findViewById(R.id.partylist_category);
+            deadlineText = itemView.findViewById(R.id.partylist_deadline_txt);
+            tagText = itemView.findViewById(R.id.partylist_tag_txt);
 
             mRootView = itemView.findViewById(R.id.item_root_layout);
         }
