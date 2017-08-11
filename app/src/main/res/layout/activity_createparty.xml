@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:TagsEditText="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,147 +7,326 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/createparty_toolbar_title_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="새 모임"
-        android:textSize="15dp" />
-
-    <Button
-        android:id="@+id/createparty_register_party_btn"
-        style="@style/CreatePartyBtnTheme"
-        android:layout_alignParentRight="true"
-        android:text="등록하기" />
-
-    <Button
-        android:id="@+id/createparty_cancel_party_btn"
-        style="@style/CreatePartyBtnTheme"
-        android:layout_alignParentLeft="true"
-        android:text="취소" />
-
-    <Button
-        android:id="@+id/createparty_confirm_btn"
-        style="@style/CreatePartyBtnTheme"
-        android:layout_alignParentRight="true"
-        android:text="확인" />
-
-    <LinearLayout
-        android:id="@+id/createparty_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/createparty_toolbar_title_txt"
-        android:layout_marginTop="10dp"
-        android:background="#ffeeeeee" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/createparty_toolbar">
+        android:layout_height="56dp"
+        android:background="@drawable/toolbar"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/createparty_partycontent_layout"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/createparty_cancel_party_btn"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="15dp"
+            android:background="@drawable/arrow" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/createactivity_boudary_margin"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/createparty_input_title_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop"
-                app:hintTextAppearance="@style/TextLabel2">
-
-                <EditText
-                    android:id="@+id/createparty_input_title_edt"
-                    style="@style/CreatePartyEditTextTheme"
-                    android:hint="모임명"
-                    android:inputType="text"
-                    android:maxLength="15" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/createparty_select_category_spn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/createactivity_content_height"
-                android:layout_below="@id/createparty_input_title_layout"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop" />
+            android:layout_centerInParent="true"
+            android:paddingBottom="15dp">
 
             <TextView
-                android:id="@+id/createparty_select_deadline_txt"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_below="@id/createparty_select_category_spn"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingLeft="3dp"
-                android:text="모집 마감기간"
-                android:textColor="#000000"
-                android:textSize="25sp" />
+                android:id="@+id/createparty_toolbar_title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="새 모임"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="15dp" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/createparty_confirm_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@android:color/transparent"
+            android:text="확인"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/createparty_partycontent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/createactivity_boudary_margin"
+        android:layout_marginRight="@dimen/createactivity_boudary_margin"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/createparty_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CreatePartyLabelTextTheme"
+                android:text="모임명" />
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/createparty_input_membernum_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/createparty_select_deadline_txt"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop"
-                app:hintTextAppearance="@style/TextLabel2">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/planet_in_box" />
 
                 <EditText
-                    android:id="@+id/createparty_input_membernum_edt"
+                    android:id="@+id/createparty_title_edt"
+                    style="@style/CreatePartyEditTextTheme"
+                    android:hint="모임명을 입력해주세요!"
+                    android:inputType="text"
+                    android:maxLength="20" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/createparty_title_constraint_txt"
+                style="@style/CreatePartyConstraintTextTheme"
+                android:text="0/20" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/createparty_category_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CreatePartyLabelTextTheme"
+                android:text="모임 카테고리" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/planet_in_box" />
+
+                <Spinner
+                    android:id="@+id/createparty_select_category_spn"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createparty_deadline_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CreatePartyLabelTextTheme"
+                android:text="모집 마감기간" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/planet_in_box" />
+
+                <TextView
+                    android:id="@+id/createparty_select_deadline_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="6dp"
+                    android:clickable="true"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/cal"
+                    android:focusable="true"
+                    android:text="모집 마감기간을 선택해주세요!"
+                    android:textColor="#828282"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createparty_membernum_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CreatePartyLabelTextTheme"
+                android:text="모집인원수" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/planet_in_box" />
+
+                <EditText
+                    android:id="@+id/createparty_membernum_edt"
                     style="@style/CreatePartyEditTextTheme"
                     android:digits="0123456789"
-                    android:hint="모집할 인원수"
-                    android:inputType="number" />
+                    android:hint="모집할 인원수를 입력해주세요!"
+                    android:inputType="number"
+                    android:maxLength="20" />
+            </LinearLayout>
+        </LinearLayout>
 
-            </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:id="@+id/createparty_information_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop"
+            android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/createparty_input_information_layout"
+            <TextView
+                style="@style/CreatePartyLabelTextTheme"
+                android:text="모임소개" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/createparty_input_membernum_layout"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop"
-                app:hintTextAppearance="@style/TextLabel2">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/planet_in_box" />
 
                 <EditText
-                    android:id="@+id/createparty_input_information_edt"
+                    android:id="@+id/createparty_information_edt"
                     style="@style/CreatePartyEditTextTheme"
-                    android:layout_height="60dp"
-                    android:hint="모임 소개"
-                    android:padding="0dp"
-                    android:maxLength="60" />
+                    android:hint="모임에 대해 간단히 소개해주세요!"
+                    android:inputType="text"
+                    android:maxLength="60"
+                    android:maxLines="3" />
+            </LinearLayout>
 
-            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/createparty_information_constraint_txt"
+                style="@style/CreatePartyConstraintTextTheme"
+                android:text="0/60" />
+        </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/createparty_input_tag_layout"
+
+        <LinearLayout
+            android:id="@+id/createparty_tag_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/createactivity_content_marginTop"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/CreatePartyLabelTextTheme"
+                    android:text="태그추가" />
+
+                <TextView
+                    android:id="@+id/createparty_tag_help_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:text="태그로 추가하려는 글자를 입력 후 엔터!"
+                    android:textColor="#828282"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/createparty_input_information_layout"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop"
-                app:hintTextAppearance="@style/TextLabel2">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/planet_in_box" />
 
                 <org.collapsed.ssuparty_android.ui.customview.TagsEditText
                     android:id="@+id/createparty_tag_edt"
                     style="@style/CreatePartyEditTextTheme"
-                    android:hint="태그 입력"
+                    android:hint="태그를 추가해주세요!"
+                    android:inputType="text"
                     TagsEditText:allowSpaceInTag="true"
-                    TagsEditText:tagsBackground="@drawable/square_default"
-                    TagsEditText:tagsCloseImageRight="@drawable/tag_close" />
+                    TagsEditText:tagsBackground="@drawable/tag_square"
+                    TagsEditText:tagsCloseImageRight="@drawable/x"
+                    TagsEditText:tagsTextSize="12sp" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/createparty_tag_constraint_txt"
+                style="@style/CreatePartyConstraintTextTheme"
+                android:text="0/4" />
 
-    </RelativeLayout>
+        </LinearLayout>
 
-</RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/createparty_register_party_btn"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:background="#a75feb"
+        android:text="등록하기"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="13sp" />
+
+</LinearLayout>

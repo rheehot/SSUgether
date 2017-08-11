@@ -1,33 +1,24 @@
 package org.collapsed.ssuparty_android.ui.createparty;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.ui.customview.TagsEditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CreatePartyPresenter implements CreatePartyContract.UserActionListener{
 
     private CreatePartyActivity mView;
-
-    private int[] mDateData;
 
     private Calendar mCalender;
 
@@ -38,16 +29,10 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
         this.mView = checkNotNull(view);
     }
 
-    public int[] getCalenderData(){
+    public Calendar getCalenderData(){
         mCalender = new GregorianCalendar();
 
-        mDateData = new int[3];
-
-        mDateData[0] = mCalender.get(Calendar.YEAR);
-        mDateData[1] = mCalender.get(Calendar.MONTH);
-        mDateData[2] = mCalender.get(Calendar.DAY_OF_MONTH);
-
-        return mDateData;
+        return mCalender;
     }
 
     boolean checkInputData(EditText title, Spinner category, TextView deadline,
@@ -107,6 +92,22 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
             return true;
         } else
             return false;
+    }
+
+    String checkCorrectDeadline(int year, int month, int day){
+        Calendar dateData = getCalenderData();
+
+        Date curDate = new Date(dateData.get(Calendar.YEAR), dateData.get(Calendar.MONTH),
+                dateData.get(Calendar.DAY_OF_MONTH));
+        Date selectDate = new Date(year, month, day);
+
+        if(curDate.getTime() > selectDate.getTime()){
+            return "마감날짜를 다시 선택해주세요!";
+        }
+        else {
+            month = month + 1;
+            return year + "." + month + "." + day;
+        }
     }
 
 }
