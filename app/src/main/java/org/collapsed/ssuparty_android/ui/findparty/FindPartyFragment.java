@@ -6,6 +6,7 @@ import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FindPartyFragment extends BaseFragment implements FindPartyContract.View {
@@ -26,11 +28,11 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     private FindPartyPresenter mPresenter;
 
     private RecyclerView mRecyclerView;
-    private RVAdapter mAdapter;
+    private RVAdapter mPartyListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<NewPartyInfo> mDataSet;
 
-    private FloatingActionButton mFab;
+    private FloatingActionButton mAddPartyButton;
 
     public static FindPartyFragment newInstance() {
         FindPartyFragment fragment = new FindPartyFragment();
@@ -42,7 +44,6 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
     }
 
     @Override
@@ -60,35 +61,33 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
         initView(rootView);
     }
 
-    private void initData() {
-        mDataSet = new ArrayList<>();
-    }
-
     @Override
     public void initView(View rootView) {
+        mAddPartyButton = rootView.findViewById(R.id.findparty_btn_fab);
+        mAddPartyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
+        mPartyListAdapter.notifyDataSetChanged();
+
         mRecyclerView = rootView.findViewById(R.id.findparty_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(0);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mPartyListAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        mFab = rootView.findViewById(R.id.findparty_btn_fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new RVAdapter(mDataSet, getActivity());
-        mAdapter.notifyDataSetChanged();
     }
 
-    public void addNewParty(String title, String member) {
-        mAdapter.addItem(mDataSet);
-        mAdapter.notifyDataSetChanged();
+    public void addNewParty(NewPartyInfo object) {
+        mDataSet.add(object);
+        mPartyListAdapter.addItem(mDataSet);
+        mPartyListAdapter.notifyDataSetChanged();
     }
 }

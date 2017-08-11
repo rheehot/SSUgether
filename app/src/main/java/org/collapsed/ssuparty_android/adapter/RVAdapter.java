@@ -6,8 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.NewPartyInfo;
@@ -17,6 +18,7 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private List<NewPartyInfo> mNewPartyInfoList;
+
     private Context mContext;
 
     public RVAdapter(List<NewPartyInfo> items, Context context) {
@@ -32,11 +34,31 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
         NewPartyInfo item = mNewPartyInfoList.get(position);
-        viewHolder.textTitle.setText(item.getTitle());
-        viewHolder.textMember.setText(item.getMemberNum());
+
+        viewHolder.titleText.setText(item.getTitle());
+        viewHolder.categoryText.setText(item.getCategory());
+        viewHolder.deadlineText.setText(item.getDeadline());
+        viewHolder.memberText.setText(item.getMemberNum());
+
+        List<String>  tagList = item.getTags();
+        String tagText ="";
+
+        for(String tag : tagList){
+            tagText +="#"+tag+" ";
+        }
+
+        viewHolder.tagText.setText(tagText);
+
+        viewHolder.mRootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, position+" yes!!!!!!!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         viewHolder.itemView.setTag(item);
 
     }
@@ -53,14 +75,19 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView textTitle;
-        public TextView textMember;
+        public TextView titleText, memberText, categoryText, deadlineText, tagText;
+        public LinearLayout mRootView;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            textTitle = itemView.findViewById(R.id.partylist_title_txt);
-            textMember = itemView.findViewById(R.id.partylist_member_num_txt);
+            titleText = itemView.findViewById(R.id.partylist_title_txt);
+            memberText = itemView.findViewById(R.id.partylist_member_num_txt);
+            categoryText = itemView.findViewById(R.id.partylist_category);
+            deadlineText = itemView.findViewById(R.id.partylist_deadline_txt);
+            tagText = itemView.findViewById(R.id.partylist_tag_txt);
+
+            mRootView = itemView.findViewById(R.id.item_root_layout);
         }
 
     }

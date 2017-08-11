@@ -21,6 +21,7 @@ import android.view.SubMenu;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
 import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
 import org.collapsed.ssuparty_android.helper.BottomNavigationViewHelper;
@@ -28,6 +29,8 @@ import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.findparty.FindPartyFragment;
 import org.collapsed.ssuparty_android.ui.home.HomeFragment;
 import org.collapsed.ssuparty_android.ui.myparty.MyPartyFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private static final int FONT_BOLD = 1;
     private static final int FONT_REGULAR = 0;
 
+
     @BindView(R.id.main_pager)
     MainViewPager mViewPager;
     @BindView(R.id.main_bottom_navigation)
@@ -54,7 +58,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private MainPresenter mPresenter;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
-    FindPartyFragment mFindPartyFragment;
+
+
+    private FindPartyFragment mFindPartyFragment;
+    private MyPartyFragment mMyPartyFragment;
+    private NewPartyInfo mPartyInfoObject;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK){
-            String mTitle = data.getStringExtra("title");
-            String mMemberNum = data.getStringExtra("memberNum");
-            mFindPartyFragment = (FindPartyFragment) getSupportFragmentManager().
-                    findFragmentById(R.id.main_pager);
-            mFindPartyFragment.addNewParty(mTitle,mMemberNum);
+            mPresenter.getDataFromCreateActivity(data);
         }
     }
 
@@ -90,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mViewPager.setOffscreenPageLimit(PAGE_COUNT);
         mViewPager.setPagingEnabled(false);
         mViewPager.addOnPageChangeListener(this);
+
+
 
         applyFontToBottomNavigationView(mBottomNavigationView, FONT_BOLD);
         applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, INDEX_HOME);
@@ -207,4 +214,5 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             return mTabCount;
         }
     }
+
 }
