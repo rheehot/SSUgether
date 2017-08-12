@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_toRightOf="@id/partylist_deadline_txt"
-                android:text="#IT  #JAVA"
+                android:text="태그"
                 android:textSize="15sp"
                 android:textColor="#00D8FF"/>
 

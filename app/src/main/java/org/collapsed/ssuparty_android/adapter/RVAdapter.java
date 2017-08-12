@@ -3,6 +3,7 @@ package org.collapsed.ssuparty_android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import org.collapsed.ssuparty_android.model.NewPartyInfo;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     private List<NewPartyInfo> mNewPartyInfoList;
 
@@ -29,7 +30,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_partylist,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_partylist, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,21 +42,25 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         viewHolder.titleText.setText(item.getTitle());
         viewHolder.categoryText.setText(item.getCategory());
         viewHolder.deadlineText.setText(item.getDeadline());
-        viewHolder.memberText.setText(item.getMemberNum());
+        viewHolder.memberText.setText("0/" + item.getMemberNum());
 
-        List<String>  tagList = item.getTags();
-        String tagText ="";
+        List<String> tagList = item.getTags();
 
-        for(String tag : tagList){
-            tagText +="#"+tag+" ";
+        if (tagList == null) {
+            viewHolder.tagText.setText("");
+        } else {
+            String tagText = "";
+
+            for (String tag : tagList) {
+                tagText += "#" + tag + " ";
+                viewHolder.tagText.setText(tagText);
+            }
         }
-
-        viewHolder.tagText.setText(tagText);
 
         viewHolder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, position+" yes!!!!!!!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, position + " yes!!!!!!!!!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -68,17 +73,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         return this.mNewPartyInfoList.size();
     }
 
-    public void addItem(List<NewPartyInfo> newPartyInfoList){
+    public void addItem(List<NewPartyInfo> newPartyInfoList) {
         mNewPartyInfoList = newPartyInfoList;
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView titleText, memberText, categoryText, deadlineText, tagText;
         public LinearLayout mRootView;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
 
             titleText = itemView.findViewById(R.id.partylist_title_txt);
