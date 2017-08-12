@@ -92,7 +92,7 @@
 
                 <EditText
                     android:id="@+id/createparty_title_edt"
-                    style="@style/CreatePartyEditTextTheme"
+                    style="@style/SGEditTextTheme"
                     android:hint="모임명을 입력해주세요!"
                     android:inputType="text"
                     android:maxLength="20" />
@@ -208,7 +208,7 @@
 
                 <EditText
                     android:id="@+id/createparty_membernum_edt"
-                    style="@style/CreatePartyEditTextTheme"
+                    style="@style/SGEditTextTheme"
                     android:digits="0123456789"
                     android:hint="모집할 인원수를 입력해주세요!"
                     android:inputType="number"
@@ -242,7 +242,7 @@
 
                 <EditText
                     android:id="@+id/createparty_information_edt"
-                    style="@style/CreatePartyEditTextTheme"
+                    style="@style/SGEditTextTheme"
                     android:hint="모임에 대해 간단히 소개해주세요!"
                     android:inputType="text"
                     android:maxLength="60"
@@ -298,7 +298,7 @@
 
                 <org.collapsed.ssuparty_android.ui.customview.TagsEditText
                     android:id="@+id/createparty_tag_edt"
-                    style="@style/CreatePartyEditTextTheme"
+                    style="@style/SGEditTextTheme"
                     android:hint="태그를 추가해주세요!"
                     android:inputType="text"
                     TagsEditText:allowSpaceInTag="true"
