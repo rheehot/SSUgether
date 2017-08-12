@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CreatePartyPresenter implements CreatePartyContract.UserActionListener{
+public class CreatePartyPresenter implements CreatePartyContract.UserActionListener {
 
     private CreatePartyActivity mView;
 
@@ -25,86 +25,104 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
     private String mPartyTitle, mPartyMemberNum, mPartyCategory, mPartyInfo, mPartyDeadline;
     private List<String> mPartyTags;
 
-    public CreatePartyPresenter(@NonNull CreatePartyActivity view){
+    private boolean mDeadlineCheck;
+
+    public CreatePartyPresenter(@NonNull CreatePartyActivity view) {
         this.mView = checkNotNull(view);
     }
 
-    public Calendar getCalenderData(){
+    public Calendar getCalenderData() {
         mCalender = new GregorianCalendar();
 
         return mCalender;
     }
 
-    boolean checkInputData(EditText title, Spinner category, TextView deadline,
-    EditText member,EditText info, TagsEditText tag) {
-        boolean testValue = false;
+    public boolean checkInputData(EditText title, Spinner category, TextView deadline,
+                                  EditText member, EditText info, TagsEditText tag) {
+        boolean checkValue = true;
         if (checkTextLength(title)) {
             mPartyTitle = title.getText().toString();
         } else {
-            return false;
+            checkValue = false;
         }
 
-        if (category.getSelectedItem().toString().equals("카테고리선택")) {
-            return false;
-        } else {
+        if (!category.getSelectedItem().toString().equals("카테고리선택")) {
             mPartyCategory = category.getSelectedItem().toString();
+        } else {
+            checkValue = false;
         }
 
-        if (mView.getDeadlineChecker()) {
+        if (mDeadlineCheck) {
             mPartyDeadline = deadline.getText().toString();
         } else {
-            return false;
+            checkValue = false;
         }
 
         if (checkTextLength(member)) {
-            mPartyMemberNum = member.getText().toString();
+            if(checkOverNumber(member.getText().toString())){
+                mPartyMemberNum = member.getText().toString();
+            }
+            else {
+                mView.setMemberNumTextByException("모집 인원수 제한을 초과했어요!");
+                checkValue = false;
+            }
         } else {
-            return false;
+            checkValue = false;
         }
 
         if (checkTextLength(info)) {
             mPartyInfo = info.getText().toString();
         } else {
-            return false;
+            checkValue = false;
         }
 
-        if (tag.getTags().size()>1) {
+        if (tag.getTags().size() > 0) {
             mPartyTags = tag.getTags();
         }
 
-        return true;
+        return checkValue;
     }
 
-    Intent putDataToIntent(){
+    public Intent putDataToIntent() {
         Intent intent = new Intent();
-        intent.putExtra("title",mPartyTitle);
-        intent.putExtra("category",mPartyCategory);
-        intent.putExtra("deadline",mPartyDeadline);
-        intent.putExtra("info",mPartyInfo);
-        intent.putExtra("memberNum",mPartyMemberNum);
-        intent.putStringArrayListExtra("tag",(ArrayList<String>)mPartyTags);
+        intent.putExtra("title", mPartyTitle);
+        intent.putExtra("category", mPartyCategory);
+        intent.putExtra("deadline", mPartyDeadline);
+        intent.putExtra("info", mPartyInfo);
+        intent.putExtra("memberNum", mPartyMemberNum);
+        intent.putStringArrayListExtra("tag", (ArrayList<String>) mPartyTags);
 
         return intent;
     }
 
-    boolean checkTextLength(EditText view) {
-        if (view.getText().toString().length() >= 1) {
+    public boolean checkTextLength(EditText view) {
+        if (view.getText().toString().length() > 0) {
             return true;
         } else
             return false;
     }
 
-    String checkCorrectDeadline(int year, int month, int day){
+    public boolean checkOverNumber(String numberText){
+        if(Integer.parseInt(numberText) <= 100) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public String checkCorrectDeadline(int year, int month, int day) {
         Calendar dateData = getCalenderData();
 
         Date curDate = new Date(dateData.get(Calendar.YEAR), dateData.get(Calendar.MONTH),
                 dateData.get(Calendar.DAY_OF_MONTH));
         Date selectDate = new Date(year, month, day);
 
-        if(curDate.getTime() > selectDate.getTime()){
+        if (curDate.getTime() > selectDate.getTime()) {
+            mDeadlineCheck = false;
             return "마감날짜를 다시 선택해주세요!";
-        }
-        else {
+        } else {
+            mDeadlineCheck = true;
             month = month + 1;
             return year + "." + month + "." + day;
         }

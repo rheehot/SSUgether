@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -38,7 +39,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
     private Button mPartyCancelBtn, mPartyRegisterBtn, mInfoConfirmBtn;
     private EditText mTitleEditText, mMemberNumEditText, mInfoEditText;
-    private TextView mToolbarTitleText ,mDeadlineText, mTagHelpText;
+    private TextView mToolbarTitleText, mDeadlineText, mTagHelpText, mMemberNumHelpText;
     private TextView mTitleConstraintText, mInfoConstraintText, mTagConstraintText;
     private Spinner mCategorySelectSpinner;
     private TagsEditText mTagEditText;
@@ -55,8 +56,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     private Intent mIntentForResult;
 
     private Calendar mDateData;
-
-    private boolean mDeadlineChecker;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +84,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         mTitleConstraintText = (TextView) findViewById(R.id.createparty_title_constraint_txt);
         mInfoConstraintText = (TextView) findViewById(R.id.createparty_information_constraint_txt);
         mTagConstraintText = (TextView) findViewById(R.id.createparty_tag_constraint_txt);
+        mMemberNumHelpText = (TextView) findViewById(R.id.createparty_membernum_help_txt);
         mTagHelpText = (TextView) findViewById(R.id.createparty_tag_help_txt);
 
         mCategorySelectSpinner = (Spinner) findViewById(R.id.createparty_select_category_spn);
@@ -94,16 +94,13 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
         mImManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        mInfoConfirmBtn.setVisibility(View.GONE);
-        mTagHelpText.setVisibility(View.GONE);
-
         mToolbarTitleText.setFocusableInTouchMode(true);
         mCategorySelectSpinner.setAdapter(mCategoryAdapter);
 
         mTagEditText.setTagsWithSpacesEnabled(true);
         mTagEditText.setThreshold(1);
 
-        mDeadlineChecker = false;
+        setVisibility();
 
         mTitleEditText.addTextChangedListener(new TextWatcher() {
 
@@ -117,7 +114,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     mTitleConstraintText.setText("20/20");
                     mTitleConstraintText.setTextColor(Color.RED);
                 } else {
-                    mTitleConstraintText.setText(String.valueOf(s.length())+"/20");
+                    mTitleConstraintText.setText(String.valueOf(s.length()) + "/20");
                     mTitleConstraintText.setTextColor(Color.parseColor("#44394d"));
                 }
             }
@@ -140,7 +137,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     mInfoConstraintText.setText("60/60");
                     mInfoConstraintText.setTextColor(Color.RED);
                 } else {
-                    mInfoConstraintText.setText(String.valueOf(s.length())+"/60");
+                    mInfoConstraintText.setText(String.valueOf(s.length()) + "/60");
                     mInfoConstraintText.setTextColor(Color.parseColor("#44394d"));
                 }
             }
@@ -168,9 +165,9 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     mTagConstraintText.setTextColor(Color.RED);
                     mTagEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(s.length())});
                 } else {
-                    if(s.length() < beforeSize && tags.size() > 0)
-                        tags.remove(tags.size()-1);
-                    mTagConstraintText.setText(String.valueOf(tags.size())+"/4");
+                    if (s.length() < beforeSize && tags.size() > 0)
+                        tags.remove(tags.size() - 1);
+                    mTagConstraintText.setText(String.valueOf(tags.size()) + "/4");
                     mTagConstraintText.setTextColor(Color.parseColor("#44394d"));
                     mTagEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
                 }
@@ -180,8 +177,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             public void afterTextChanged(Editable editable) {
             }
         });
-
-        mDeadlineChecker = false;
 
         mTouchListner = new View.OnTouchListener() {
             @Override
@@ -210,13 +205,12 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.createparty_register_party_btn:
-                        if (mPresenter.checkInputData(mTitleEditText,mCategorySelectSpinner,
-                                mDeadlineText, mMemberNumEditText,mInfoEditText, mTagEditText)) {
+                        if (mPresenter.checkInputData(mTitleEditText, mCategorySelectSpinner,
+                                mDeadlineText, mMemberNumEditText, mInfoEditText, mTagEditText)) {
                             mIntentForResult = mPresenter.putDataToIntent();
                             setResult(Activity.RESULT_OK, mIntentForResult);
                             finish();
-                        }
-                        else{
+                        } else {
                             Toast.makeText(CreatePartyActivity.this,
                                     "입력되지 않은 정보가 있습니다!", Toast.LENGTH_SHORT).show();
                         }
@@ -252,15 +246,22 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                 if (getFocus) {
                     mPartyCancelBtn.setVisibility(View.GONE);
                     mInfoConfirmBtn.setVisibility(View.VISIBLE);
-                    if(view.getId() == R.id.createparty_tag_edt) {
-                        mTagHelpText.setVisibility(View.VISIBLE);
+                    switch (view.getId()) {
+                        case R.id.createparty_tag_edt:
+                            mTagHelpText.setVisibility(View.VISIBLE);
+                            break;
+                        case R.id.createparty_membernum_edt:
+                            mMemberNumHelpText.setText("최대 100명까지 모집할 수 있어요!");
+                            mMemberNumHelpText.setVisibility(View.VISIBLE);
+                            break;
+                        default:
+                            break;
                     }
                 } else {
                     mPartyCancelBtn.setVisibility(View.VISIBLE);
                     mInfoConfirmBtn.setVisibility(View.GONE);
-                    if(view.getId() == R.id.createparty_tag_edt) {
-                        mTagHelpText.setVisibility(View.GONE);
-                    }
+                    mTagHelpText.setVisibility(View.GONE);
+                    mMemberNumHelpText.setVisibility(View.GONE);
                 }
             }
         };
@@ -271,14 +272,12 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         setFocusListner(mTagEditText);
     }
 
-    void hideVirtualKeyboard(View view) {
+    public void hideVirtualKeyboard(View view) {
         mToolbarTitleText.requestFocus();
         mImManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    void showDatePickerDialog(){
-        mDeadlineChecker = true;
-
+    public void showDatePickerDialog() {
         mDateData = mPresenter.getCalenderData();
 
         mDateLisner = new DatePickerDialog.OnDateSetListener() {
@@ -295,17 +294,27 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                 mDateData.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    void setTouchListner(View view) {
+    public void setVisibility(){
+        mInfoConfirmBtn.setVisibility(View.GONE);
+        mTagHelpText.setVisibility(View.GONE);
+        mMemberNumHelpText.setVisibility(View.GONE);
+    }
+
+    public void setMemberNumTextByException(String errorText){
+        mMemberNumHelpText.setText(errorText);
+        mMemberNumHelpText.setVisibility(View.VISIBLE);
+        mMemberNumEditText.setText("");
+    }
+
+    public void setTouchListner(View view) {
         view.setOnTouchListener(mTouchListner);
     }
 
-    void setClickListner(View view) {
+    public void setClickListner(View view) {
         view.setOnClickListener(mClickListner);
     }
 
-    void setFocusListner(View view) {
+    public void setFocusListner(View view) {
         view.setOnFocusChangeListener(mFocusListner);
     }
-
-    boolean getDeadlineChecker(){ return mDeadlineChecker; }
 }

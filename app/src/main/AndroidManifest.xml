@@ -17,13 +17,16 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-        <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.createparty.CreatePartyActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.main.MainActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+
+        <activity android:name=".ui.createparty.CreatePartyActivity">
         </activity>
         <activity android:name=".ui.account.AccountActivity" />
 

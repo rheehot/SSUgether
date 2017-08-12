@@ -33,7 +33,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     //서버 연동시 이용! 추후에 리턴값은 수정
-    NewPartyInfo getDataFromCreateActivity(Intent intent){
+    public NewPartyInfo getDataFromCreateActivity(Intent intent){
         mTitle = intent.getStringExtra("title");
         mCategory = intent.getStringExtra("category");
         mDeadline = intent.getStringExtra("deadline");
@@ -41,7 +41,14 @@ public class MainPresenter implements MainContract.UserActionListener {
         mInfo = intent.getStringExtra("info");
         mTags = intent.getStringArrayListExtra("tag");
 
-        return new NewPartyInfo(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
+        NewPartyInfo partyData = new NewPartyInfo(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
+        setFindPartyList(partyData);
+
+        return partyData;
+    }
+
+    public void setFindPartyList(NewPartyInfo object){
+        mView.getFindPartyFragmentObeject().addNewParty(object);
     }
 
 }

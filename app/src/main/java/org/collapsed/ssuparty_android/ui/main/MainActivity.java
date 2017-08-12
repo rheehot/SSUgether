@@ -59,12 +59,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private MainPresenter mPresenter;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
 
-
-    private FindPartyFragment mFindPartyFragment;
-    private MyPartyFragment mMyPartyFragment;
-    private NewPartyInfo mPartyInfoObject;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,6 +207,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public int getCount() {
             return mTabCount;
         }
+    }
+
+    public FindPartyFragment getFindPartyFragmentObeject(){
+        return (FindPartyFragment)
+                getSupportFragmentManager().findFragmentById(R.id.main_pager);
     }
 
 }

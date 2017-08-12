@@ -57,51 +57,32 @@ public class MyPartyFragment extends BaseFragment implements MyPartyContract.Vie
         initView(rootView);
     }
 
-    public void initView(View rootView){
-
-        mTopLayoutManager = new LinearLayoutManager(getActivity());
-        mBottomLayoutManager = new LinearLayoutManager(getActivity());
-        mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
-
-        List<String> dummyTag = new ArrayList<String>(){
-            {
-                add("UX");
-                add("UI");
-                add("JAVA");
-            }
-        };
-
-        NewPartyInfo dummyClass = new NewPartyInfo("소공전 버스기사 구합니다","3/10","공모전","D - 37","모임소개입니다.",dummyTag);
-
-        mDataSet = new ArrayList<>();
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mDataSet.add(dummyClass);
-        mPartyListAdapter.addItem(mDataSet);
-        mPartyListAdapter.notifyDataSetChanged();
+    public void initView(View rootView) {
+        mDataSet = new ArrayList<NewPartyInfo>();
 
         mCreatedPartyList = rootView.findViewById(R.id.myparty_created_party_list);
         mCreatedPartyList.setHasFixedSize(true);
         mCreatedPartyList.setLayoutManager(mTopLayoutManager);
         mCreatedPartyList.scrollToPosition(0);
-        mCreatedPartyList.setAdapter(mPartyListAdapter);
         mCreatedPartyList.setItemAnimator(new DefaultItemAnimator());
 
         mCreatedPartyList = rootView.findViewById(R.id.myparty_joined_party_list);
         mCreatedPartyList.setHasFixedSize(true);
         mCreatedPartyList.setLayoutManager(mBottomLayoutManager);
         mCreatedPartyList.scrollToPosition(0);
-        mCreatedPartyList.setAdapter(mPartyListAdapter);
         mCreatedPartyList.setItemAnimator(new DefaultItemAnimator());
+
+        mTopLayoutManager = new LinearLayoutManager(getActivity());
+        mBottomLayoutManager = new LinearLayoutManager(getActivity());
+
+        mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
+        mCreatedPartyList.setAdapter(mPartyListAdapter);
+        mCreatedPartyList.setAdapter(mPartyListAdapter);
     }
 
-    public void addMyParty(NewPartyInfo object){
+    public void addMyParty(NewPartyInfo object) {
         mDataSet.add(object);
         mPartyListAdapter.addItem(mDataSet);
     }
+
 }

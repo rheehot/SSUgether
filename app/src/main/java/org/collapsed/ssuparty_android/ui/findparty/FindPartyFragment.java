@@ -70,17 +70,17 @@ public class FindPartyFragment extends BaseFragment implements FindPartyContract
             }
         });
 
-
+        mDataSet = new ArrayList<NewPartyInfo>();
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
-        mPartyListAdapter.notifyDataSetChanged();
 
         mRecyclerView = rootView.findViewById(R.id.findparty_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(0);
-        mRecyclerView.setAdapter(mPartyListAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mPartyListAdapter = new RVAdapter(mDataSet, getActivity());
+        mRecyclerView.setAdapter(mPartyListAdapter);
     }
 
     public void addNewParty(NewPartyInfo object) {
