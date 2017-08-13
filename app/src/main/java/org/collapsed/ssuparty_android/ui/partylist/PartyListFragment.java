@@ -21,7 +21,7 @@ import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import java.util.ArrayList;
 
 
-public class PartyListFragment extends BaseFragment implements PartyListContract.View{
+public class PartyListFragment extends BaseFragment implements PartyListContract.View {
 
     private static final int INDEX_HOME = 0;
     private static final int INDEX_MY_PARTY = 1;
@@ -69,9 +69,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     public void initView(View rootView) {
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        mListData = new ArrayList<NewPartyInfo>();
-
-        mListAdapter = new PartyListAdapter(mListData,getActivity());
+        mListData = new ArrayList<>();
+        mListAdapter = new PartyListAdapter(mListData, getActivity());
 
         mRecyclerView = rootView.findViewById(R.id.partylist_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -92,12 +91,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mAddPartyButton.setVisibility(View.GONE);
     }
 
-    public void addPartyItemToList(NewPartyInfo object){
+    public void addPartyItemToList(NewPartyInfo object) {
         mPresenter.setNewDataToAdapter(mListData, mListAdapter, object);
     }
 
-    public void showViewInList(int index){
-        switch (index){
+    public void inflateView(int index) {
+        switch (index) {
             case INDEX_HOME:
                 break;
 
@@ -113,7 +112,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
                 break;
         }
     }
-    public void showAddPartyButton(){
+
+    public void showAddPartyButton() {
         mAddPartyButton.setVisibility(View.VISIBLE);
     }
 

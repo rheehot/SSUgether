@@ -9,7 +9,7 @@ public interface PartyListContract {
     interface View {
         void initView(android.view.View rootView);
 
-        void showViewInList(int index);
+        void inflateView(int index);
 
         void addPartyItemToList(NewPartyInfo object);
     }

@@ -18,12 +18,9 @@ import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.NewPartyInfo;
 import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
 import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     TextView mToolbarTitle;
 
     private MainPresenter mPresenter;
-    private PartyListFragment mCommonListFragmnet;
+    private PartyListFragment mCommonListFragment;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
 
     @Override
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             mPresenter.getDataFromCreateActivity(data);
         }
     }
@@ -99,22 +96,37 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 switch (item.getItemId()) {
                     case R.id.bn_home:
                         mViewPager.setCurrentItem(INDEX_HOME, false);
-                        showViewInFragment(INDEX_HOME);
+                        inflateViewInPage(INDEX_HOME);
+
                         return true;
 
                     case R.id.bn_myparty:
                         mViewPager.setCurrentItem(INDEX_MY_PARTY, false);
-                        showViewInFragment(INDEX_MY_PARTY);
+                        inflateViewInPage(INDEX_MY_PARTY);
+
+
                         return true;
 
                     case R.id.bn_allparty:
                         mViewPager.setCurrentItem(INDEX_ALL_PARTY, false);
-                        showViewInFragment(INDEX_ALL_PARTY);
+                        inflateViewInPage(INDEX_ALL_PARTY);
+
                         return true;
                 }
                 return false;
             }
         });
+    }
+
+    private void inflateViewInPage(int index) {
+        mCommonListFragment
+                = (PartyListFragment) getSupportFragmentManager().findFragmentById(R.id.main_pager);
+        mCommonListFragment.inflateView(index);
+    }
+
+    public PartyListFragment getCommonListFragmentObeject() {
+        return (PartyListFragment)
+                getSupportFragmentManager().findFragmentById(R.id.main_pager);
     }
 
     @Override
@@ -175,11 +187,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     }
 
-    public class BottomNaviPagerAdapter extends FragmentStatePagerAdapter {
+    private static class BottomNaviPagerAdapter extends FragmentStatePagerAdapter {
 
         private int mTabCount;
 
-        public BottomNaviPagerAdapter(FragmentManager fm, int tabCount) {
+        private BottomNaviPagerAdapter(FragmentManager fm, int tabCount) {
             super(fm);
             this.mTabCount = tabCount;
         }
@@ -214,16 +226,4 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             return mTabCount;
         }
     }
-
-    public PartyListFragment getCommonListFragmentObeject(){
-        return (PartyListFragment)
-                getSupportFragmentManager().findFragmentById(R.id.main_pager);
-    }
-
-    public void showViewInFragment(int index){
-        mCommonListFragmnet
-                = (PartyListFragment)getSupportFragmentManager().findFragmentById(R.id.main_pager);
-        mCommonListFragmnet.showViewInList(index);
-    }
-
 }

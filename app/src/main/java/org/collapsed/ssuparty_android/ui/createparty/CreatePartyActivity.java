@@ -32,7 +32,7 @@ import java.util.List;
 
 public class CreatePartyActivity extends AppCompatActivity implements CreatePartyContract.View {
 
-    private static final String TextColor = "#44394d";
+    private static final String TEXT_COLOR = "#44394d";
 
     private CreatePartyPresenter mPresenter;
 
@@ -116,7 +116,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     mTitleConstraintText.setTextColor(Color.RED);
                 } else {
                     mTitleConstraintText.setText(String.valueOf(s.length()) + "/20");
-                    mTitleConstraintText.setTextColor(Color.parseColor(TextColor));
+                    mTitleConstraintText.setTextColor(Color.parseColor(TEXT_COLOR));
                 }
             }
 
@@ -139,7 +139,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     mInfoConstraintText.setTextColor(Color.RED);
                 } else {
                     mInfoConstraintText.setText(String.valueOf(s.length()) + "/60");
-                    mInfoConstraintText.setTextColor(Color.parseColor(TextColor));
+                    mInfoConstraintText.setTextColor(Color.parseColor(TEXT_COLOR));
                 }
             }
 
@@ -169,7 +169,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     if (s.length() < beforeSize && tags.size() > 0)
                         tags.remove(tags.size() - 1);
                     mTagConstraintText.setText(String.valueOf(tags.size()) + "/4");
-                    mTagConstraintText.setTextColor(Color.parseColor(TextColor));
+                    mTagConstraintText.setTextColor(Color.parseColor(TEXT_COLOR));
                     mTagEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
                 }
             }
@@ -286,7 +286,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String dateText = mPresenter.checkCorrectDeadline(year, month, day);
                 mDeadlineText.setText(dateText);
-                mDeadlineText.setTextColor(Color.parseColor(TextColor));
+                mDeadlineText.setTextColor(Color.parseColor(TEXT_COLOR));
             }
         };
 
@@ -295,13 +295,13 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                 mDateData.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    public void setVisibility(){
+    public void setVisibility() {
         mInfoConfirmBtn.setVisibility(View.GONE);
         mTagHelpText.setVisibility(View.GONE);
         mMemberNumHelpText.setVisibility(View.GONE);
     }
 
-    public void setMemberNumTextByException(String errorText){
+    public void setMemberNumTextByException(String errorText) {
         mMemberNumHelpText.setText(errorText);
         mMemberNumHelpText.setVisibility(View.VISIBLE);
         mMemberNumEditText.setText("");

@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CreatePartyPresenter implements CreatePartyContract.CheckData, CreatePartyContract.ReturnData {
+public class CreatePartyPresenter implements CreatePartyContract.Presenter {
 
     private static final String TITLE_KEY = "title";
     private static final String CATEGORY_KEY = "category";
@@ -66,10 +66,9 @@ public class CreatePartyPresenter implements CreatePartyContract.CheckData, Crea
         }
 
         if (checkTextLength(member)) {
-            if(checkOverNumber(member.getText().toString())){
+            if (checkOverNumber(member.getText().toString())) {
                 mPartyMemberNum = member.getText().toString();
-            }
-            else {
+            } else {
                 mView.setMemberNumTextByException("모집 인원수 제한을 초과했어요!");
                 checkValue = false;
             }
@@ -109,11 +108,10 @@ public class CreatePartyPresenter implements CreatePartyContract.CheckData, Crea
             return false;
     }
 
-    public boolean checkOverNumber(String numberText){
-        if(Integer.parseInt(numberText) <= 100) {
+    public boolean checkOverNumber(String numberText) {
+        if (Integer.parseInt(numberText) <= 100) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

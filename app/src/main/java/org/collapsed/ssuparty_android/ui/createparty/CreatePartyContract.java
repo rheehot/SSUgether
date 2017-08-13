@@ -27,7 +27,7 @@ public interface CreatePartyContract {
         void setFocusListner(android.view.View view);
     }
 
-    interface CheckData{
+    interface Presenter {
         boolean checkInputData(EditText title, Spinner category, TextView deadline,
                                EditText member, EditText info, TagsEditText tag);
 
@@ -36,9 +36,8 @@ public interface CreatePartyContract {
         boolean checkOverNumber(String numberText);
 
         String checkCorrectDeadline(int year, int month, int day);
-    }
 
-    interface ReturnData{
         Intent putDataToIntent();
+
     }
 }
