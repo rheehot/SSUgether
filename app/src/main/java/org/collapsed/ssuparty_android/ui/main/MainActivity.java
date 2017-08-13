@@ -18,19 +18,18 @@ import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.NewPartyInfo;
+import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
 import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
 import org.collapsed.ssuparty_android.helper.BottomNavigationViewHelper;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
-import org.collapsed.ssuparty_android.ui.findparty.FindPartyFragment;
 import org.collapsed.ssuparty_android.ui.home.HomeFragment;
-import org.collapsed.ssuparty_android.ui.myparty.MyPartyFragment;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,12 +41,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private static final int INDEX_HOME = 0;
     private static final int INDEX_MY_PARTY = 1;
-    private static final int INDEX_FIND_PARTY = 2;
+    private static final int INDEX_ALL_PARTY = 2;
 
     private static final int PAGE_COUNT = 3;
     private static final int FONT_BOLD = 1;
     private static final int FONT_REGULAR = 0;
-
 
     @BindView(R.id.main_pager)
     MainViewPager mViewPager;
@@ -57,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     TextView mToolbarTitle;
 
     private MainPresenter mPresenter;
+    private PartyListFragment mCommonListFragmnet;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
 
     @Override
@@ -90,8 +89,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mViewPager.setPagingEnabled(false);
         mViewPager.addOnPageChangeListener(this);
 
-
-
         applyFontToBottomNavigationView(mBottomNavigationView, FONT_BOLD);
         applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, INDEX_HOME);
 
@@ -102,12 +99,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 switch (item.getItemId()) {
                     case R.id.bn_home:
                         mViewPager.setCurrentItem(INDEX_HOME, false);
+                        showViewInFragment(INDEX_HOME);
                         return true;
+
                     case R.id.bn_myparty:
                         mViewPager.setCurrentItem(INDEX_MY_PARTY, false);
+                        showViewInFragment(INDEX_MY_PARTY);
                         return true;
-                    case R.id.bn_findparty:
-                        mViewPager.setCurrentItem(INDEX_FIND_PARTY, false);
+
+                    case R.id.bn_allparty:
+                        mViewPager.setCurrentItem(INDEX_ALL_PARTY, false);
+                        showViewInFragment(INDEX_ALL_PARTY);
                         return true;
                 }
                 return false;
@@ -184,23 +186,27 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         @Override
         public Fragment getItem(int position) {
-
             switch (position) {
                 case INDEX_HOME:
                     HomeFragment homeView = HomeFragment.newInstance();
                     return homeView;
 
                 case INDEX_MY_PARTY:
-                    MyPartyFragment mealView = MyPartyFragment.newInstance();
-                    return mealView;
+                    PartyListFragment myPartyView = PartyListFragment.newInstance();
+                    return myPartyView;
 
-                case INDEX_FIND_PARTY:
-                    FindPartyFragment noticeView = FindPartyFragment.newInstance();
-                    return noticeView;
+                case INDEX_ALL_PARTY:
+                    PartyListFragment allPartyView = PartyListFragment.newInstance();
+                    return allPartyView;
 
                 default:
                     return null;
             }
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return super.getItemPosition(object);
         }
 
         @Override
@@ -209,9 +215,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    public FindPartyFragment getFindPartyFragmentObeject(){
-        return (FindPartyFragment)
+    public PartyListFragment getCommonListFragmentObeject(){
+        return (PartyListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.main_pager);
+    }
+
+    public void showViewInFragment(int index){
+        mCommonListFragmnet
+                = (PartyListFragment)getSupportFragmentManager().findFragmentById(R.id.main_pager);
+        mCommonListFragmnet.showViewInList(index);
     }
 
 }

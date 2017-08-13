@@ -16,7 +16,14 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CreatePartyPresenter implements CreatePartyContract.UserActionListener {
+public class CreatePartyPresenter implements CreatePartyContract.CheckData, CreatePartyContract.ReturnData {
+
+    private static final String TITLE_KEY = "title";
+    private static final String CATEGORY_KEY = "category";
+    private static final String DEADLINE_KEY = "deadline";
+    private static final String MEMBER_KEY = "memberNum";
+    private static final String INFO_KEY = "info";
+    private static final String TAG_KEY = "tag";
 
     private CreatePartyActivity mView;
 
@@ -85,12 +92,12 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
 
     public Intent putDataToIntent() {
         Intent intent = new Intent();
-        intent.putExtra("title", mPartyTitle);
-        intent.putExtra("category", mPartyCategory);
-        intent.putExtra("deadline", mPartyDeadline);
-        intent.putExtra("info", mPartyInfo);
-        intent.putExtra("memberNum", mPartyMemberNum);
-        intent.putStringArrayListExtra("tag", (ArrayList<String>) mPartyTags);
+        intent.putExtra(TITLE_KEY, mPartyTitle);
+        intent.putExtra(CATEGORY_KEY, mPartyCategory);
+        intent.putExtra(DEADLINE_KEY, mPartyDeadline);
+        intent.putExtra(INFO_KEY, mPartyInfo);
+        intent.putExtra(MEMBER_KEY, mPartyMemberNum);
+        intent.putStringArrayListExtra(TAG_KEY, (ArrayList<String>) mPartyTags);
 
         return intent;
     }

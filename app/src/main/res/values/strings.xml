@@ -13,7 +13,7 @@
     <!-- Bottom Navigation Section -->
     <string name="section_home_title">Home</string>
     <string name="section_myparty_title">My Party</string>
-    <string name="section_findparty_title">Find Party</string>
+    <string name="section_allparty_title">Find Party</string>
     <string name="title_activity_account">AccountActivity</string>
 
 </resources>

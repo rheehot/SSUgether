@@ -27,7 +27,7 @@
                 android:layout_marginRight="15dp"
                 android:text="공모전"
                 android:textSize="15sp"
-                android:textColor="#47C832"/>
+                android:textColor="#493169"/>
 
             <TextView
                 android:id="@+id/partylist_deadline_txt"
@@ -36,7 +36,7 @@
                 android:layout_toRightOf="@id/partylist_category"
                 android:layout_marginRight="15dp"
                 android:text="D - 28"
-                android:textColor="#FF0000"
+                android:textColor="#703a7f"
                 android:textSize="15sp" />
 
             <TextView
@@ -46,7 +46,7 @@
                 android:layout_toRightOf="@id/partylist_deadline_txt"
                 android:text="태그"
                 android:textSize="15sp"
-                android:textColor="#00D8FF"/>
+                android:textColor="#ba88c8"/>
 
             <TextView
                 android:id="@+id/partylist_member_num_txt"
@@ -54,6 +54,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:text="5/10"
+                android:textColor="#969599"
                 android:textSize="15sp" />
 
         </RelativeLayout>

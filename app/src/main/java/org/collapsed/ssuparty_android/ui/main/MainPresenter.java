@@ -2,11 +2,9 @@ package org.collapsed.ssuparty_android.ui.main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.collapsed.ssuparty_android.GlobalApplication;
 import org.collapsed.ssuparty_android.model.NewPartyInfo;
-import org.collapsed.ssuparty_android.ui.findparty.FindPartyFragment;
 
 import java.util.List;
 
@@ -16,16 +14,20 @@ public class MainPresenter implements MainContract.UserActionListener {
 
     private static final String TAG = MainPresenter.class.getSimpleName();
 
+    private static final String TITLE_KEY = "title";
+    private static final String CATEGORY_KEY = "category";
+    private static final String DEADLINE_KEY = "deadline";
+    private static final String MEMBER_KEY = "memberNum";
+    private static final String INFO_KEY = "info";
+    private static final String TAG_KEY = "tag";
+
     private String mTitle, mCategory, mDeadline, mInfo, mMemberNum;
     private List<String> mTags;
-
-    NewPartyInfo dd;
 
     private MainActivity mView;
 
     public MainPresenter(@NonNull MainActivity view) {
         this.mView = checkNotNull(view);
-        dd = new NewPartyInfo(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
     }
 
     public void initMain() {
@@ -34,21 +36,21 @@ public class MainPresenter implements MainContract.UserActionListener {
 
     //서버 연동시 이용! 추후에 리턴값은 수정
     public NewPartyInfo getDataFromCreateActivity(Intent intent){
-        mTitle = intent.getStringExtra("title");
-        mCategory = intent.getStringExtra("category");
-        mDeadline = intent.getStringExtra("deadline");
-        mMemberNum = intent.getStringExtra("memberNum");
-        mInfo = intent.getStringExtra("info");
-        mTags = intent.getStringArrayListExtra("tag");
+        mTitle = intent.getStringExtra(TITLE_KEY);
+        mCategory = intent.getStringExtra(CATEGORY_KEY);
+        mDeadline = intent.getStringExtra(DEADLINE_KEY);
+        mMemberNum = intent.getStringExtra(MEMBER_KEY);
+        mInfo = intent.getStringExtra(INFO_KEY);
+        mTags = intent.getStringArrayListExtra(TAG_KEY);
 
         NewPartyInfo partyData = new NewPartyInfo(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
-        setFindPartyList(partyData);
 
+        setNewPartyList(partyData);
         return partyData;
     }
 
-    public void setFindPartyList(NewPartyInfo object){
-        mView.getFindPartyFragmentObeject().addNewParty(object);
+    public void setNewPartyList(NewPartyInfo object){
+        mView.getCommonListFragmentObeject().addPartyItemToList(object);
     }
 
 }
