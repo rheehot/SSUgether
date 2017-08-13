@@ -1,15 +1,19 @@
 package org.collapsed.ssuparty_android.ui.signup;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
 
@@ -18,14 +22,33 @@ import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private final static int SIGNUP_PAGER_COUNT = 2;
+    @BindView(R.id.signup_toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.signup_name_edittxt)
+    EditText mNameEditText;
+    @BindView(R.id.signup_name_constraint_txt)
+    TextView mNameConstraintText;
+    @BindView(R.id.signup_nickname_edittxt)
+    EditText mNickNameEditText;
+    @BindView(R.id.signup_nickname_constraint_txt)
+    TextView mNickNameConstraintText;
+    @BindView(R.id.signup_major_edittxt)
+    AutoCompleteTextView mMajorEditText;
+    @BindView(R.id.signup_grade_spinner)
+    AppCompatSpinner mGradeSpinner;
+    @BindView(R.id.signup_stdnum_edittxt)
+    EditText mStdnumEditText;
+    @BindView(R.id.signup_stdnum_constraint_txt)
+    TextView mStdnumConstraintText;
+    @BindView(R.id.signup_gender_spinner)
+    AppCompatSpinner mGenderSpinner;
 
-    @BindView(R.id.signup_complete_layout)
-    LinearLayout mCompleteLayout;
+    @BindView(R.id.signup_private_agree_checkbox)
+    CheckBox mAgreeCheckBox;
+    @BindView(R.id.signup_submit_btn)
+    Button mSubmitBtn;
 
     private SignupPresenter mPresenter;
-    private ViewPager mViewPager;
-    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,54 +58,107 @@ public class SignupActivity extends AppCompatActivity {
 
         mPresenter = new SignupPresenter(this);
 
-        mViewPager = (ViewPager) findViewById(R.id.signup_pager);
-        mPagerAdapter = new SignupPagerAdapter(getSupportFragmentManager(), mPresenter);
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        initView();
+    }
+
+    private void initView() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 1) {
-                    mCompleteLayout.setVisibility(View.VISIBLE);
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        mNameEditText.addTextChangedListener(new TextWatcher() {
+            String curStr;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                curStr = s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 10) {
+                    mNameEditText.setText(curStr);
+                    mNameEditText.setSelection(start);
+                    mNameConstraintText.setTextColor(Color.RED);
                 } else {
-                    mCompleteLayout.setVisibility(View.GONE);
+                    mNameConstraintText.setText(String.valueOf(s.length()) + "/10");
+                    mNameConstraintText.setTextColor(Color.BLACK);
                 }
             }
 
             @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
+            public void afterTextChanged(Editable editable) {
 
             }
         });
-    }
 
-    private static class SignupPagerAdapter extends FragmentStatePagerAdapter {
-        private SignupPresenter presenter;
+        mNickNameEditText.addTextChangedListener(new TextWatcher() {
+            String curStr;
 
-        public SignupPagerAdapter(FragmentManager fm, SignupPresenter presenter) {
-            super(fm);
-            this.presenter = presenter;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            if (position == 0) {
-                return Signup1Fragment.newInstance(presenter);
-            } else if (position == 1) {
-                return Signup2Fragment.newInstance(presenter);
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                curStr = s.toString();
             }
 
-            throw new RuntimeException("Invalid Signup Pager postion");
-        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 10) {
+                    mNickNameEditText.setText(curStr);
+                    mNickNameEditText.setSelection(start);
+                    mNickNameConstraintText.setTextColor(Color.RED);
+                } else {
+                    mNickNameConstraintText.setText(String.valueOf(s.length()) + "/10");
+                    mNickNameConstraintText.setTextColor(Color.BLACK);
+                }
+            }
 
-        @Override
-        public int getCount() {
-            return SIGNUP_PAGER_COUNT;
-        }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mStdnumEditText.addTextChangedListener(new TextWatcher() {
+            String curStr;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+                curStr = s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 8) {
+                    mStdnumEditText.setText(curStr);
+                    mStdnumEditText.setSelection(start);
+                    mStdnumConstraintText.setTextColor(Color.RED);
+                } else {
+                    mStdnumConstraintText.setText(String.valueOf(s.length()) + "/8");
+                    mStdnumConstraintText.setTextColor(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.signup_major));
+        mMajorEditText.setAdapter(autoCompleteAdapter);
+
+        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 회원가입 요청
+            }
+        });
     }
 }
