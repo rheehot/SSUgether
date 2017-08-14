@@ -16,7 +16,14 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class CreatePartyPresenter implements CreatePartyContract.UserActionListener {
+public class CreatePartyPresenter implements CreatePartyContract.Presenter {
+
+    private static final String TITLE_KEY = "title";
+    private static final String CATEGORY_KEY = "category";
+    private static final String DEADLINE_KEY = "deadline";
+    private static final String MEMBER_KEY = "memberNum";
+    private static final String INFO_KEY = "info";
+    private static final String TAG_KEY = "tag";
 
     private CreatePartyActivity mView;
 
@@ -59,10 +66,9 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
         }
 
         if (checkTextLength(member)) {
-            if(checkOverNumber(member.getText().toString())){
+            if (checkOverNumber(member.getText().toString())) {
                 mPartyMemberNum = member.getText().toString();
-            }
-            else {
+            } else {
                 mView.setMemberNumTextByException("모집 인원수 제한을 초과했어요!");
                 checkValue = false;
             }
@@ -85,12 +91,12 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
 
     public Intent putDataToIntent() {
         Intent intent = new Intent();
-        intent.putExtra("title", mPartyTitle);
-        intent.putExtra("category", mPartyCategory);
-        intent.putExtra("deadline", mPartyDeadline);
-        intent.putExtra("info", mPartyInfo);
-        intent.putExtra("memberNum", mPartyMemberNum);
-        intent.putStringArrayListExtra("tag", (ArrayList<String>) mPartyTags);
+        intent.putExtra(TITLE_KEY, mPartyTitle);
+        intent.putExtra(CATEGORY_KEY, mPartyCategory);
+        intent.putExtra(DEADLINE_KEY, mPartyDeadline);
+        intent.putExtra(INFO_KEY, mPartyInfo);
+        intent.putExtra(MEMBER_KEY, mPartyMemberNum);
+        intent.putStringArrayListExtra(TAG_KEY, (ArrayList<String>) mPartyTags);
 
         return intent;
     }
@@ -102,11 +108,10 @@ public class CreatePartyPresenter implements CreatePartyContract.UserActionListe
             return false;
     }
 
-    public boolean checkOverNumber(String numberText){
-        if(Integer.parseInt(numberText) <= 100) {
+    public boolean checkOverNumber(String numberText) {
+        if (Integer.parseInt(numberText) <= 100) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

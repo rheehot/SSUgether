@@ -13,9 +13,9 @@
         android:title="@string/section_myparty_title"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/bn_findparty"
+        android:id="@+id/bn_allparty"
         android:enabled="true"
         android:icon="@drawable/ic_search_white_24dp"
-        android:title="@string/section_findparty_title"
+        android:title="@string/section_allparty_title"
         app:showAsAction="ifRoom" />
 </menu>

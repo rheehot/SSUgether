@@ -5,5 +5,5 @@
     <!-- Bottom Navigation Section -->
     <string name="section_home_title">메인</string>
     <string name="section_myparty_title">내 파티</string>
-    <string name="section_findparty_title">파티 찾기</string>
+    <string name="section_allparty_title">파티 찾기</string>
 </resources>

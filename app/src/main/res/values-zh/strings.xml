@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">SSUParty</string>
-
-    <!-- Bottom Navigation Section -->
-    <string name="section_home_title">Home</string>
-    <string name="section_myparty_title">My Party</string>
-    <string name="section_findparty_title">Find Party</string>
-</resources>

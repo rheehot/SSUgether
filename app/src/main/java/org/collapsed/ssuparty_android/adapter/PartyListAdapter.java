@@ -3,7 +3,6 @@ package org.collapsed.ssuparty_android.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,13 @@ import org.collapsed.ssuparty_android.model.NewPartyInfo;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.ViewHolder> {
 
     private List<NewPartyInfo> mNewPartyInfoList;
 
     private Context mContext;
 
-    public RVAdapter(List<NewPartyInfo> items, Context context) {
+    public PartyListAdapter(List<NewPartyInfo> items, Context context) {
         mNewPartyInfoList = items;
         mContext = context;
     }
