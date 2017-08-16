@@ -12,12 +12,14 @@
         android:layout_centerInParent="true"
         android:src="@drawable/logo" />
 
-    <com.kakao.usermgmt.LoginButton
-        android:id="@+id/com_kakao_login"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/account_facebook_login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"/>
 
 </RelativeLayout>

@@ -20,6 +20,10 @@ import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 public class PartyListFragment extends BaseFragment implements PartyListContract.View {
 
@@ -29,14 +33,16 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     private static final int START_CREATE_ACTIVITY = 1;
 
+    @BindView(R.id.partylist_fab_btn)
+    FloatingActionButton mAddPartyButton;
+    @BindView(R.id.partylist_recycler_view)
+    RecyclerView mRecyclerView;
+
     private PartyListPresenter mPresenter;
-
-    private FloatingActionButton mAddPartyButton;
-    private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-
     private PartyListAdapter mListAdapter;
     private ArrayList<NewPartyInfo> mListData;
+    private Unbinder mUnbinder;
 
     public static PartyListFragment newInstance() {
         PartyListFragment fragment = new PartyListFragment();
@@ -59,6 +65,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     @Override
     public void onViewCreated(View rootView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        mUnbinder = ButterKnife.bind(this,rootView);
 
         mPresenter = new PartyListPresenter(this);
 
@@ -72,14 +80,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mListData = new ArrayList<>();
         mListAdapter = new PartyListAdapter(mListData, getActivity());
 
-        mRecyclerView = rootView.findViewById(R.id.partylist_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mListAdapter);
 
-        mAddPartyButton = rootView.findViewById(R.id.partylist_fab_btn);
         mAddPartyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +117,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 
     public void showAddPartyButton() {
