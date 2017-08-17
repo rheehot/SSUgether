@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_item_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:orientation="horizontal"
+    tools:context="org.collapsed.ssuparty_android.ui.main.MainActivity">
+
+
+    <ImageView
+        android:id="@+id/profile_item_image"
+        android:layout_width="56dp"
+        android:layout_height="88dp"
+        android:layout_marginLeft="16dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/profile_man"
+        />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/profile_item_nickname_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="닉네임"
+                android:textColor="#493169"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/profile_item_carrer_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@id/profile_item_nickname_txt"
+                android:text="경력"
+                android:textColor="#703a7f"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/profile_item_education_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_item_carrer_txt"
+                android:layout_centerVertical="true"
+                android:text="학력"
+                android:textColor="#ba88c8"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

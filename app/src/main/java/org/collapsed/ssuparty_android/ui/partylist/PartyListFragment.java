@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.adapter.PartyListAdapter;
-import org.collapsed.ssuparty_android.model.NewPartyInfo;
+import org.collapsed.ssuparty_android.adapter.ProfileListAdapter;
+import org.collapsed.ssuparty_android.model.PartyData;
+import org.collapsed.ssuparty_android.model.ProfileData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 
@@ -40,8 +42,10 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     private PartyListPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private PartyListAdapter mListAdapter;
-    private ArrayList<NewPartyInfo> mListData;
+    private PartyListAdapter mPartyAdapter;
+    private ProfileListAdapter mProflieAdapter;
+    private ArrayList<PartyData> mPartyDataList;
+    private ArrayList<ProfileData> mProfileDataList;
     private Unbinder mUnbinder;
 
     public static PartyListFragment newInstance() {
@@ -77,14 +81,18 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     public void initView(View rootView) {
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        mListData = new ArrayList<>();
-        mListAdapter = new PartyListAdapter(mListData, getActivity());
+        mPartyDataList = new ArrayList<>();
+        mProfileDataList = new ArrayList<>();
+        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"티모","숭실대","자바"));
+
+        mPartyAdapter = new PartyListAdapter(mPartyDataList, getActivity());
+        mProflieAdapter = new ProfileListAdapter(mProfileDataList, getActivity());
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mListAdapter);
+        mRecyclerView.setAdapter(mPartyAdapter);
 
         mAddPartyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +105,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mAddPartyButton.setVisibility(View.GONE);
     }
 
-    public void addPartyItemToList(NewPartyInfo object) {
-        mPresenter.setNewDataToAdapter(mListData, mListAdapter, object);
+    public void addPartyItemToList(PartyData object) {
+        mPresenter.setNewDataToAdapter(mPartyDataList, mPartyAdapter, object);
+    }
+
+    public void addProfileItemToList(ProfileData object) {
+        mPresenter.setNewDataToAdapter(mProfileDataList, mProflieAdapter, object);
     }
 
     public void inflateView(int index) {
@@ -112,6 +124,10 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             case INDEX_ALL_PARTY:
                 showAddPartyButton();
+
+                //profile data 테스트용 코드
+                mRecyclerView.setAdapter(mProflieAdapter);
+
                 break;
 
             default:

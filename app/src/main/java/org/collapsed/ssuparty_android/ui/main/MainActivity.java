@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            mPresenter.getDataFromCreateActivity(data);
+            mPresenter.getDataFromCreateParty(data);
         }
     }
 

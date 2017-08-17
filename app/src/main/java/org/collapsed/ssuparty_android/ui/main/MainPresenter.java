@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import org.collapsed.ssuparty_android.GlobalApplication;
-import org.collapsed.ssuparty_android.model.NewPartyInfo;
+import org.collapsed.ssuparty_android.model.PartyData;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     //서버 연동시 이용! 추후에 리턴값은 수정
-    public NewPartyInfo getDataFromCreateActivity(Intent intent){
+    public PartyData getDataFromCreateParty(Intent intent){
         mTitle = intent.getStringExtra(TITLE_KEY);
         mCategory = intent.getStringExtra(CATEGORY_KEY);
         mDeadline = intent.getStringExtra(DEADLINE_KEY);
@@ -43,13 +43,13 @@ public class MainPresenter implements MainContract.UserActionListener {
         mInfo = intent.getStringExtra(INFO_KEY);
         mTags = intent.getStringArrayListExtra(TAG_KEY);
 
-        NewPartyInfo partyData = new NewPartyInfo(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
+        PartyData partyData = new PartyData(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
 
         setNewPartyList(partyData);
         return partyData;
     }
 
-    public void setNewPartyList(NewPartyInfo object){
+    public void setNewPartyList(PartyData object){
         mView.getCommonListFragmentObeject().addPartyItemToList(object);
     }
 

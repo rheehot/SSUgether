@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewPartyInfo {
+public class PartyData {
     private String mTitle;
     private String mMemberNum;
     private String mCategory;
@@ -15,10 +15,10 @@ public class NewPartyInfo {
     private String mInformation;
     private ArrayList<String> mTags;
 
-    public NewPartyInfo(){}
+    public PartyData(){}
 
-    public NewPartyInfo(String title, String memberNum, String category,
-    String deadline, String information, List<String> tags){
+    public PartyData(String title, String memberNum, String category,
+                     String deadline, String information, List<String> tags){
         this.mTitle = title;
         this.mMemberNum = memberNum;
         this.mCategory = category;
