@@ -1,6 +1,8 @@
 package org.collapsed.ssuparty_android.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.facebook.login.widget.ProfilePictureView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.ProfileData;
@@ -43,8 +44,8 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
         Glide.with(mContext).load(item.getProfileImageId()).into(viewHolder.profileImgae);
         viewHolder.nicknameText.setText(item.getNickname());
-        viewHolder.educationText.setText(item.getEducation());
-        viewHolder.carrerText.setText(item.getCarrer());
+        viewHolder.majorText.setText(item.getMajor());
+        viewHolder.gradeText.setText(item.getGrade());
 
         viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +70,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nicknameText, educationText, carrerText;
+        public TextView nicknameText, gradeText, majorText;
         public ImageView profileImgae;
         public LinearLayout rootView;
 
@@ -77,8 +78,8 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             super(itemView);
 
             nicknameText = itemView.findViewById(R.id.profile_item_nickname_txt);
-            educationText = itemView.findViewById(R.id.profile_item_education_txt);
-            carrerText = itemView.findViewById(R.id.profile_item_carrer_txt);
+            majorText = itemView.findViewById(R.id.profile_item_major_txt);
+            gradeText = itemView.findViewById(R.id.profile_item_grade_txt);
             profileImgae = itemView.findViewById(R.id.profile_item_image);
 
             rootView = itemView.findViewById(R.id.profile_item_root_layout);
