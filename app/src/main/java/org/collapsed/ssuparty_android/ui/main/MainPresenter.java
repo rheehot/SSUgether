@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import org.collapsed.ssuparty_android.GlobalApplication;
+import org.collapsed.ssuparty_android.model.FirebaseDB;
 import org.collapsed.ssuparty_android.model.PartyData;
 
 import java.util.List;
@@ -21,13 +22,18 @@ public class MainPresenter implements MainContract.UserActionListener {
     private static final String INFO_KEY = "info";
     private static final String TAG_KEY = "tag";
 
+    private static final String DB_ALL_PARTY_KEY = "all_party";
+    private static final String DB_MY_PARTY_KEY = "my_party";
+
     private String mTitle, mCategory, mDeadline, mInfo, mMemberNum;
     private List<String> mTags;
 
     private MainActivity mView;
+    private FirebaseDB mModel;
 
     public MainPresenter(@NonNull MainActivity view) {
         this.mView = checkNotNull(view);
+        this.mModel = new FirebaseDB(this);
     }
 
     public void initMain() {
@@ -35,7 +41,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     //서버 연동시 이용! 추후에 리턴값은 수정
-    public PartyData getDataFromCreateParty(Intent intent){
+    public void getDataFromCreateParty(Intent intent){
         mTitle = intent.getStringExtra(TITLE_KEY);
         mCategory = intent.getStringExtra(CATEGORY_KEY);
         mDeadline = intent.getStringExtra(DEADLINE_KEY);
@@ -45,12 +51,15 @@ public class MainPresenter implements MainContract.UserActionListener {
 
         PartyData partyData = new PartyData(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
 
-        setNewPartyList(partyData);
-        return partyData;
+        pushDataToFirebaseDB(DB_ALL_PARTY_KEY,partyData);
+        pushDataToFirebaseDB(DB_MY_PARTY_KEY,partyData);
     }
 
-    public void setNewPartyList(PartyData object){
+    public void setNewPartyList(PartyData object) {
         mView.getCommonListFragmentObeject().addPartyItemToList(object);
     }
 
+    public void pushDataToFirebaseDB(String key, Object data) {
+        mModel.setData(key, data);
+    }
 }

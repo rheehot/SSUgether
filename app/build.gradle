@@ -54,6 +54,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:' + rootProject.firebaseVersion;
     compile 'com.google.firebase:firebase-messaging:' + rootProject.firebaseVersion;
     compile 'com.google.firebase:firebase-crash:' + rootProject.firebaseVersion;
+    compile 'com.google.firebase:firebase-database:'+ rootProject.firebaseVersion;
     compile 'com.google.guava:guava:' + rootProject.guavaVersion;
 
     compile 'com.jakewharton:butterknife:' + rootProject.butterknifeVersion;

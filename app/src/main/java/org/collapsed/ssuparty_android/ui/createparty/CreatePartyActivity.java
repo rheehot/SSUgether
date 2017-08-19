@@ -211,7 +211,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                         if (mPresenter.checkInputData(mTitleEditText, mCategorySelectSpinner,
                                 mDeadlineText, mMemberNumEditText, mInfoEditText, mTagEditText)) {
                             mIntentForResult = mPresenter.putDataToIntent();
-                            setResult(Activity.RESULT_OK, mIntentForResult);
+                            setResult(CreatePartyActivity.RESULT_OK, mIntentForResult);
                             finish();
                         } else {
                             Toast.makeText(CreatePartyActivity.this,

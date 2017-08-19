@@ -85,17 +85,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mProfileDataList = new ArrayList<>();
 
         //더미 데이터 - 프로필 테스트용
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-        mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
+        //mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
 
         mPartyAdapter = new PartyListAdapter(mPartyDataList, getActivity());
         mProflieAdapter = new ProfileListAdapter(mProfileDataList, getActivity());
@@ -138,7 +128,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
                 showAddPartyButton();
 
                 //profile data 테스트용 코드
-                mRecyclerView.setAdapter(mProflieAdapter);
+                //mRecyclerView.setAdapter(mProflieAdapter);
 
                 break;
 
