@@ -37,7 +37,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     @BindView(R.id.partylist_fab_btn)
     FloatingActionButton mAddPartyButton;
-    @BindView(R.id.partylist_recycler_view)
+    @BindView(R.id.partylist_list)
     RecyclerView mRecyclerView;
 
     private PartyListPresenter mPresenter;
@@ -73,6 +73,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mUnbinder = ButterKnife.bind(this,rootView);
 
         mPresenter = new PartyListPresenter(this);
+        mPartyDataList = new ArrayList<>();
+        mProfileDataList = new ArrayList<>();
 
         initView(rootView);
     }
@@ -80,9 +82,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     @Override
     public void initView(View rootView) {
         mLayoutManager = new LinearLayoutManager(getActivity());
-
-        mPartyDataList = new ArrayList<>();
-        mProfileDataList = new ArrayList<>();
 
         //더미 데이터 - 프로필 테스트용
         //mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));

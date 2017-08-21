@@ -51,14 +51,14 @@ public class FirebaseDB {
 
     }
 
-    public void setData(String key, Object object) {
+    public void pushDataToFirebaseDB(String key, Object data) {
         switch (key) {
             case DB_ALL_PARTY_KEY:
-                mAllPartyRef.push().setValue(object);
+                mAllPartyRef.push().setValue(data);
                 break;
 
             case DB_MY_PARTY_KEY:
-                //mMyPartyRef.push().setValue(object);
+                //mMyPartyRef.push().setValue(data);
                 break;
 
             default:
