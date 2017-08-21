@@ -13,17 +13,41 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/SSUPartyTheme.NoActionBar">
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
         <activity android:name=".ui.main.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
 
         <activity android:name=".ui.createparty.CreatePartyActivity">
         </activity>
-        <activity android:name=".ui.account.AccountActivity" />
+        <activity android:name=".ui.account.AccountActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
 
         <service android:name=".service.SPFirebaseMessagingService">
             <intent-filter>
@@ -39,15 +63,9 @@
         <activity android:name=".ui.splash.SplashActivity">
         </activity>
 
-        <receiver android:name=".TokenExpiredChecker" />
-
         <activity android:name=".ui.signup.SignupActivity"
             android:theme="@style/SSUPartyTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

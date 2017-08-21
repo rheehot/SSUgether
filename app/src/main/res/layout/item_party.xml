@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_root_layout"
+    android:id="@+id/party_item_root_layout"
     android:layout_width="match_parent"
     android:layout_height="91dp"
     android:orientation="vertical"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/partylist_top_layout"
+            android:id="@+id/party_item_top_layout"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
@@ -21,7 +21,7 @@
             android:paddingRight="15dp">
 
             <TextView
-                android:id="@+id/partylist_category"
+                android:id="@+id/party_item_category_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="15dp"
@@ -30,26 +30,26 @@
                 android:textColor="#493169"/>
 
             <TextView
-                android:id="@+id/partylist_deadline_txt"
+                android:id="@+id/party_item_deadline_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_toRightOf="@id/partylist_category"
+                android:layout_toRightOf="@id/party_item_category_txt"
                 android:layout_marginRight="15dp"
                 android:text="D - 28"
                 android:textColor="#703a7f"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/partylist_tag_txt"
+                android:id="@+id/party_item_tag_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_toRightOf="@id/partylist_deadline_txt"
+                android:layout_toRightOf="@id/party_item_deadline_txt"
                 android:text="태그"
                 android:textSize="15sp"
                 android:textColor="#ba88c8"/>
 
             <TextView
-                android:id="@+id/partylist_member_num_txt"
+                android:id="@+id/party_item_member_num_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
@@ -60,15 +60,15 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/partylist_bottom_layout"
+            android:id="@+id/party_item_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@id/partylist_top_layout"
+            android:layout_below="@id/party_item_top_layout"
             android:layout_marginBottom="15dp"
             android:paddingLeft="15dp">
 
             <TextView
-                android:id="@+id/partylist_title_txt"
+                android:id="@+id/party_item_title_txt"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="공모전타이틀"

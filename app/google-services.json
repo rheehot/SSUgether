@@ -1,29 +1,21 @@
 {
   "project_info": {
-    "project_number": "376248909650",
-    "firebase_url": "https://fcmtest-8c07a.firebaseio.com",
-    "project_id": "fcmtest-8c07a",
-    "storage_bucket": "fcmtest-8c07a.appspot.com"
+    "project_number": "202562844929",
+    "firebase_url": "https://ssugether.firebaseio.com",
+    "project_id": "ssugether",
+    "storage_bucket": "ssugether.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:376248909650:android:fd8da54ebac68612",
+        "mobilesdk_app_id": "1:202562844929:android:fd8da54ebac68612",
         "android_client_info": {
           "package_name": "org.collapsed.ssuparty_android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "376248909650-jmc9o0jjgv0prpfi07tievderos2o72p.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.collapsed.ssuparty_android",
-            "certificate_hash": "f717ee0ae5a814966bcfd70854e929125e389b3d"
-          }
-        },
-        {
-          "client_id": "376248909650-cfkfbg4lupq0maa9bh3dcfr292m5dejl.apps.googleusercontent.com",
+          "client_id": "202562844929-ab4cf2oapupekd8fvvu8c5i57uic6b8i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "org.collapsed.ssuparty_android",
@@ -31,13 +23,13 @@
           }
         },
         {
-          "client_id": "376248909650-fsjg472esfap9ca4415lf40jn66sda9t.apps.googleusercontent.com",
+          "client_id": "202562844929-tmg2rupurd1em0qnqk1am3npcaldh21n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCVhVuGOb_fjTMsJOMy1YmEcGk1BpRtj5k"
+          "current_key": "AIzaSyCZZuk3c9dYlHvUJSkqGmuRJ_8aehTokRA"
         }
       ],
       "services": {
@@ -48,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "376248909650-fsjg472esfap9ca4415lf40jn66sda9t.apps.googleusercontent.com",
+              "client_id": "202562844929-tmg2rupurd1em0qnqk1am3npcaldh21n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

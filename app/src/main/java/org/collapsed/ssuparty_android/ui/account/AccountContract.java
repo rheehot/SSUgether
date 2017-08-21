@@ -8,8 +8,5 @@ public interface AccountContract {
     }
 
     interface UserActionListener {
-        boolean handleActivityResultWithCurrentSession(int requestCode, int resultCode, Intent data);
-
-        void removeSessionCallback();
     }
 }

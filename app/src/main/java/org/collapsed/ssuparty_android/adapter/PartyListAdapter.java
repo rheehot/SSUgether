@@ -11,32 +11,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.NewPartyInfo;
+import org.collapsed.ssuparty_android.model.PartyData;
 
 import java.util.List;
 
 public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.ViewHolder> {
 
-    private List<NewPartyInfo> mNewPartyInfoList;
+    private List<PartyData> mPartyDataList;
 
     private Context mContext;
 
-    public PartyListAdapter(List<NewPartyInfo> items, Context context) {
-        mNewPartyInfoList = items;
+    public PartyListAdapter(List<PartyData> items, Context context) {
+        mPartyDataList = items;
         mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_partylist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_party, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        NewPartyInfo item = mNewPartyInfoList.get(position);
+        PartyData item = mPartyDataList.get(position);
 
         viewHolder.titleText.setText(item.getTitle());
         viewHolder.categoryText.setText(item.getCategory());
@@ -56,7 +56,7 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.View
             }
         }
 
-        viewHolder.mRootView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, position + " yes!!!!!!!!!", Toast.LENGTH_SHORT).show();
@@ -69,29 +69,29 @@ public class PartyListAdapter extends RecyclerView.Adapter<PartyListAdapter.View
 
     @Override
     public int getItemCount() {
-        return this.mNewPartyInfoList.size();
+        return this.mPartyDataList.size();
     }
 
-    public void addItem(List<NewPartyInfo> newPartyInfoList) {
-        mNewPartyInfoList = newPartyInfoList;
+    public void addItem(List<PartyData> partyDataList) {
+        mPartyDataList = partyDataList;
         notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView titleText, memberText, categoryText, deadlineText, tagText;
-        public LinearLayout mRootView;
+        public LinearLayout rootView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            titleText = itemView.findViewById(R.id.partylist_title_txt);
-            memberText = itemView.findViewById(R.id.partylist_member_num_txt);
-            categoryText = itemView.findViewById(R.id.partylist_category);
-            deadlineText = itemView.findViewById(R.id.partylist_deadline_txt);
-            tagText = itemView.findViewById(R.id.partylist_tag_txt);
+            titleText = itemView.findViewById(R.id.party_item_title_txt);
+            memberText = itemView.findViewById(R.id.party_item_member_num_txt);
+            categoryText = itemView.findViewById(R.id.party_item_category_txt);
+            deadlineText = itemView.findViewById(R.id.party_item_deadline_txt);
+            tagText = itemView.findViewById(R.id.party_item_tag_txt);
 
-            mRootView = itemView.findViewById(R.id.item_root_layout);
+            rootView = itemView.findViewById(R.id.party_item_root_layout);
         }
 
     }

@@ -16,4 +16,7 @@
     <string name="section_allparty_title">Find Party</string>
     <string name="title_activity_account">AccountActivity</string>
 
+    <string name="facebook_app_id">1930468173833531</string>
+    <string name="fb_login_protocol_scheme">fb1930468173833531</string>
+
 </resources>

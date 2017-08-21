@@ -30,37 +30,61 @@ import org.collapsed.ssuparty_android.ui.customview.TagsEditText;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CreatePartyActivity extends AppCompatActivity implements CreatePartyContract.View {
 
     private static final String TEXT_COLOR = "#44394d";
 
-    private CreatePartyPresenter mPresenter;
-
-    private LinearLayout mContentLayout;
-
-    private Button mPartyCancelBtn, mPartyRegisterBtn, mInfoConfirmBtn;
-    private EditText mTitleEditText, mMemberNumEditText, mInfoEditText;
-    private TextView mToolbarTitleText, mDeadlineText, mTagHelpText, mMemberNumHelpText;
-    private TextView mTitleConstraintText, mInfoConstraintText, mTagConstraintText;
-    private Spinner mCategorySelectSpinner;
-    private TagsEditText mTagEditText;
+    @BindView(R.id.createparty_partycontent_layout)
+    LinearLayout mContentLayout;
+    @BindView(R.id.createparty_confirm_btn)
+    Button mInfoConfirmBtn;
+    @BindView(R.id.createparty_cancel_party_btn)
+    Button mPartyCancelBtn;
+    @BindView(R.id.createparty_register_party_btn)
+    Button mPartyRegisterBtn;
+    @BindView(R.id.createparty_title_edt)
+    EditText mTitleEditText;
+    @BindView(R.id.createparty_membernum_edt)
+    EditText mMemberNumEditText;
+    @BindView(R.id.createparty_information_edt)
+    EditText mInfoEditText;
+    @BindView(R.id.createparty_toolbar_title_txt)
+    TextView mToolbarTitleText;
+    @BindView(R.id.createparty_select_deadline_txt)
+    TextView mDeadlineText;
+    @BindView(R.id.createparty_tag_help_txt)
+    TextView mTagHelpText;
+    @BindView(R.id.createparty_membernum_help_txt)
+    TextView mMemberNumHelpText;
+    @BindView(R.id.createparty_title_constraint_txt)
+    TextView mTitleConstraintText;
+    @BindView(R.id.createparty_information_constraint_txt)
+    TextView mInfoConstraintText;
+    @BindView(R.id.createparty_tag_constraint_txt)
+    TextView mTagConstraintText;
+    @BindView(R.id.createparty_select_category_spn)
+    Spinner mCategorySelectSpinner;
+    @BindView(R.id.createparty_tag_edt)
+    TagsEditText mTagEditText;
 
     private View.OnClickListener mClickListner;
     private View.OnFocusChangeListener mFocusListner;
     private View.OnTouchListener mTouchListner;
     private DatePickerDialog.OnDateSetListener mDateLisner;
 
+    private CreatePartyPresenter mPresenter;
     private InputMethodManager mImManager;
-
     private ArrayAdapter mCategoryAdapter;
-
     private Intent mIntentForResult;
-
     private Calendar mDateData;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createparty);
+        ButterKnife.bind(this);
 
         mPresenter = new CreatePartyPresenter(this);
 
@@ -68,28 +92,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     }
 
     public void initView() {
-
-        mContentLayout = (LinearLayout) findViewById(R.id.createparty_partycontent_layout);
-
-        mPartyCancelBtn = (Button) findViewById(R.id.createparty_cancel_party_btn);
-        mPartyRegisterBtn = (Button) findViewById(R.id.createparty_register_party_btn);
-        mInfoConfirmBtn = (Button) findViewById(R.id.createparty_confirm_btn);
-
-        mTitleEditText = (EditText) findViewById(R.id.createparty_title_edt);
-        mMemberNumEditText = (EditText) findViewById(R.id.createparty_membernum_edt);
-        mInfoEditText = (EditText) findViewById(R.id.createparty_information_edt);
-        mTagEditText = (TagsEditText) findViewById(R.id.createparty_tag_edt);
-
-        mToolbarTitleText = (TextView) findViewById(R.id.createparty_toolbar_title_txt);
-        mDeadlineText = (TextView) findViewById(R.id.createparty_select_deadline_txt);
-        mTitleConstraintText = (TextView) findViewById(R.id.createparty_title_constraint_txt);
-        mInfoConstraintText = (TextView) findViewById(R.id.createparty_information_constraint_txt);
-        mTagConstraintText = (TextView) findViewById(R.id.createparty_tag_constraint_txt);
-        mMemberNumHelpText = (TextView) findViewById(R.id.createparty_membernum_help_txt);
-        mTagHelpText = (TextView) findViewById(R.id.createparty_tag_help_txt);
-
-        mCategorySelectSpinner = (Spinner) findViewById(R.id.createparty_select_category_spn);
-
         mCategoryAdapter = ArrayAdapter.createFromResource(CreatePartyActivity.this, R.array.group_category,
                 R.layout.item_spinner);
 
@@ -209,7 +211,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                         if (mPresenter.checkInputData(mTitleEditText, mCategorySelectSpinner,
                                 mDeadlineText, mMemberNumEditText, mInfoEditText, mTagEditText)) {
                             mIntentForResult = mPresenter.putDataToIntent();
-                            setResult(Activity.RESULT_OK, mIntentForResult);
+                            setResult(CreatePartyActivity.RESULT_OK, mIntentForResult);
                             finish();
                         } else {
                             Toast.makeText(CreatePartyActivity.this,

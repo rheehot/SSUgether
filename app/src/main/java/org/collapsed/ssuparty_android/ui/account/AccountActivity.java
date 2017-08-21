@@ -7,34 +7,45 @@ import android.os.Bundle;
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.ui.main.MainActivity;
 
+import com.facebook.CallbackManager;
+import com.facebook.login.widget.LoginButton;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
 public class AccountActivity extends AppCompatActivity implements AccountContract.View {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+
+    @BindView(R.id.account_facebook_login_btn)
+    LoginButton mLoginButton;
+
     private AccountPresenter mPresenter;
+    private CallbackManager mCallbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        ButterKnife.bind(this);
 
         mPresenter = new AccountPresenter(this);
+        mCallbackManager = CallbackManager.Factory.create();
+        mPresenter.setFacebookLoginCallback(mLoginButton, mCallbackManager);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mPresenter.handleActivityResultWithCurrentSession(requestCode, resultCode, data)) {
-            return;
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        mPresenter.removeSessionCallback();
     }
 
     @Override
@@ -43,4 +54,5 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
         startActivity(intent);
         finish();
     }
+
 }

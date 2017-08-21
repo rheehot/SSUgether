@@ -21,6 +21,8 @@ import android.view.SubMenu;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.PartyData;
+import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
 import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private MainPresenter mPresenter;
     private PartyListFragment mCommonListFragment;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
+    private PartyData mCreatedPartyData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            mPresenter.getDataFromCreateActivity(data);
+        if (resultCode == CreatePartyActivity.RESULT_OK) {
+           mPresenter.getDataFromCreateParty(data);
+
         }
     }
 
@@ -97,20 +101,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     case R.id.bn_home:
                         mViewPager.setCurrentItem(INDEX_HOME, false);
                         inflateViewInPage(INDEX_HOME);
-
                         return true;
 
                     case R.id.bn_myparty:
                         mViewPager.setCurrentItem(INDEX_MY_PARTY, false);
                         inflateViewInPage(INDEX_MY_PARTY);
-
-
                         return true;
 
                     case R.id.bn_allparty:
                         mViewPager.setCurrentItem(INDEX_ALL_PARTY, false);
                         inflateViewInPage(INDEX_ALL_PARTY);
-
                         return true;
                 }
                 return false;

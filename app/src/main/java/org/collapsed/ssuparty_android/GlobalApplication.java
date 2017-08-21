@@ -5,9 +5,7 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.kakao.auth.KakaoSDK;
-
-import org.collapsed.ssuparty_android.utils.KakaoSDKAdapter;
+import com.facebook.FacebookSdk;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -19,7 +17,7 @@ public class GlobalApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        KakaoSDK.init(new KakaoSDKAdapter(getApplicationContext()));
+        FacebookSdk.sdkInitialize(getApplicationContext());
         initNetworkClient();
         initFontSetup();
         mAppConfig = new AppConfig();

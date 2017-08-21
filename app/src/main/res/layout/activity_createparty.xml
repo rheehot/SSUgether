@@ -232,7 +232,7 @@
                         android:digits="0123456789"
                         android:hint="모집할 인원수를 입력해주세요!"
                         android:inputType="number"
-                        android:maxLength="20" />
+                        android:maxLength="3" />
                 </LinearLayout>
             </LinearLayout>
 
