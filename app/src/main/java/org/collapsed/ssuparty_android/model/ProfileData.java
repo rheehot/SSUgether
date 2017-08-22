@@ -6,8 +6,6 @@ public class ProfileData {
     private String mMajor;
     private String mProfileImageUrl;
 
-    public ProfileData(){}
-
     public ProfileData(String imageUrl, String nickname, String major, String grade){
         this.mProfileImageUrl = imageUrl;
         this.mNickname = nickname;

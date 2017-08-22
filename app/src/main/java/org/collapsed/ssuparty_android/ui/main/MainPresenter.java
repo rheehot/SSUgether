@@ -41,7 +41,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     //서버 연동시 이용! 추후에 리턴값은 수정
-    public void getDataFromCreateParty(Intent intent){
+    public void getCreatedPartyInfo(Intent intent){
         mTitle = intent.getStringExtra(TITLE_KEY);
         mCategory = intent.getStringExtra(CATEGORY_KEY);
         mDeadline = intent.getStringExtra(DEADLINE_KEY);
@@ -51,15 +51,15 @@ public class MainPresenter implements MainContract.UserActionListener {
 
         PartyData partyData = new PartyData(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
 
-        pushDataToFirebaseDB(DB_ALL_PARTY_KEY,partyData);
-        pushDataToFirebaseDB(DB_MY_PARTY_KEY,partyData);
+        setDataInDB(DB_ALL_PARTY_KEY,partyData);
+        setDataInDB(DB_MY_PARTY_KEY,partyData);
     }
 
-    public void setNewPartyList(PartyData object) {
-        mView.getCommonListFragmentObeject().addPartyItemToList(object);
+    public void setNewPartyList(PartyData partyData) {
+        mView.getCommonListFragmentObeject().addPartyItemToList(partyData);
     }
 
-    public void pushDataToFirebaseDB(String key, Object data) {
-        mModel.setData(key, data);
+    public void setDataInDB(String key, Object data) {
+        mModel.pushDataToFirebaseDB(key, data);
     }
 }

@@ -1,6 +1,5 @@
 package org.collapsed.ssuparty_android.ui.main;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == CreatePartyActivity.RESULT_OK) {
-           mPresenter.getDataFromCreateParty(data);
+           mPresenter.getCreatedPartyInfo(data);
 
         }
     }
