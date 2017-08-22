@@ -1,6 +1,7 @@
 package org.collapsed.ssuparty_android.ui.partylist;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,27 +12,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.adapter.PartyListAdapter;
-import org.collapsed.ssuparty_android.adapter.ProfileListAdapter;
 import org.collapsed.ssuparty_android.model.PartyData;
 import org.collapsed.ssuparty_android.model.ProfileData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class PartyListFragment extends BaseFragment implements PartyListContract.View {
 
-    private static final int INDEX_HOME = 0;
-    private static final int INDEX_MY_PARTY = 1;
-    private static final int INDEX_ALL_PARTY = 2;
+public class PartyListFragment extends BaseFragment implements PartyListContract.View {
 
     private static final int START_CREATE_ACTIVITY = 1;
 
@@ -44,8 +48,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     private RecyclerView.LayoutManager mLayoutManager;
     private PartyListAdapter mPartyAdapter;
     private ProfileListAdapter mProflieAdapter;
-    private ArrayList<PartyData> mPartyDataList;
-    private ArrayList<ProfileData> mProfileDataList;
+    private ArrayList<PartyData> mPartyDataList = new ArrayList<>();
+    private ArrayList<ProfileData> mProfileDataList = new ArrayList<>();
     private Unbinder mUnbinder;
 
     public static PartyListFragment newInstance() {
@@ -73,8 +77,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mUnbinder = ButterKnife.bind(this,rootView);
 
         mPresenter = new PartyListPresenter(this);
-        mPartyDataList = new ArrayList<>();
-        mProfileDataList = new ArrayList<>();
 
         initView(rootView);
     }
@@ -83,17 +85,17 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     public void initView(View rootView) {
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        //더미 데이터 - 프로필 테스트용
-        //mProfileDataList.add(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
-
-        mPartyAdapter = new PartyListAdapter(mPartyDataList, getActivity());
-        mProflieAdapter = new ProfileListAdapter(mProfileDataList, getActivity());
+        mPartyAdapter = new PartyListAdapter();
+        mProflieAdapter = new ProfileListAdapter(getActivity());
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mPartyAdapter);
+
+        //더미 데이터 - 프로필 테스트용
+        addProfileItemToList(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
 
         mAddPartyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,29 +108,27 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mAddPartyButton.setVisibility(View.GONE);
     }
 
-    public void addPartyItemToList(PartyData object) {
-        mPresenter.setNewDataToAdapter(mPartyDataList, mPartyAdapter, object);
+    public void addPartyItemToList(PartyData partyData) {
+        mPartyDataList.add(partyData);
+        mPartyAdapter.notifyDataSetChanged();
     }
 
-    public void addProfileItemToList(ProfileData object) {
-        mPresenter.setNewDataToAdapter(mProfileDataList, mProflieAdapter, object);
+    public void addProfileItemToList(ProfileData profileData) {
+        mProfileDataList.add(profileData);
+        mProflieAdapter.notifyDataSetChanged();
     }
 
     public void inflateView(int index) {
         switch (index) {
-            case INDEX_HOME:
+            case AppConfig.INDEX_HOME:
                 break;
 
-            case INDEX_MY_PARTY:
-                showAddPartyButton();
+            case AppConfig.INDEX_MY_PARTY:
                 break;
 
-            case INDEX_ALL_PARTY:
+            case AppConfig.INDEX_ALL_PARTY:
                 showAddPartyButton();
-
-                //profile data 테스트용 코드
-                //mRecyclerView.setAdapter(mProflieAdapter);
-
+                mRecyclerView.setAdapter(mPartyAdapter);
                 break;
 
             default:
@@ -144,6 +144,127 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     public void showAddPartyButton() {
         mAddPartyButton.setVisibility(View.VISIBLE);
+    }
+
+    class PartyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_party, parent, false);
+            return new CustomViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+            PartyData item = mPartyDataList.get(position);
+
+            ((CustomViewHolder) viewHolder).titleText.setText(item.getTitle());
+            ((CustomViewHolder) viewHolder).categoryText.setText(item.getCategory());
+            ((CustomViewHolder) viewHolder).deadlineText.setText(item.getDeadline());
+            ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMemberNum());
+
+            List<String> tagList = item.getTags();
+
+            if (tagList == null) {
+                ((CustomViewHolder) viewHolder).tagText.setText("");
+            } else {
+                String tagText = "";
+
+                for (String tag : tagList) {
+                    tagText += "#" + tag + " ";
+                    ((CustomViewHolder) viewHolder).tagText.setText(tagText);
+                }
+            }
+
+            ((CustomViewHolder) viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            });
+
+            viewHolder.itemView.setTag(item);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mPartyDataList.size();
+        }
+
+        private class CustomViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView titleText, memberText, categoryText, deadlineText, tagText;
+            public LinearLayout rootView;
+
+            public CustomViewHolder(View view) {
+                super(view);
+
+                titleText = view.findViewById(R.id.party_item_title_txt);
+                memberText = view.findViewById(R.id.party_item_member_num_txt);
+                categoryText = view.findViewById(R.id.party_item_category_txt);
+                deadlineText = view.findViewById(R.id.party_item_deadline_txt);
+                tagText = view.findViewById(R.id.party_item_tag_txt);
+
+                rootView = view.findViewById(R.id.party_item_root_layout);
+            }
+        }
+    }
+
+    class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        private Context mContext;
+
+        public ProfileListAdapter(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        public ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_profile, parent, false);
+            return new ProfileViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+            ProfileData item = mProfileDataList.get(position);
+
+            Glide.with(mContext).load(item.getProfileImageId()).into(((ProfileViewHolder)viewHolder).profileImgae);
+            ((ProfileViewHolder)viewHolder).nicknameText.setText(item.getNickname());
+            ((ProfileViewHolder)viewHolder).majorText.setText(item.getMajor());
+            ((ProfileViewHolder)viewHolder).gradeText.setText(item.getGrade());
+
+            ((ProfileViewHolder)viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            });
+
+            viewHolder.itemView.setTag(item);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mProfileDataList.size();
+        }
+
+        private class ProfileViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView nicknameText, gradeText, majorText;
+            public ImageView profileImgae;
+            public LinearLayout rootView;
+
+            public ProfileViewHolder(View itemView) {
+                super(itemView);
+
+                nicknameText = itemView.findViewById(R.id.profile_item_nickname_txt);
+                majorText = itemView.findViewById(R.id.profile_item_major_txt);
+                gradeText = itemView.findViewById(R.id.profile_item_grade_txt);
+                profileImgae = itemView.findViewById(R.id.profile_item_image);
+
+                rootView = itemView.findViewById(R.id.profile_item_root_layout);
+            }
+        }
     }
 
 }
