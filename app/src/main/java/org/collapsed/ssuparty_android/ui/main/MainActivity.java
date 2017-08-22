@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.widget.TextView;
 
+import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.PartyData;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
@@ -37,10 +38,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int INDEX_HOME = 0;
-    private static final int INDEX_MY_PARTY = 1;
-    private static final int INDEX_ALL_PARTY = 2;
-
     private static final int PAGE_COUNT = 3;
     private static final int FONT_BOLD = 1;
     private static final int FONT_REGULAR = 0;
@@ -54,8 +51,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private MainPresenter mPresenter;
     private PartyListFragment mCommonListFragment;
+
+    private static HomeFragment mHomeView;
+    private static PartyListFragment mAllPartyView, mMyPartyView;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
-    private PartyData mCreatedPartyData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == CreatePartyActivity.RESULT_OK) {
            mPresenter.getCreatedPartyInfo(data);
-
         }
     }
 
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mViewPager.addOnPageChangeListener(this);
 
         applyFontToBottomNavigationView(mBottomNavigationView, FONT_BOLD);
-        applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, INDEX_HOME);
+        applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, AppConfig.INDEX_HOME);
 
         BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -98,18 +96,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bn_home:
-                        mViewPager.setCurrentItem(INDEX_HOME, false);
-                        inflateViewInPage(INDEX_HOME);
+                        mViewPager.setCurrentItem(AppConfig.INDEX_HOME, false);
+                        inflateViewInPage(AppConfig.INDEX_HOME);
                         return true;
 
                     case R.id.bn_myparty:
-                        mViewPager.setCurrentItem(INDEX_MY_PARTY, false);
-                        inflateViewInPage(INDEX_MY_PARTY);
+                        mViewPager.setCurrentItem(AppConfig.INDEX_MY_PARTY, false);
+                        inflateViewInPage(AppConfig.INDEX_MY_PARTY);
                         return true;
 
                     case R.id.bn_allparty:
-                        mViewPager.setCurrentItem(INDEX_ALL_PARTY, false);
-                        inflateViewInPage(INDEX_ALL_PARTY);
+                        mViewPager.setCurrentItem(AppConfig.INDEX_ALL_PARTY, false);
+                        inflateViewInPage(AppConfig.INDEX_ALL_PARTY);
                         return true;
                 }
                 return false;
@@ -118,14 +116,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void inflateViewInPage(int index) {
-        mCommonListFragment
-                = (PartyListFragment) getSupportFragmentManager().findFragmentById(R.id.main_pager);
-        mCommonListFragment.inflateView(index);
-    }
+        switch (index){
+            case AppConfig.INDEX_HOME:
+                break;
 
-    public PartyListFragment getCommonListFragmentObeject() {
-        return (PartyListFragment)
-                getSupportFragmentManager().findFragmentById(R.id.main_pager);
+            case AppConfig.INDEX_MY_PARTY:
+                mMyPartyView.inflateView(index);
+                break;
+
+            case AppConfig.INDEX_ALL_PARTY:
+                mAllPartyView.inflateView(index);
+                break;
+
+            default:
+                break;
+        }
     }
 
     @Override
@@ -198,17 +203,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case INDEX_HOME:
-                    HomeFragment homeView = HomeFragment.newInstance();
-                    return homeView;
+                case AppConfig.INDEX_HOME:
+                    mHomeView = HomeFragment.newInstance();
+                    return mHomeView;
 
-                case INDEX_MY_PARTY:
-                    PartyListFragment myPartyView = PartyListFragment.newInstance();
-                    return myPartyView;
+                case AppConfig.INDEX_MY_PARTY:
+                    mMyPartyView  = PartyListFragment.newInstance();
+                    return mMyPartyView;
 
-                case INDEX_ALL_PARTY:
-                    PartyListFragment allPartyView = PartyListFragment.newInstance();
-                    return allPartyView;
+                case AppConfig.INDEX_ALL_PARTY:
+                    mAllPartyView = PartyListFragment.newInstance();
+                    return mAllPartyView;
 
                 default:
                     return null;
@@ -224,5 +229,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public int getCount() {
             return mTabCount;
         }
+    }
+
+    public HomeFragment getHomeFragment(){
+        return mHomeView;
+    }
+
+    public PartyListFragment getMyPartyFragment(){
+        return mMyPartyView;
+    }
+
+    public PartyListFragment getAllPartyFragment(){
+        return mAllPartyView;
     }
 }

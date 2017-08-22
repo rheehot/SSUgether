@@ -3,7 +3,12 @@ package org.collapsed.ssuparty_android.ui.main;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.squareup.otto.Subscribe;
+
+import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.GlobalApplication;
+import org.collapsed.ssuparty_android.event.BusProvider;
+import org.collapsed.ssuparty_android.event.PartyEvent;
 import org.collapsed.ssuparty_android.model.FirebaseDB;
 import org.collapsed.ssuparty_android.model.PartyData;
 
@@ -34,6 +39,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     public MainPresenter(@NonNull MainActivity view) {
         this.mView = checkNotNull(view);
         this.mModel = new FirebaseDB(this);
+        BusProvider.getInstance().register(this);
     }
 
     public void initMain() {
@@ -41,7 +47,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     //서버 연동시 이용! 추후에 리턴값은 수정
-    public void getCreatedPartyInfo(Intent intent){
+    public void getCreatedPartyInfo(Intent intent) {
         mTitle = intent.getStringExtra(TITLE_KEY);
         mCategory = intent.getStringExtra(CATEGORY_KEY);
         mDeadline = intent.getStringExtra(DEADLINE_KEY);
@@ -51,15 +57,25 @@ public class MainPresenter implements MainContract.UserActionListener {
 
         PartyData partyData = new PartyData(mTitle, mMemberNum, mCategory, mDeadline, mInfo, mTags);
 
-        setDataInDB(DB_ALL_PARTY_KEY,partyData);
-        setDataInDB(DB_MY_PARTY_KEY,partyData);
+        setDataInFirebase(DB_ALL_PARTY_KEY, partyData);
+        setDataInFirebase(DB_MY_PARTY_KEY, partyData);
     }
 
-    public void setNewPartyList(PartyData partyData) {
-        mView.getCommonListFragmentObeject().addPartyItemToList(partyData);
+    @Subscribe
+    public void onPartyAdded(PartyEvent addEvent) {
+        switch (addEvent.getKey()) {
+            case AppConfig.INDEX_MY_PARTY:
+                mView.getMyPartyFragment().addPartyItemToList(addEvent.getPartyData());
+                break;
+
+            case AppConfig.INDEX_ALL_PARTY:
+                mView.getAllPartyFragment().addPartyItemToList(addEvent.getPartyData());
+                break;
+        }
     }
 
-    public void setDataInDB(String key, Object data) {
+    public void setDataInFirebase(String key, Object data) {
         mModel.pushDataToFirebaseDB(key, data);
     }
+
 }
