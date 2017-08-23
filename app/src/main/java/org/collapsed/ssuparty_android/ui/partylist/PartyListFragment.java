@@ -74,7 +74,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     public void onViewCreated(View rootView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
         ButterKnife.bind(this, rootView);
-        mUnbinder = ButterKnife.bind(this,rootView);
+        mUnbinder = ButterKnife.bind(this, rootView);
 
         mPresenter = new PartyListPresenter(this);
 

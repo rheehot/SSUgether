@@ -14,10 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
@@ -29,6 +33,7 @@ import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
 import org.collapsed.ssuparty_android.helper.BottomNavigationViewHelper;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.home.HomeFragment;
+import org.collapsed.ssuparty_android.ui.profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +77,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == CreatePartyActivity.RESULT_OK) {
            mPresenter.getCreatedPartyInfo(data);
+        }
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            Log.d("crop","success");
+
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -204,8 +219,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public Fragment getItem(int position) {
             switch (position) {
                 case AppConfig.INDEX_HOME:
-                    mHomeView = HomeFragment.newInstance();
-                    return mHomeView;
+                    //mHomeView = HomeFragment.newInstance();
+                    //return mHomeView;
+                    ProfileFragment fragment = ProfileFragment.newInstance();
+                    return fragment;
 
                 case AppConfig.INDEX_MY_PARTY:
                     mMyPartyView  = PartyListFragment.newInstance();
