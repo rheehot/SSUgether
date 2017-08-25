@@ -21,13 +21,14 @@
             android:background="@drawable/toolbar"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/createparty_cancel_party_btn"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="15dp"
-                android:background="@drawable/arrow" />
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/arrow"
+                android:background="@android:color/transparent"/>
 
             <FrameLayout
                 android:layout_width="wrap_content"

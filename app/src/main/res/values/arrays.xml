@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string-array name="group_category">
+    <string-array name="party_category">
         <item>카테고리선택</item>
         <item>공모전</item>
         <item>스터디</item>
@@ -29,4 +29,119 @@
         <item>남성</item>
         <item>여성</item>
     </string-array>
+    <string-array name="spec_title">
+        <item>과목</item>
+        <item>프로젝트</item>
+        <item>공모전</item>
+        <item>인턴</item>
+        <item>서포터즈</item>
+        <item>봉사활동</item>
+        <item>수상경력</item>
+        <item>논문 / 저서</item>
+        <item>외국어</item>
+        <item>보유기술</item>
+        <item>나만의 스펙</item>
+    </string-array>
+
+    <string-array name="spec_content">
+        <item>과목을 등록하면 자세한 전공과 관심분야를 알릴 수 있습니다.</item>
+        <item>프로젝트 경험은 커리어에 중요한 자산이 됩니다.</item>
+        <item>공모전 경험을 소개해 본인에게 잘 맞는 파트너를 찾아보세요.</item>
+        <item>인턴 경험을 추가하여 경럭 사항을 강조하세요.</item>
+        <item>적극적인 활동 경험을 뽐내보세요.</item>
+        <item>봉사활동 경험을 추가해보세요.</item>
+        <item>수상경력을 추가해보세요.</item>
+        <item>논문, 저서 경험을 추가해 보세요.</item>
+        <item>외국어 실력을 추가해보세요.</item>
+        <item>본인의 기술을 추가해보세요.</item>
+        <item>나만의 스펙에 대해 기술해보세요.</item>
+    </string-array>
+
+    <string-array name="spec_category_data">
+        <item>A+</item>
+        <item>A0</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B0</item>
+        <item>B-</item>
+        <item>C+</item>
+        <item>C0</item>
+        <item>C-</item>
+        <item>D+</item>
+        <item>D0</item>
+        <item>D-</item>
+        <item>F</item>
+    </string-array>
+
+    <string-array name="spec_subject">
+        <item>과목</item>
+        <item>과목</item>
+        <item>교수명</item>
+        <item>학기</item>
+        <item>성적</item>
+    </string-array>
+
+    <string-array name="spec_project">
+        <item>프로젝트</item>
+        <item>이름</item>
+        <item>직책</item>
+        <item>주요업무</item>
+        <item>추가입력사항</item>
+    </string-array>
+
+    <string-array name="spec_contest">
+        <item>공모전</item>
+        <item>공모전이름</item>
+        <item>역할</item>
+        <item>인원수</item>
+        <item>추가입력사항</item>
+    </string-array>
+
+    <string-array name="spec_intern">
+        <item>인턴활동</item>
+        <item>회사</item>
+        <item>직급</item>
+        <item>지역</item>
+        <item>추가입력사항</item>
+    </string-array>
+
+    <string-array name="spec_prize">
+        <item>수상경력</item>
+        <item>이름</item>
+        <item>발급기관</item>
+        <item>관련분야</item>
+        <item>추가입력사항</item>
+    </string-array>
+
+    <string-array name="spec_valenteer">
+        <item>봉사활동</item>
+        <item>단체명</item>
+        <item>역할</item>
+        <item>관련분야</item>
+        <item>추가입력사항</item>
+    </string-array>
+
+    <string-array name="spec_thesis">
+        <item>논문 / 저서</item>
+        <item>이름</item>
+        <item>발행인 / 출판사</item>
+        <item>관련분야</item>
+        <item>추가입력사항</item>
+    </string-array>
+
+    <string-array name="spec_language">
+        <item>외국어</item>
+        <item>언어 종류</item>
+        <item>자격증 종류</item>
+        <item>점수</item>
+    </string-array>
+
+    <string-array name="spec_support">
+        <item>서포터즈</item>
+        <item>단체명</item>
+        <item>역할</item>
+        <item>관련분야</item>
+        <item>추가입력사항</item>
+    </string-array>
+
 </resources>

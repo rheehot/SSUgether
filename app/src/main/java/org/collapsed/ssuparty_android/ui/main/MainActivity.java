@@ -25,7 +25,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.PartyData;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
@@ -75,25 +74,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == CreatePartyActivity.RESULT_OK) {
-           mPresenter.getCreatedPartyInfo(data);
-        }
-        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            Log.d("crop","success");
+        super.onActivityResult(requestCode, resultCode, data);
 
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(this, "Cropping failed: " + result.getError(), Toast.LENGTH_LONG).show();
+        if(requestCode == CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE)
+            if(resultCode == CreatePartyActivity.RESULT_OK) {
+                mPresenter.getCreatedPartyInfo(data);
             }
         }
-    }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+        @Override
+        protected void attachBaseContext (Context newBase){
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        }
 
     private void initView() {
         mBottomNaviAdapter = new BottomNaviPagerAdapter(getSupportFragmentManager(), PAGE_COUNT);
@@ -131,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void inflateViewInPage(int index) {
-        switch (index){
+        switch (index) {
             case AppConfig.INDEX_HOME:
                 break;
 
@@ -225,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     return fragment;
 
                 case AppConfig.INDEX_MY_PARTY:
-                    mMyPartyView  = PartyListFragment.newInstance();
+                    mMyPartyView = PartyListFragment.newInstance();
                     return mMyPartyView;
 
                 case AppConfig.INDEX_ALL_PARTY:
@@ -248,15 +240,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    public HomeFragment getHomeFragment(){
+    public HomeFragment getHomeFragment() {
         return mHomeView;
     }
 
-    public PartyListFragment getMyPartyFragment(){
+    public PartyListFragment getMyPartyFragment() {
         return mMyPartyView;
     }
 
-    public PartyListFragment getAllPartyFragment(){
+    public PartyListFragment getAllPartyFragment() {
         return mAllPartyView;
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_spec_actionbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+
+        <include
+            layout="@layout/layout_spec_common"
+            android:id="@+id/specform_common_layout" />
+
+
+        <include
+            layout="@layout/layout_spec_ability"
+            android:id="@+id/specform_ability_layout" />
+
+        <include
+            layout="@layout/layout_spec_myspec"
+            android:id="@+id/specform_myspec_layout" />
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/layout_spec_help"/>
+
+</LinearLayout>

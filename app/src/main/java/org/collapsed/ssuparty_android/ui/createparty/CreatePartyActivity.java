@@ -1,7 +1,6 @@
 package org.collapsed.ssuparty_android.ui.createparty;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,17 +32,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class CreatePartyActivity extends AppCompatActivity implements CreatePartyContract.View {
 
     private static final String TEXT_COLOR = "#44394d";
+    public static final int CREATE_ACTIVITY_REQUEST_CODE = 1;
 
     @BindView(R.id.createparty_partycontent_layout)
     LinearLayout mContentLayout;
     @BindView(R.id.createparty_confirm_btn)
     Button mInfoConfirmBtn;
     @BindView(R.id.createparty_cancel_party_btn)
-    Button mPartyCancelBtn;
+    ImageButton mPartyCancelBtn;
     @BindView(R.id.createparty_register_party_btn)
     Button mPartyRegisterBtn;
     @BindView(R.id.createparty_title_edt)
@@ -81,18 +83,21 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     private Intent mIntentForResult;
     private Calendar mDateData;
 
+    private Unbinder mUnbinder;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createparty);
         ButterKnife.bind(this);
 
         mPresenter = new CreatePartyPresenter(this);
+        mUnbinder = ButterKnife.bind(this);
 
         initView();
     }
 
     public void initView() {
-        mCategoryAdapter = ArrayAdapter.createFromResource(CreatePartyActivity.this, R.array.group_category,
+        mCategoryAdapter = ArrayAdapter.createFromResource(CreatePartyActivity.this, R.array.party_category,
                 R.layout.item_spinner);
 
         mImManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -319,5 +324,11 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
     public void setFocusListner(View view) {
         view.setOnFocusChangeListener(mFocusListner);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 }
