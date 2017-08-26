@@ -37,68 +37,47 @@
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_subject_layout"
-            />
+            android:id="@+id/spec_subject_layout" />
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_project_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_project_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_contest_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_contest_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_intern_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_intern_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_support_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_support_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_volunteer_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_volunteer_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_prize_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_prize_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_thesis_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_thesis_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_language_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_language_layout"/>
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_ability_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_ability_layout" />
 
         <include
             layout="@layout/layout_spec_selector"
-            android:id="@+id/spec_myspec_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/spec_myspec_layout" />
 
     </LinearLayout>
 

@@ -7,7 +7,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class GlobalApplication extends Application {
     private static RequestQueue mQueue;
@@ -19,20 +18,11 @@ public class GlobalApplication extends Application {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         initNetworkClient();
-        initFontSetup();
         mAppConfig = new AppConfig();
     }
 
     public static AppConfig getConfig() {
         return mAppConfig;
-    }
-
-    private void initFontSetup() {
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/NanumSquareOTFRegular.otf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
     }
 
     @Override

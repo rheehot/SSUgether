@@ -36,7 +36,6 @@ import org.collapsed.ssuparty_android.ui.profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View, BaseFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener {
 
@@ -80,11 +79,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             if(resultCode == CreatePartyActivity.RESULT_OK) {
                 mPresenter.getCreatedPartyInfo(data);
             }
-        }
-
-        @Override
-        protected void attachBaseContext (Context newBase){
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
         }
 
     private void initView() {

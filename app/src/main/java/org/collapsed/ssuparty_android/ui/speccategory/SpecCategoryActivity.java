@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.ui.spec;
+package org.collapsed.ssuparty_android.ui.speccategory;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,27 +8,26 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.ui.specform.SpecFormActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_ABILITY;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_CONTEST;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_INTERN;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_LANGUAGE;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_MYSPEC;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_PRIZE;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_PROJECT;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_SUBJECT;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_SUPPORT;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_THESIS;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_VOLUNTEER;
-
-
 public class SpecCategoryActivity extends AppCompatActivity {
+
+    private static final int INDEX_SPEC_SUBJECT = 11;
+    private static final int INDEX_SPEC_PROJECT = 12;
+    private static final int INDEX_SPEC_CONTEST = 13;
+    private static final int INDEX_SPEC_INTERN = 14;
+    private static final int INDEX_SPEC_SUPPORT = 15;
+    private static final int INDEX_SPEC_VOLUNTEER = 16;
+    private static final int INDEX_SPEC_PRIZE = 17;
+    private static final int INDEX_SPEC_THESIS = 18;
+    private static final int INDEX_SPEC_LANGUAGE = 19;
+    private static final int INDEX_SPEC_ABILITY = 20;
+    private static final int INDEX_SPEC_MYSPEC = 21;
 
     @BindView(R.id.spec_subject_layout)
     View mSubjectLayout;
@@ -63,7 +62,7 @@ public class SpecCategoryActivity extends AppCompatActivity {
     private ImageView mVolunteerSymbol, mPrizeSymbol, mThesisSymbol, mLanguageSymbol, mAbilitySymbol;
 
     private View.OnClickListener mSpecClickListener;
-    private Intent mSpecFormActivityIntent;
+    private Intent mSpecformActivityIntent;
 
     private Unbinder mUnbinder;
 
@@ -165,54 +164,54 @@ public class SpecCategoryActivity extends AppCompatActivity {
         mSpecClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSpecFormActivityIntent = new Intent(SpecCategoryActivity.this, SpecFormActivity.class);
+                mSpecformActivityIntent = new Intent(SpecCategoryActivity.this, SpecFormActivity.class);
 
                 switch (view.getId()){
                     case R.id.spec_subject_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_SUBJECT);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_SUBJECT);
                         break;
 
                     case R.id.spec_project_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_PROJECT);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_PROJECT);
                         break;
 
                     case R.id.spec_contest_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_CONTEST);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_CONTEST);
                         break;
 
                     case R.id.spec_intern_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_INTERN);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_INTERN);
                         break;
 
                     case R.id.spec_prize_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_PRIZE);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_PRIZE);
                         break;
 
                     case R.id.spec_volunteer_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_VOLUNTEER);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_VOLUNTEER);
                         break;
 
                     case R.id.spec_thesis_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_THESIS);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_THESIS);
                         break;
 
                     case R.id.spec_language_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_LANGUAGE);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_LANGUAGE);
                         break;
 
                     case R.id.spec_support_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_SUPPORT);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_SUPPORT);
                         break;
 
                     case R.id.spec_ability_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_ABILITY);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_ABILITY);
                         break;
 
                     case R.id.spec_myspec_layout:
-                        mSpecFormActivityIntent.putExtra("specCategory", INDEX_SPEC_MYSPEC);
+                        mSpecformActivityIntent.putExtra("specCategory", INDEX_SPEC_MYSPEC);
                         break;
                 }
-                startActivity(mSpecFormActivityIntent);
+                startActivity(mSpecformActivityIntent);
             }
         };
 

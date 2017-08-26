@@ -20,7 +20,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
-import org.collapsed.ssuparty_android.ui.spec.SpecCategoryActivity;
+import org.collapsed.ssuparty_android.ui.speccategory.SpecCategoryActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +30,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends BaseFragment  {
 
-    @BindView(R.id.profile_user_image_rouded_img)
+    @BindView(R.id.profile_user_image)
     RoundedImageView mUserPhotoImageView;
     @BindView(R.id.profile_nickname_txt)
     TextView mNicknameText;
@@ -82,7 +82,7 @@ public class ProfileFragment extends BaseFragment  {
                         .setActivityTitle("편집")
                         .setCropShape(CropImageView.CropShape.OVAL)
                         .setAspectRatio(1,1)
-                        .getIntent(getContext());
+                        .getIntent(mContext);
 
                 startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
             }
@@ -91,7 +91,7 @@ public class ProfileFragment extends BaseFragment  {
         mSpecButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext() ,SpecCategoryActivity.class);
+                Intent intent = new Intent(mContext ,SpecCategoryActivity.class);
                 startActivity(intent);
 
             }

@@ -65,10 +65,12 @@
         <activity
             android:name=".ui.signup.SignupActivity"
             android:theme="@style/SSUPartyTheme.NoActionBar" />
+
         <activity
-            android:name=".ui.spec.SpecCategoryActivity"
+            android:name=".ui.speccategory.SpecCategoryActivity"
             android:theme="@style/SSUPartyTheme.NoActionBar" />
-        <activity android:name=".ui.spec.SpecFormActivity" />
+
+        <activity android:name=".ui.specform.SpecFormActivity" />
     </application>
 
 </manifest>

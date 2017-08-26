@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.ui.spec;
+package org.collapsed.ssuparty_android.ui.specform;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,19 +24,19 @@ import butterknife.Unbinder;
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
 
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_ABILITY;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_CONTEST;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_INTERN;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_LANGUAGE;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_MYSPEC;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_PRIZE;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_PROJECT;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_SUBJECT;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_SUPPORT;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_THESIS;
-import static org.collapsed.ssuparty_android.AppConfig.INDEX_SPEC_VOLUNTEER;
-
 public class SpecFormActivity extends AppCompatActivity {
+
+    private static final int INDEX_SPEC_SUBJECT = 11;
+    private static final int INDEX_SPEC_PROJECT = 12;
+    private static final int INDEX_SPEC_CONTEST = 13;
+    private static final int INDEX_SPEC_INTERN = 14;
+    private static final int INDEX_SPEC_SUPPORT = 15;
+    private static final int INDEX_SPEC_VOLUNTEER = 16;
+    private static final int INDEX_SPEC_PRIZE = 17;
+    private static final int INDEX_SPEC_THESIS = 18;
+    private static final int INDEX_SPEC_LANGUAGE = 19;
+    private static final int INDEX_SPEC_ABILITY = 20;
+    private static final int INDEX_SPEC_MYSPEC = 21;
 
     //ActionBarView
     @BindView(R.id.specform_actionbar_title_txt)
