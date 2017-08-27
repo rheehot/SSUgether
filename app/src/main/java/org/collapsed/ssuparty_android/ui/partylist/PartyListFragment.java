@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -33,11 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
-
 public class PartyListFragment extends BaseFragment implements PartyListContract.View {
-
-    private static final int START_CREATE_ACTIVITY = 1;
 
     @BindView(R.id.partylist_fab_btn)
     FloatingActionButton mAddPartyButton;
@@ -74,7 +69,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     public void onViewCreated(View rootView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
         ButterKnife.bind(this, rootView);
-        mUnbinder = ButterKnife.bind(this,rootView);
+        mUnbinder = ButterKnife.bind(this, rootView);
 
         mPresenter = new PartyListPresenter(this);
 
@@ -101,7 +96,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
-                startActivityForResult(intent, START_CREATE_ACTIVITY);
+                getActivity().startActivityForResult(intent, CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE);
             }
         });
 

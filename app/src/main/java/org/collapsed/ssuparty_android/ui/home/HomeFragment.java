@@ -13,9 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.kakao.auth.Session;
-import com.kakao.usermgmt.response.model.UserProfile;
-
 import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
@@ -58,10 +55,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             public void onClick(View view) {
                 mPresenter.fetchNetworkingExample();
 
-                Log.d(TAG, "cache userNickname : " + UserProfile.loadFromCache().getNickname());
-                Log.d(TAG, "getAccessToken : " + Session.getCurrentSession().getTokenInfo().getAccessToken());
-                Log.d(TAG, "getRefreshToken : " + Session.getCurrentSession().getTokenInfo().getRefreshToken());
-                Log.d(TAG, "Expire Time : " + Session.getCurrentSession().getTokenInfo().getRemainedExpiresInAccessTokenTime());
             }
         });
     }

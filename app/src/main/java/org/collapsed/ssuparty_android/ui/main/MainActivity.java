@@ -14,14 +14,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.PartyData;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
@@ -29,10 +32,10 @@ import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
 import org.collapsed.ssuparty_android.helper.BottomNavigationViewHelper;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.home.HomeFragment;
+import org.collapsed.ssuparty_android.ui.profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View, BaseFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener {
 
@@ -70,15 +73,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == CreatePartyActivity.RESULT_OK) {
-           mPresenter.getCreatedPartyInfo(data);
-        }
-    }
+        super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+        if(requestCode == CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE)
+            if(resultCode == CreatePartyActivity.RESULT_OK) {
+                mPresenter.getCreatedPartyInfo(data);
+            }
+        }
 
     private void initView() {
         mBottomNaviAdapter = new BottomNaviPagerAdapter(getSupportFragmentManager(), PAGE_COUNT);
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void inflateViewInPage(int index) {
-        switch (index){
+        switch (index) {
             case AppConfig.INDEX_HOME:
                 break;
 
@@ -204,11 +205,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public Fragment getItem(int position) {
             switch (position) {
                 case AppConfig.INDEX_HOME:
-                    mHomeView = HomeFragment.newInstance();
-                    return mHomeView;
+                    //mHomeView = HomeFragment.newInstance();
+                    //return mHomeView;
+                    ProfileFragment fragment = ProfileFragment.newInstance();
+                    return fragment;
 
                 case AppConfig.INDEX_MY_PARTY:
-                    mMyPartyView  = PartyListFragment.newInstance();
+                    mMyPartyView = PartyListFragment.newInstance();
                     return mMyPartyView;
 
                 case AppConfig.INDEX_ALL_PARTY:
@@ -231,15 +234,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    public HomeFragment getHomeFragment(){
+    public HomeFragment getHomeFragment() {
         return mHomeView;
     }
 
-    public PartyListFragment getMyPartyFragment(){
+    public PartyListFragment getMyPartyFragment() {
         return mMyPartyView;
     }
 
-    public PartyListFragment getAllPartyFragment(){
+    public PartyListFragment getAllPartyFragment() {
         return mAllPartyView;
     }
 }

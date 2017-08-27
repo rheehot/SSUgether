@@ -43,7 +43,6 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     public void initMain() {
-        GlobalApplication.getConfig().initializeUserProfile();
     }
 
     //서버 연동시 이용! 추후에 리턴값은 수정

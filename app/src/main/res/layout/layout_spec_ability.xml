@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <EditText
+            android:id="@+id/specform_ability_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:hint="보유 기술을 입력해주세요! (예 : 4개국어 가능)"
+            android:maxLines="1"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/specform_ability_input_btn"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="2"
+            android:background="@android:color/transparent"
+            android:text="입력"
+            android:textColor="#62589a" />
+    </LinearLayout>
+
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/specform_ability_tag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="15dp"
+        android:padding="10dp"
+        app:container_background_color="#ffffff"
+        app:container_border_color="#d7d0f9"
+        app:container_enable_drag="true"
+        app:container_max_lines="1"
+        app:horizontal_interval="10dp"
+        app:tag_background_color="#d7d0f9"
+        app:tag_border_color="#d7d0f9"
+        app:tag_clickable="true"
+        app:tag_text_color="#939297"
+        app:tag_theme="none"
+        app:vertical_interval="10dp" />
+</LinearLayout>
