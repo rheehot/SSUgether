@@ -1,5 +1,6 @@
 package org.collapsed.ssuparty_android.ui.profile;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import org.collapsed.ssuparty_android.model.ProfileDB;
@@ -37,5 +38,9 @@ public class ProfilePresenter {
 
     public void onChangedIntroduction(String introduction) {
         mModel.writeNewIntroduction(id, introduction);
+    }
+
+    public void onChangedProfileImage(Uri imageUri){
+        mModel.writeNewProfileImage(imageUri);
     }
 }

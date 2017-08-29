@@ -1,6 +1,6 @@
 package org.collapsed.ssuparty_android.model;
 
-import android.util.Log;
+import android.net.Uri;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.otto.Bus;
 
 import org.collapsed.ssuparty_android.event.BusProvider;
+import org.collapsed.ssuparty_android.event.profile.ImageEvent;
 import org.collapsed.ssuparty_android.event.profile.IntroEvent;
 import org.collapsed.ssuparty_android.event.profile.TagEvent;
 
@@ -19,11 +20,7 @@ public class ProfileDB {
 
     private static final String DB_PROFILE_KEY = "profile";
 
-    private static final int DB_PROFILE_INTRO_MODE = 1;
-    private static final int DB_PROFILE_TAG_MODE = 2;
-    private static final int DB_PROFILE_IMAGE_MODE = 3;
-
-    private DatabaseReference mRootRef, mProfileRef, mPersonalTagsRef, mPersonalIntroRef;
+    private DatabaseReference mRootDBRef, mProfileDBRef, mPersonalTagsDBRef, mPersonalIntroDBRef, mPersonalImageDBRef;
     private Bus mEventBus;
 
     //실험용, 나중에는 로컬에 저장된 user id를 받아와서 이용.
@@ -34,18 +31,21 @@ public class ProfileDB {
     }
 
     public void initModel() {
-        mRootRef = FirebaseDatabase.getInstance().getReference();
-        mProfileRef = mRootRef.child(DB_PROFILE_KEY);
-        mPersonalTagsRef = mProfileRef.child(personalId).child("tags");
-        mPersonalIntroRef = mProfileRef.child(personalId).child("introduction");
+        mRootDBRef = FirebaseDatabase.getInstance().getReference();
+        mProfileDBRef = mRootDBRef.child(DB_PROFILE_KEY);
+        mPersonalTagsDBRef = mProfileDBRef.child(personalId).child("tags");
+        mPersonalIntroDBRef = mProfileDBRef.child(personalId).child("introduction");
+        mPersonalImageDBRef = mProfileDBRef.child(personalId).child("image");
 
         mEventBus = BusProvider.getInstance();
 
-        mPersonalIntroRef.addValueEventListener(new ValueEventListener() {
+        mPersonalIntroDBRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String introductionData = dataSnapshot.getValue(String.class);
+
+                //call setNewIntroduction(...) in profileFragment;
                 mEventBus.post(new IntroEvent(introductionData));
             }
 
@@ -55,11 +55,13 @@ public class ProfileDB {
             }
         });
 
-        mPersonalTagsRef.addValueEventListener(new ValueEventListener() {
+        mPersonalTagsDBRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<String> tagsData = (List<String>) dataSnapshot.getValue();
+
+                //call setNewTags(...) in profileFragment;
                 mEventBus.post(new TagEvent(tagsData));
             }
 
@@ -69,17 +71,36 @@ public class ProfileDB {
             }
         });
 
+        mPersonalImageDBRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String uriData = dataSnapshot.getValue(String.class);
+
+                //call setNewImage(...) in profileFragment;
+                mEventBus.post(new ImageEvent(Uri.parse(uriData)));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void writeNewUser(String userId, Object profileData) {
-        mProfileRef.child(userId).setValue(profileData);
+        mProfileDBRef.child(userId).setValue(profileData);
     }
 
     public void writeNewTags(String userId, List<String> tags) {
-        mProfileRef.child(userId).child("tags").setValue(tags);
+        mProfileDBRef.child(userId).child("tags").setValue(tags);
     }
 
     public void writeNewIntroduction(String userId, String introduction) {
-        mProfileRef.child(userId).child("introduction").setValue(introduction);
+        mProfileDBRef.child(userId).child("introduction").setValue(introduction);
     }
+
+    public void writeNewProfileImage(Uri imageUri) {
+        mProfileDBRef.child(personalId).child("image").setValue(imageUri.toString());
+    }
+
 }

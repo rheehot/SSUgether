@@ -7,11 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,6 +21,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.event.BusProvider;
+import org.collapsed.ssuparty_android.event.profile.ImageEvent;
 import org.collapsed.ssuparty_android.event.profile.IntroEvent;
 import org.collapsed.ssuparty_android.event.profile.TagEvent;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
@@ -45,7 +44,7 @@ public class ProfileFragment extends BaseFragment {
     private static final int DB_PROFILE_IMAGE_MODE = 3;
 
     @BindView(R.id.profile_user_image)
-    RoundedImageView mUserPhotoImageView;
+    RoundedImageView mProfileImageView;
     @BindView(R.id.profile_nickname_txt)
     TextView mNicknameText;
     @BindView(R.id.profile_major_txt)
@@ -155,7 +154,7 @@ public class ProfileFragment extends BaseFragment {
             }
         };
 
-        mUserPhotoImageView.setOnClickListener(mClickListener);
+        mProfileImageView.setOnClickListener(mClickListener);
         mWriteIntroButton.setOnClickListener(mClickListener);
         mWriteTagButton.setOnClickListener(mClickListener);
     }
@@ -172,6 +171,12 @@ public class ProfileFragment extends BaseFragment {
         mIntroContentText.setText(introEvent.getIntroduction());
     }
 
+    //from ProfileDB
+    @Subscribe
+    public void setNewImage(ImageEvent imageEvent) {
+        mProfileImageView.setImageURI(imageEvent.getImageUri());
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -179,8 +184,7 @@ public class ProfileFragment extends BaseFragment {
         if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                mUserPhotoImageView.setImageURI(result.getUri());
-                mPresenter.onChangedIntroduction(result.getUri().toString());
+                mPresenter.onChangedProfileImage(result.getUri());
             }
         }
     }
