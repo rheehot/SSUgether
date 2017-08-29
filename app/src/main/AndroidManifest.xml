@@ -66,11 +66,6 @@
             android:name=".ui.signup.SignupActivity"
             android:theme="@style/SSUPartyTheme.NoActionBar" />
 
-        <activity
-            android:name=".ui.speccategory.SpecCategoryActivity"
-            android:theme="@style/SSUPartyTheme.NoActionBar" />
-
-        <activity android:name=".ui.specform.SpecFormActivity" />
     </application>
 
 </manifest>

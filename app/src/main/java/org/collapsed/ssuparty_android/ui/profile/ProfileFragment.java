@@ -1,34 +1,48 @@
 package org.collapsed.ssuparty_android.ui.profile;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.event.BusProvider;
+import org.collapsed.ssuparty_android.event.profile.IntroEvent;
+import org.collapsed.ssuparty_android.event.profile.TagEvent;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
-import org.collapsed.ssuparty_android.ui.speccategory.SpecCategoryActivity;
+import org.collapsed.ssuparty_android.ui.customview.CustomDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import co.lujun.androidtagview.TagContainerLayout;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ProfileFragment extends BaseFragment  {
+public class ProfileFragment extends BaseFragment {
+
+    private static final int DIALOG_NEGATIVE_MODE = 1;
+    private static final int DIALOG_POSITIVE_MODE = 2;
+
+    private static final int DB_PROFILE_INTRO_MODE = 1;
+    private static final int DB_PROFILE_TAG_MODE = 2;
+    private static final int DB_PROFILE_IMAGE_MODE = 3;
 
     @BindView(R.id.profile_user_image)
     RoundedImageView mUserPhotoImageView;
@@ -38,14 +52,26 @@ public class ProfileFragment extends BaseFragment  {
     TextView mMajorText;
     @BindView(R.id.profile_grade_txt)
     TextView mGradeText;
-    @BindView(R.id.profile_info_progressbar)
-    ProgressBar mInfoProgressbar;
-    @BindView(R.id.profile_spec_btn)
-    FloatingActionButton mSpecButton;
+
+    @BindView(R.id.profile_intro_write_btn)
+    ImageButton mWriteIntroButton;
+    @BindView(R.id.profile_intro_content_txt)
+    TextView mIntroContentText;
+    @BindView(R.id.profile_tag_write_btn)
+    ImageButton mWriteTagButton;
+    @BindView(R.id.profile_tag_layout)
+    TagContainerLayout mTagLayout;
 
     private Unbinder mUnbinder;
     private Context mContext;
     private Uri imageUri;
+    private AlertDialog.Builder mDialogBuilder;
+    private View.OnClickListener mClickListener;
+    private String mContentValue;
+    private boolean mIsFirstTime = true;
+
+    private ProfilePresenter mPresenter;
+    private Bus mEventBus = BusProvider.getInstance();
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -69,54 +95,99 @@ public class ProfileFragment extends BaseFragment  {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mEventBus.register(this);
+
         mUnbinder = ButterKnife.bind(this, view);
         mContext = getContext();
+        mPresenter = new ProfilePresenter(this);
+
         initView();
     }
 
-    public void initView(){
-        mUserPhotoImageView.setOnClickListener(new View.OnClickListener() {
+    public void initView() {
+        mTagLayout.addTag("태그를 등록해주세요!");
+
+        mClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
-                        .setActivityTitle("편집")
-                        .setCropShape(CropImageView.CropShape.OVAL)
-                        .setAspectRatio(1,1)
-                        .getIntent(mContext);
+                switch (view.getId()) {
+                    case R.id.profile_user_image:
+                        Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
+                                .setActivityTitle("편집")
+                                .setCropShape(CropImageView.CropShape.OVAL)
+                                .setAspectRatio(1, 1)
+                                .getIntent(mContext);
 
-                startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                        startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                        break;
+
+                    case R.id.profile_intro_write_btn:
+                        final CustomDialog introDialog = new CustomDialog(getActivity());
+                        introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dia) {
+                                if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
+                                    if (!introDialog.getText().equals("")) {
+                                        mPresenter.onChangedIntroduction(introDialog.getText());
+                                    }
+                                }
+                            }
+                        });
+
+                        introDialog.show();
+                        break;
+
+                    case R.id.profile_tag_write_btn:
+                        final CustomDialog tagDialog = new CustomDialog(getActivity());
+                        tagDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dia) {
+                                if (tagDialog.getMode() == DIALOG_POSITIVE_MODE) {
+                                    mTagLayout.addTag(tagDialog.getText());
+                                    mPresenter.onChangedTags(mTagLayout.getTags());
+                                }
+                            }
+                        });
+
+                        tagDialog.show();
+                        break;
+                }
             }
-        });
+        };
 
-        mSpecButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext ,SpecCategoryActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
+        mUserPhotoImageView.setOnClickListener(mClickListener);
+        mWriteIntroButton.setOnClickListener(mClickListener);
+        mWriteTagButton.setOnClickListener(mClickListener);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mUnbinder.unbind();
+    //from ProfileDB
+    @Subscribe
+    public void setNewTags(TagEvent tagEvent) {
+        mTagLayout.setTags(tagEvent.getTags());
+    }
+
+    //from ProfileDB
+    @Subscribe
+    public void setNewIntroduction(IntroEvent introEvent) {
+        mIntroContentText.setText(introEvent.getIntroduction());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
+        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Log.d("crop", "result ok");
-                Log.d("crop", "requset code : " + requestCode);
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 mUserPhotoImageView.setImageURI(result.getUri());
-                Toast.makeText(getActivity(), "Cropping successful, Sample: " + result.getSampleSize(), Toast.LENGTH_LONG).show();
+                mPresenter.onChangedIntroduction(result.getUri().toString());
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }

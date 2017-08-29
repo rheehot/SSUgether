@@ -89,8 +89,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mPartyAdapter);
 
-        //더미 데이터 - 프로필 테스트용
-        addProfileItemToList(new ProfileData(mPresenter.getUserProfileImageUrl(),"지훈123","컴퓨터","1학년"));
 
         mAddPartyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +222,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
             ProfileData item = mProfileDataList.get(position);
 
-            Glide.with(mContext).load(item.getProfileImageId()).into(((ProfileViewHolder)viewHolder).profileImgae);
+            Glide.with(mContext).load(item.getProfileImageUri()).into(((ProfileViewHolder)viewHolder).profileImgae);
             ((ProfileViewHolder)viewHolder).nicknameText.setText(item.getNickname());
             ((ProfileViewHolder)viewHolder).majorText.setText(item.getMajor());
             ((ProfileViewHolder)viewHolder).gradeText.setText(item.getGrade());

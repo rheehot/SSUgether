@@ -6,10 +6,9 @@ import android.support.annotation.NonNull;
 import com.squareup.otto.Subscribe;
 
 import org.collapsed.ssuparty_android.AppConfig;
-import org.collapsed.ssuparty_android.GlobalApplication;
 import org.collapsed.ssuparty_android.event.BusProvider;
 import org.collapsed.ssuparty_android.event.PartyEvent;
-import org.collapsed.ssuparty_android.model.FirebaseDB;
+import org.collapsed.ssuparty_android.model.PartyDB;
 import org.collapsed.ssuparty_android.model.PartyData;
 
 import java.util.List;
@@ -34,11 +33,11 @@ public class MainPresenter implements MainContract.UserActionListener {
     private List<String> mTags;
 
     private MainActivity mView;
-    private FirebaseDB mModel;
+    private PartyDB mModel;
 
     public MainPresenter(@NonNull MainActivity view) {
         this.mView = checkNotNull(view);
-        this.mModel = new FirebaseDB(this);
+        this.mModel = new PartyDB(this);
         BusProvider.getInstance().register(this);
     }
 
@@ -74,7 +73,7 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     public void setDataInFirebase(String key, Object data) {
-        mModel.pushDataToFirebaseDB(key, data);
+        mModel.writeNewParty(key, data);
     }
 
 }

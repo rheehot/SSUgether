@@ -1,5 +1,7 @@
 package org.collapsed.ssuparty_android.model;
 
+import android.util.Log;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,14 +14,14 @@ import org.collapsed.ssuparty_android.event.BusProvider;
 import org.collapsed.ssuparty_android.event.PartyEvent;
 import org.collapsed.ssuparty_android.ui.main.MainPresenter;
 
-public class FirebaseDB {
+public class PartyDB {
 
     private static final String DB_ALL_PARTY_KEY = "all_party";
     private static final String DB_MY_PARTY_KEY = "my_party";
 
     private DatabaseReference mRootRef, mAllPartyRef, mMyPartyRef;
 
-    public FirebaseDB(MainPresenter presenter) {
+    public PartyDB(MainPresenter presenter) {
 
         initModel();
     }
@@ -34,6 +36,7 @@ public class FirebaseDB {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 PartyData partydata = dataSnapshot.getValue(PartyData.class);
                 BusProvider.getInstance().post(new PartyEvent(partydata, AppConfig.INDEX_ALL_PARTY));
+                Log.d("dasd","ok!");
             }
 
             @Override
@@ -51,7 +54,7 @@ public class FirebaseDB {
 
     }
 
-    public void pushDataToFirebaseDB(String key, Object data) {
+    public void writeNewParty(String key, Object data) {
         switch (key) {
             case DB_ALL_PARTY_KEY:
                 mAllPartyRef.push().setValue(data);
