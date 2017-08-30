@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 break;
 
             case AppConfig.INDEX_MY_PARTY:
-                mMyPartyView.inflateView(index);
+//                mMyPartyView.inflateView(index);
                 break;
 
             case AppConfig.INDEX_ALL_PARTY:
@@ -205,14 +205,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public Fragment getItem(int position) {
             switch (position) {
                 case AppConfig.INDEX_HOME:
-                    //mHomeView = HomeFragment.newInstance();
-                    //return mHomeView;
-                    ProfileFragment fragment = ProfileFragment.newInstance();
-                    return fragment;
+                    mHomeView = HomeFragment.newInstance();
+                    return mHomeView;
 
                 case AppConfig.INDEX_MY_PARTY:
-                    mMyPartyView = PartyListFragment.newInstance();
-                    return mMyPartyView;
+                    /*mMyPartyView = PartyListFragment.newInstance();
+                    return mMyPartyView;*/
+                    ProfileFragment fragment = ProfileFragment.newInstance();
+                    return fragment;
 
                 case AppConfig.INDEX_ALL_PARTY:
                     mAllPartyView = PartyListFragment.newInstance();

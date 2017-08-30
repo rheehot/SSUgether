@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -21,11 +20,12 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.event.BusProvider;
-import org.collapsed.ssuparty_android.event.profile.ImageEvent;
+import org.collapsed.ssuparty_android.event.profile.FirstProfileEvent;
 import org.collapsed.ssuparty_android.event.profile.IntroEvent;
 import org.collapsed.ssuparty_android.event.profile.TagEvent;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomDialog;
+import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,12 +39,8 @@ public class ProfileFragment extends BaseFragment {
     private static final int DIALOG_NEGATIVE_MODE = 1;
     private static final int DIALOG_POSITIVE_MODE = 2;
 
-    private static final int DB_PROFILE_INTRO_MODE = 1;
-    private static final int DB_PROFILE_TAG_MODE = 2;
-    private static final int DB_PROFILE_IMAGE_MODE = 3;
-
     @BindView(R.id.profile_user_image)
-    RoundedImageView mProfileImageView;
+    ImageView mProfileImageView;
     @BindView(R.id.profile_nickname_txt)
     TextView mNicknameText;
     @BindView(R.id.profile_major_txt)
@@ -64,10 +60,8 @@ public class ProfileFragment extends BaseFragment {
     private Unbinder mUnbinder;
     private Context mContext;
     private Uri imageUri;
-    private AlertDialog.Builder mDialogBuilder;
     private View.OnClickListener mClickListener;
     private String mContentValue;
-    private boolean mIsFirstTime = true;
 
     private ProfilePresenter mPresenter;
     private Bus mEventBus = BusProvider.getInstance();
@@ -104,7 +98,8 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void initView() {
-        mTagLayout.addTag("태그를 등록해주세요!");
+        //mTagLayout.addTag("태그를 등록해주세요!");
+        inflateProfileImage();
 
         mClickListener = new View.OnClickListener() {
             @Override
@@ -159,22 +154,26 @@ public class ProfileFragment extends BaseFragment {
         mWriteTagButton.setOnClickListener(mClickListener);
     }
 
-    //from ProfileDB
+    public void inflateProfileImage() {
+        mPresenter.loadImageUrlFromFirebase();
+    }
+
+    //called by ProfileDB
     @Subscribe
     public void setNewTags(TagEvent tagEvent) {
         mTagLayout.setTags(tagEvent.getTags());
     }
 
-    //from ProfileDB
+    //called by ProfileDB
     @Subscribe
     public void setNewIntroduction(IntroEvent introEvent) {
         mIntroContentText.setText(introEvent.getIntroduction());
     }
 
-    //from ProfileDB
+    //called by ProfileDB
     @Subscribe
-    public void setNewImage(ImageEvent imageEvent) {
-        mProfileImageView.setImageURI(imageEvent.getImageUri());
+    public void inflateProfileImageInFirstTime(FirstProfileEvent imageEvent) {
+        ImageUtil.loadImageForUrl(mProfileImageView, imageEvent.getUrl(), null);
     }
 
     @Override
@@ -185,6 +184,7 @@ public class ProfileFragment extends BaseFragment {
             if (resultCode == RESULT_OK) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 mPresenter.onChangedProfileImage(result.getUri());
+                mProfileImageView.setImageURI(result.getUri());
             }
         }
     }

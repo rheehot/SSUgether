@@ -6,14 +6,13 @@ import android.support.annotation.NonNull;
 import org.collapsed.ssuparty_android.model.ProfileDB;
 import org.collapsed.ssuparty_android.model.ProfileData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ProfilePresenter {
 
-    //실험용
+    //테스트용 ID
     String id = "kingjihoon123";
 
     private ProfileFragment mView;
@@ -28,8 +27,8 @@ public class ProfilePresenter {
         /*List<String> tags = new ArrayList<>();
         tags.add("숭실대학교");
         data = new ProfileData(id,"킹", "컴퓨터","","정보를 입력해주세요!",tags);
-
         mModel.writeNewUser(id, data);*/
+
     }
 
     public void onChangedTags(List<String> tags) {
@@ -42,5 +41,9 @@ public class ProfilePresenter {
 
     public void onChangedProfileImage(Uri imageUri){
         mModel.writeNewProfileImage(imageUri);
+    }
+
+    public void loadImageUrlFromFirebase(){
+        mModel.passImageUrl();
     }
 }

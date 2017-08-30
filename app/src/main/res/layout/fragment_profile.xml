@@ -46,19 +46,16 @@
             android:layout_marginTop="15dp"
             android:orientation="vertical">
 
-            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <org.collapsed.ssuparty_android.ui.customview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_user_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
-                android:scaleType="fitCenter"
                 android:src="@drawable/profile_man"
-                app:riv_border_color="#cbc1f2"
-                app:riv_border_width="1dip"
-                app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true"
-                app:riv_oval="true" />/>
+                app:civ_border_width="1dp"
+                app:civ_border_color="#cbc1f2"/>
 
             <TextView
                 android:id="@+id/profile_nickname_txt"
