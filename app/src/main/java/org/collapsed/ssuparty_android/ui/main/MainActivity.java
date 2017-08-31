@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private static final int PAGE_COUNT = 3;
     private static final int FONT_BOLD = 1;
     private static final int FONT_REGULAR = 0;
+    private static final int INDEX_HOME = 0;
+    private static final int INDEX_MY_PARTY = 1;
+    private static final int INDEX_ALL_PARTY = 2;
 
     @BindView(R.id.main_pager)
     MainViewPager mViewPager;
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mViewPager.addOnPageChangeListener(this);
 
         applyFontToBottomNavigationView(mBottomNavigationView, FONT_BOLD);
-        applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, AppConfig.INDEX_HOME);
+        applyFontToBottomNavigationViewItem(mBottomNavigationView, FONT_BOLD, INDEX_HOME);
 
         BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -97,18 +100,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bn_home:
-                        mViewPager.setCurrentItem(AppConfig.INDEX_HOME, false);
-                        inflateViewInPage(AppConfig.INDEX_HOME);
+                        mViewPager.setCurrentItem(INDEX_HOME, false);
+                        inflateViewInPage(INDEX_HOME);
                         return true;
 
                     case R.id.bn_myparty:
-                        mViewPager.setCurrentItem(AppConfig.INDEX_MY_PARTY, false);
-                        inflateViewInPage(AppConfig.INDEX_MY_PARTY);
+                        mViewPager.setCurrentItem(INDEX_MY_PARTY, false);
+                        inflateViewInPage(INDEX_MY_PARTY);
                         return true;
 
                     case R.id.bn_allparty:
-                        mViewPager.setCurrentItem(AppConfig.INDEX_ALL_PARTY, false);
-                        inflateViewInPage(AppConfig.INDEX_ALL_PARTY);
+                        mViewPager.setCurrentItem(INDEX_ALL_PARTY, false);
+                        inflateViewInPage(INDEX_ALL_PARTY);
                         return true;
                 }
                 return false;
@@ -118,14 +121,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void inflateViewInPage(int index) {
         switch (index) {
-            case AppConfig.INDEX_HOME:
+            case INDEX_HOME:
                 break;
 
-            case AppConfig.INDEX_MY_PARTY:
+            case INDEX_MY_PARTY:
 //                mMyPartyView.inflateView(index);
                 break;
 
-            case AppConfig.INDEX_ALL_PARTY:
+            case INDEX_ALL_PARTY:
                 mAllPartyView.inflateView(index);
                 break;
 
@@ -204,17 +207,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case AppConfig.INDEX_HOME:
+                case INDEX_HOME:
                     mHomeView = HomeFragment.newInstance();
                     return mHomeView;
 
-                case AppConfig.INDEX_MY_PARTY:
+                case INDEX_MY_PARTY:
                     /*mMyPartyView = PartyListFragment.newInstance();
                     return mMyPartyView;*/
                     ProfileFragment fragment = ProfileFragment.newInstance();
                     return fragment;
 
-                case AppConfig.INDEX_ALL_PARTY:
+                case INDEX_ALL_PARTY:
                     mAllPartyView = PartyListFragment.newInstance();
                     return mAllPartyView;
 

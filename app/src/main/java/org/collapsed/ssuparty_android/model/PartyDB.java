@@ -18,6 +18,9 @@ public class PartyDB {
 
     private static final String DB_ALL_PARTY_KEY = "all_party";
     private static final String DB_MY_PARTY_KEY = "my_party";
+    private static final int INDEX_HOME = 0;
+    private static final int INDEX_MY_PARTY = 1;
+    private static final int INDEX_ALL_PARTY = 2;
 
     private DatabaseReference mRootRef, mAllPartyRef, mMyPartyRef;
 
@@ -35,7 +38,7 @@ public class PartyDB {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 PartyData partydata = dataSnapshot.getValue(PartyData.class);
-                BusProvider.getInstance().post(new PartyEvent(partydata, AppConfig.INDEX_ALL_PARTY));
+                BusProvider.getInstance().post(new PartyEvent(partydata, INDEX_ALL_PARTY));
                 Log.d("dasd","ok!");
             }
 

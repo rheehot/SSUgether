@@ -44,6 +44,6 @@ public class ProfilePresenter {
     }
 
     public void loadImageUrlFromFirebase(){
-        mModel.passImageUrl();
+        mModel.loadImageUrl();
     }
 }

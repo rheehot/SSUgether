@@ -39,6 +39,8 @@ import static android.app.Activity.RESULT_OK;
 public class ProfileFragment extends BaseFragment {
 
     private static final int DIALOG_POSITIVE_MODE = 2;
+    private static final int DIALOG_TAG = 11;
+    private static final int DIALOG_INTRO = 12;
 
     @BindView(R.id.profile_user_image)
     ImageView mProfileImageView;
@@ -107,44 +109,15 @@ public class ProfileFragment extends BaseFragment {
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.profile_user_image:
-                        Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
-                                .setActivityTitle("편집")
-                                .setCropShape(CropImageView.CropShape.OVAL)
-                                .setAspectRatio(1, 1)
-                                .getIntent(mContext);
-
-                        startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                        startCropActivity();
                         break;
 
                     case R.id.profile_intro_write_btn:
-                        final CustomDialog introDialog = new CustomDialog(getActivity());
-                        introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dia) {
-                                if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
-                                    if (!introDialog.getText().equals("")) {
-                                        mPresenter.onChangedIntroduction(introDialog.getText());
-                                    }
-                                }
-                            }
-                        });
-
-                        introDialog.show();
+                        showCustomDialog(DIALOG_INTRO);
                         break;
 
                     case R.id.profile_tag_write_btn:
-                        final CustomDialog tagDialog = new CustomDialog(getActivity());
-                        tagDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dia) {
-                                if (tagDialog.getMode() == DIALOG_POSITIVE_MODE) {
-                                    mTagLayout.addTag(tagDialog.getText());
-                                    mPresenter.onChangedTags(mTagLayout.getTags());
-                                }
-                            }
-                        });
-
-                        tagDialog.show();
+                        showCustomDialog(DIALOG_TAG);
                         break;
                 }
             }
@@ -218,6 +191,51 @@ public class ProfileFragment extends BaseFragment {
                 mProfileImageView.setImageURI(result.getUri());
             }
         }
+    }
+
+    public void showCustomDialog(int mode) {
+        switch (mode) {
+            case DIALOG_INTRO:
+                final CustomDialog introDialog = new CustomDialog(getActivity());
+                introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dia) {
+                        if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
+                            if (!introDialog.getText().equals("")) {
+                                mPresenter.onChangedIntroduction(introDialog.getText());
+                            }
+                        }
+                    }
+                });
+
+                introDialog.show();
+                break;
+
+            case DIALOG_TAG:
+                final CustomDialog tagDialog = new CustomDialog(getActivity());
+                tagDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dia) {
+                        if (tagDialog.getMode() == DIALOG_POSITIVE_MODE) {
+                            mTagLayout.addTag(tagDialog.getText());
+                            mPresenter.onChangedTags(mTagLayout.getTags());
+                        }
+                    }
+                });
+
+                tagDialog.show();
+                break;
+        }
+    }
+
+    public void startCropActivity() {
+        Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
+                .setActivityTitle("편집")
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setAspectRatio(1, 1)
+                .getIntent(mContext);
+
+        startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
     }
 
     @Override

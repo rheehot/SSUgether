@@ -29,6 +29,10 @@ public class MainPresenter implements MainContract.UserActionListener {
     private static final String DB_ALL_PARTY_KEY = "all_party";
     private static final String DB_MY_PARTY_KEY = "my_party";
 
+    private static final int INDEX_HOME = 0;
+    private static final int INDEX_MY_PARTY = 1;
+    private static final int INDEX_ALL_PARTY = 2;
+
     private String mTitle, mCategory, mDeadline, mInfo, mMemberNum;
     private List<String> mTags;
 
@@ -62,11 +66,11 @@ public class MainPresenter implements MainContract.UserActionListener {
     @Subscribe
     public void onPartyAdded(PartyEvent addEvent) {
         switch (addEvent.getKey()) {
-            case AppConfig.INDEX_MY_PARTY:
+            case INDEX_MY_PARTY:
                 mView.getMyPartyFragment().addPartyItemToList(addEvent.getPartyData());
                 break;
 
-            case AppConfig.INDEX_ALL_PARTY:
+            case INDEX_ALL_PARTY:
                 mView.getAllPartyFragment().addPartyItemToList(addEvent.getPartyData());
                 break;
         }

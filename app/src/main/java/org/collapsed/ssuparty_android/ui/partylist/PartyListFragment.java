@@ -35,6 +35,10 @@ import butterknife.Unbinder;
 
 public class PartyListFragment extends BaseFragment implements PartyListContract.View {
 
+    private static final int INDEX_HOME = 0;
+    private static final int INDEX_MY_PARTY = 1;
+    private static final int INDEX_ALL_PARTY = 2;
+
     @BindView(R.id.partylist_fab_btn)
     FloatingActionButton mAddPartyButton;
     @BindView(R.id.partylist_list)
@@ -114,13 +118,13 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     public void inflateView(int index) {
         switch (index) {
-            case AppConfig.INDEX_HOME:
+            case INDEX_HOME:
                 break;
 
-            case AppConfig.INDEX_MY_PARTY:
+            case INDEX_MY_PARTY:
                 break;
 
-            case AppConfig.INDEX_ALL_PARTY:
+            case INDEX_ALL_PARTY:
                 showAddPartyButton();
                 mRecyclerView.setAdapter(mPartyAdapter);
                 break;

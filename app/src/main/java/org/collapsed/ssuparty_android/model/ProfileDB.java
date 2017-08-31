@@ -44,7 +44,7 @@ public class ProfileDB {
         mRootDBRef = FirebaseDatabase.getInstance().getReference();
         mProfileDBRef = mRootDBRef.child(DB_PROFILE_KEY);
         mPersonalTagsDBRef = mProfileDBRef.child(personalId).child("tags");
-        mPersonalIntroDBRef = mProfileDBRef.child(personalId).child("introduction");
+        mPersonalIntroDBRef = mProfileDBRef.child(personalId).child("intro");
 
         mEventBus = BusProvider.getInstance();
 
@@ -94,7 +94,7 @@ public class ProfileDB {
     }
 
     public void writeNewIntroduction(String userId, String introduction) {
-        mProfileDBRef.child(userId).child("introduction").setValue(introduction);
+        mProfileDBRef.child(userId).child("intro").setValue(introduction);
     }
 
     //추후에 프로필 리스트에서 업데이트 기능 구현할 때 onSuccess 부분 다시 작성
@@ -116,7 +116,7 @@ public class ProfileDB {
         });
     }
 
-    public void passImageUrl() {
+    public void loadImageUrl() {
         StorageReference reference = mRootStorageRef.child("images/"+filename);
         reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
