@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="view"
+            type="org.collapsed.ssuparty_android.ui.home.HomeFragment" />
+
+        <variable
+            name="presenter"
+            type="org.collapsed.ssuparty_android.ui.home.HomePresenter" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/home_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:paddingEnd="14dp"
+            android:paddingStart="14dp"
+            android:animateLayoutChanges="true"
+            app:contentInsetStart="0dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="9"
+                        android:background="@android:color/transparent"
+                        android:hint="보유 기술 및 모임, 공모전 이름 검색"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> view.changeSearchResultState()}"
+                        android:src="@drawable/ic_search_black_24px" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </android.support.v7.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/home_logo"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_above="@id/home_toolbar"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
+
+        <ScrollView
+            android:id="@+id/home_search_result_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:visibility="gone">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="17dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="프로필"
+                        android:textColor="@color/titleTextPrimary"
+                        android:textSize="@dimen/title_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_show_all_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/more"
+                        android:onClick="@{() -> view.showAllProfiles()}"
+                        android:text="전체보기"
+                        android:textColor="@color/titleTextPrimary"
+                        android:textSize="@dimen/secondary_text_size" />
+                </RelativeLayout>
+
+                <include layout="@layout/layout_userprofile_row" />
+
+                <include layout="@layout/layout_userprofile_row" />
+
+                <include layout="@layout/divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="모임"
+                        android:textColor="@color/titleTextPrimary"
+                        android:textSize="@dimen/title_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_show_all_meetups"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/more"
+                        android:text="전체보기"
+                        android:textColor="@color/titleTextPrimary"
+                        android:textSize="@dimen/secondary_text_size" />
+                </RelativeLayout>
+
+                <org.collapsed.ssuparty_android.ui.customview.NonScrollListView
+                    android:id="@+id/home_meetups_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:entries="@array/signup_major"
+                    android:orientation="vertical" />
+
+                <include layout="@layout/divider" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="공모전"
+                        android:textColor="@color/titleTextPrimary"
+                        android:textSize="@dimen/title_text_size" />
+
+                    <TextView
+                        android:id="@+id/home_show_all_contests"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/more"
+                        android:text="전체보기"
+                        android:textColor="@color/titleTextPrimary"
+                        android:textSize="@dimen/secondary_text_size" />
+                </RelativeLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <GridView
+                            android:id="@+id/home_contests_grid"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:columnWidth="160dp"
+                            android:horizontalSpacing="4dp"
+                            android:stretchMode="none"
+                            android:verticalSpacing="0dp" />
+                    </FrameLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

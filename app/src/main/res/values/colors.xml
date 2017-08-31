@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#a25efc</color>
-    <color name="colorPrimaryDark">#8b5df9</color>
-    <color name="colorAccent">#bcb5e1</color>
+    <color name="colorPrimary">#a15ffb</color>
+    <color name="colorPrimaryDark">#6c30c7</color>
+    <color name="colorAccent">#60dce4</color>
     <color name="colorWhite">#ffffffff</color>
 
-    <color name="sky_blue2">#66b8ff</color>
+    <color name="titleTextPrimary">#a15ffb</color>
+    <color name="secondaryTextPrimary">#a896ec</color>
+
+    <color name="weakBGColor">#d7d0f9</color>
+    <color name="strongBGColor">#a896ec</color>
 </resources>
