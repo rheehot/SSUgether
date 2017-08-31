@@ -24,6 +24,7 @@ import org.collapsed.ssuparty_android.model.PartyData;
 import org.collapsed.ssuparty_android.model.ProfileData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
+import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mPartyAdapter = new PartyListAdapter();
-        mProflieAdapter = new ProfileListAdapter(getActivity());
+        mProflieAdapter = new ProfileListAdapter();
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -205,12 +206,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private Context mContext;
-
-        public ProfileListAdapter(Context context) {
-            mContext = context;
-        }
-
         @Override
         public ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -222,7 +217,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
             ProfileData item = mProfileDataList.get(position);
 
-            Glide.with(mContext).load(item.getProfileImageUri()).into(((ProfileViewHolder)viewHolder).profileImgae);
+            ImageUtil.loadUrlImage(((ProfileViewHolder)viewHolder).profileImgae, item.getProfileImageUri());
             ((ProfileViewHolder)viewHolder).nicknameText.setText(item.getNickname());
             ((ProfileViewHolder)viewHolder).majorText.setText(item.getMajor());
             ((ProfileViewHolder)viewHolder).gradeText.setText(item.getGrade());

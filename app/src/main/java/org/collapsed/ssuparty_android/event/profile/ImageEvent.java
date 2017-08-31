@@ -10,7 +10,7 @@ public class ImageEvent {
         this.mUrl = url;
     }
 
-    public String getReference(){
+    public String getReference() {
         return mUrl;
     }
 

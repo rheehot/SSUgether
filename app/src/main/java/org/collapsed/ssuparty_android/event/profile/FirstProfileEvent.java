@@ -7,7 +7,7 @@ public class FirstProfileEvent {
         mUrl = url;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return mUrl;
     }
 }
