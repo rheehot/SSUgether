@@ -15,10 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="소개 입력!"
+            android:text="내용을 입력해주세요!"
             android:textSize="16sp"
             android:textStyle="bold" />
-
 
         <EditText
             android:id="@+id/intro_dialog_content_edit"

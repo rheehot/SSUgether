@@ -40,7 +40,7 @@ public class CustomDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_profile_intro);
+        setContentView(R.layout.dialog_profile);
         ButterKnife.bind(this);
 
         mDoneButton.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +60,6 @@ public class CustomDialog extends Dialog {
             }
         });
     }
-
 
     public String getText() {
         return mContentText;

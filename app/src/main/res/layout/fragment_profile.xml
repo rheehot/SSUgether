@@ -53,7 +53,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
-                android:src="@drawable/profile_man"
+                android:src="@drawable/camera"
                 app:civ_border_width="1dp"
                 app:civ_border_color="#cbc1f2"/>
 
