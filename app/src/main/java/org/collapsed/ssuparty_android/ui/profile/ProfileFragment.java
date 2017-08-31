@@ -204,7 +204,7 @@ public class ProfileFragment extends BaseFragment {
     //called by ProfileDB
     @Subscribe
     public void inflateProfileImageInFirstTime(FirstProfileEvent imageEvent) {
-        ImageUtil.loadUrlImage(mProfileImageView, imageEvent.getUrl(), null);
+        ImageUtil.loadUrlImage(mProfileImageView, imageEvent.getUrl());
     }
 
     @Override
