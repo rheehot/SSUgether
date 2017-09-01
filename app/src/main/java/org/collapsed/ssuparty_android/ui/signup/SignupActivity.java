@@ -1,5 +1,6 @@
 package org.collapsed.ssuparty_android.ui.signup;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.userprofile.UserProfileDB;
+import org.collapsed.ssuparty_android.model.userprofile.UserProfileData;
+import org.collapsed.ssuparty_android.ui.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +53,7 @@ public class SignupActivity extends AppCompatActivity {
     Button mSubmitBtn;
 
     private SignupPresenter mPresenter;
+    private String mToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +71,7 @@ public class SignupActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(view -> finish());
 
         mNameEditText.addTextChangedListener(new TextWatcher() {
             String curStr;
@@ -154,11 +154,28 @@ public class SignupActivity extends AppCompatActivity {
         ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.signup_major));
         mMajorEditText.setAdapter(autoCompleteAdapter);
 
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 회원가입 요청
-            }
-        });
+        mSubmitBtn.setOnClickListener(view -> signupFinish());
+    }
+
+    public void signupFinish() {
+        Intent intent = getIntent();
+
+        String uid = intent.getStringExtra("uid");
+        String imgUrl = intent.getStringExtra("imgUrl");
+        String email = intent.getStringExtra("email");
+        String name = mNameEditText.getText().toString();
+        String nickname = mNickNameEditText.getText().toString();
+        String major = mMajorEditText.getText().toString();
+        long grade = mGradeSpinner.getSelectedItemPosition();
+        long schoolID = Long.parseLong(mStdnumEditText.getText().toString());
+        long gender = mGenderSpinner.getSelectedItemPosition();
+        UserProfileData data = new UserProfileData(uid, email, imgUrl, name, nickname, major, grade, schoolID, gender);
+
+        UserProfileDB db = new UserProfileDB();
+        db.writeNewUser(data);
+
+        Intent moveIntent = new Intent(this, MainActivity.class);
+        startActivity(moveIntent);
+        finish();
     }
 }

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="view"
             type="org.collapsed.ssuparty_android.ui.home.HomeFragment" />

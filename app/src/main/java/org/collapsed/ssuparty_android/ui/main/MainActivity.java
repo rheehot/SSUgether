@@ -21,6 +21,7 @@ import android.view.SubMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.collapsed.ssuparty_android.AppConfig;

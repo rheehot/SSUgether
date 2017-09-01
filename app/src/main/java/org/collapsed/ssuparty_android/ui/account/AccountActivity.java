@@ -3,6 +3,7 @@ package org.collapsed.ssuparty_android.ui.account;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.ui.main.MainActivity;
@@ -18,7 +19,6 @@ import butterknife.ButterKnife;
 public class AccountActivity extends AppCompatActivity implements AccountContract.View {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
 
     @BindView(R.id.account_facebook_login_btn)
     LoginButton mLoginButton;
@@ -50,10 +50,13 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
     }
 
     @Override
-    public void redirectSignupActivity() {
-        final Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);
-        finish();
+    public void showFailedFBLogin() {
+        Toast.makeText(this, "페이스북 로그인에 실패하였습니다.", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showCanceledFBLogin() {
+        Toast.makeText(this, "페이스북 로그인이 완료되지 않았습니다.", Toast.LENGTH_LONG).show();
     }
 
 }
