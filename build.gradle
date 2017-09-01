@@ -3,20 +3,21 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath "io.realm:realm-gradle-plugin:2.2.0"
+        classpath "io.realm:realm-gradle-plugin:3.4.0"
         classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.6.1'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        mavenCentral()
         maven { url "https://jitpack.io" }
     }
 }
@@ -45,4 +46,14 @@ ext {
     rulesVersion = "0.5"
     espressoVersion = "2.2.2"
     butterknifeVersion = "8.4.0"
+}
+
+subprojects {
+    tasks.withType(com.android.build.gradle.internal.tasks.databinding.DataBindingExportBuildInfoTask) { task ->
+        if (task.name.endsWith("AndroidTest")) {
+            task.finalizedBy(tasks.create("${task.name}Workaround") << {
+                task.output.deleteDir()
+            })
+        }
+    }
 }

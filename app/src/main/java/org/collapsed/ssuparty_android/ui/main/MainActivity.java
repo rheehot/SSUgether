@@ -52,11 +52,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     MainViewPager mViewPager;
     @BindView(R.id.main_bottom_navigation)
     BottomNavigationView mBottomNavigationView;
-    @BindView(R.id.main_toolbar_title_txt)
-    TextView mToolbarTitle;
 
     private MainPresenter mPresenter;
-    private PartyListFragment mCommonListFragment;
 
     private static HomeFragment mHomeView;
     private static PartyListFragment mAllPartyView, mMyPartyView;

@@ -1,17 +1,15 @@
 package org.collapsed.ssuparty_android.ui.home;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import org.collapsed.ssuparty_android.model.ExampleAdBanner;
-import org.collapsed.ssuparty_android.network.ExampleAdBannerFetcher;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.collapsed.ssuparty_android.model.profile.UserProfileVO;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-class HomePresenter implements HomeContract.UserActionListener, HomeContract.OnDataFetchedListener {
+public class HomePresenter implements HomeContract.UserActionListener {
     private static final String TAG = HomePresenter.class.getSimpleName();
 
     private HomeFragment mView;
@@ -21,27 +19,9 @@ class HomePresenter implements HomeContract.UserActionListener, HomeContract.OnD
     }
 
     @Override
-    public void fetchNetworkingExample() {
-        ExampleAdBannerFetcher fetcher = new ExampleAdBannerFetcher(this);
-        fetcher.executeFetch();
-    }
-
-    @Override
-    public void onBannerDataFetched(String response) {
-        parseResponseData(response);
-    }
-
-    @Override
-    public void parseResponseData(String response) {
-        JSONObject object;
-        String banners = null;
-        try {
-            object = new JSONObject(response);
-            banners = object.getString("banners");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        List<ExampleAdBanner> bannerDatas = ExampleAdBanner.fromJson(banners);
-        mView.showBannersDataWithToast(bannerDatas);
+    public ArrayList<UserProfileVO> fetchAllProfiles() {
+        Log.d(TAG, "fetchAllProfiles");
+        mView.showAllProfiles();
+        return null;
     }
 }

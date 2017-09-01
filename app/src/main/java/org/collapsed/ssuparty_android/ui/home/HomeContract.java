@@ -1,23 +1,22 @@
 package org.collapsed.ssuparty_android.ui.home;
 
-import org.collapsed.ssuparty_android.model.ExampleAdBanner;
+import org.collapsed.ssuparty_android.model.profile.UserProfileVO;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface HomeContract {
     interface View {
-        void initView(android.view.View rootView);
+        void changeSearchResultState();
 
-        void showBannersDataWithToast(List<ExampleAdBanner> bannerDatas);
+        void animateToDefaultState();
+
+        void animateToSearchResultState();
+
+        void showAllProfiles();
+
     }
 
     interface UserActionListener {
-        void fetchNetworkingExample();
-
-        void parseResponseData(String response);
-    }
-
-    interface OnDataFetchedListener {
-        void onBannerDataFetched(String response);
+        ArrayList<UserProfileVO> fetchAllProfiles();
     }
 }
