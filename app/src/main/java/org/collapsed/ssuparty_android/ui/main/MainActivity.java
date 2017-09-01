@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int PAGE_COUNT = 3;
+    private static final int PAGE_COUNT = 4;
     private static final int FONT_BOLD = 1;
     private static final int FONT_REGULAR = 0;
     private static final int INDEX_HOME = 0;
     private static final int INDEX_MY_PARTY = 1;
     private static final int INDEX_ALL_PARTY = 2;
+    private static final int INDEX_PROFILE = 3;
 
     @BindView(R.id.main_pager)
     MainViewPager mViewPager;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private static HomeFragment mHomeView;
     private static PartyListFragment mAllPartyView, mMyPartyView;
+    private static ProfileFragment mProfileView;
     private BottomNaviPagerAdapter mBottomNaviAdapter;
 
     @Override
@@ -110,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                         mViewPager.setCurrentItem(INDEX_ALL_PARTY, false);
                         inflateViewInPage(INDEX_ALL_PARTY);
                         return true;
+
+                    case R.id.bn_profile:
+                        mViewPager.setCurrentItem(INDEX_PROFILE, false);
+                        inflateViewInPage(INDEX_PROFILE);
+                        return true;
                 }
                 return false;
             }
@@ -122,11 +129,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 break;
 
             case INDEX_MY_PARTY:
-//                mMyPartyView.inflateView(index);
+                mMyPartyView.inflateView(index);
                 break;
 
             case INDEX_ALL_PARTY:
                 mAllPartyView.inflateView(index);
+                break;
+
+            case INDEX_PROFILE:
                 break;
 
             default:
@@ -209,14 +219,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     return mHomeView;
 
                 case INDEX_MY_PARTY:
-                    /*mMyPartyView = PartyListFragment.newInstance();
-                    return mMyPartyView;*/
-                    ProfileFragment fragment = ProfileFragment.newInstance();
-                    return fragment;
+                    mMyPartyView = PartyListFragment.newInstance();
+                    return mMyPartyView;
+
 
                 case INDEX_ALL_PARTY:
                     mAllPartyView = PartyListFragment.newInstance();
                     return mAllPartyView;
+
+                case INDEX_PROFILE:
+                    mProfileView = ProfileFragment.newInstance();
+                    return mProfileView;
 
                 default:
                     return null;

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.ui.main.MainActivity;
+import org.collapsed.ssuparty_android.ui.signup.SignupActivity;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
@@ -50,7 +51,7 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
 
     @Override
     public void redirectSignupActivity() {
-        final Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         finish();
     }

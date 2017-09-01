@@ -1,6 +1,7 @@
 package org.collapsed.ssuparty_android.ui.account;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,9 +59,7 @@ public class AccountPresenter implements AccountContract.UserActionListener {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         mView.redirectSignupActivity();
-
                         if (!task.isSuccessful()) {
-                            Log.d("error","auth fail");
                         }
                     }
                 });
