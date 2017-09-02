@@ -1,5 +1,6 @@
 package org.collapsed.ssuparty_android.ui.signup;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoDB;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
+import org.collapsed.ssuparty_android.ui.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity implements SignupContract.View {
 
     @BindView(R.id.signup_toolbar)
     Toolbar mToolbar;
@@ -49,6 +53,11 @@ public class SignupActivity extends AppCompatActivity {
     Button mSubmitBtn;
 
     private SignupPresenter mPresenter;
+    private boolean mNameFiiled = false;
+    private boolean mNickFiled = false;
+    private boolean mStdNumFilled = false;
+    private boolean mMajorFiiled = false;
+    private boolean mAgree = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,31 +75,37 @@ public class SignupActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        mToolbar.setNavigationOnClickListener(view -> finish());
+
+        mSubmitBtn.setVisibility(View.GONE);
+
+        mAgreeCheckBox.setOnCheckedChangeListener((compoundButton, checked) -> {
+            mAgree = checked;
+            checkSignupAble();
         });
 
         mNameEditText.addTextChangedListener(new TextWatcher() {
             String curStr;
 
             @Override
-            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
-                curStr = s.toString();
+            public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
+                curStr = inputedString.toString();
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 10) {
+            public void onTextChanged(CharSequence inputedString, int start, int before, int count) {
+                if (inputedString.length() > 10) {
                     mNameEditText.setText(curStr);
                     mNameEditText.setSelection(start);
                     mNameConstraintText.setTextColor(Color.RED);
+                } else if (inputedString.length() == 0) {
+                    mNameFiiled = false;
                 } else {
-                    mNameConstraintText.setText(String.valueOf(s.length()) + "/10");
+                    mNameFiiled = true;
+                    mNameConstraintText.setText(String.valueOf(inputedString.length()) + "/10");
                     mNameConstraintText.setTextColor(Color.BLACK);
                 }
+                checkSignupAble();
             }
 
             @Override
@@ -103,20 +118,24 @@ public class SignupActivity extends AppCompatActivity {
             String curStr;
 
             @Override
-            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
-                curStr = s.toString();
+            public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
+                curStr = inputedString.toString();
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 10) {
+            public void onTextChanged(CharSequence inputedString, int start, int before, int count) {
+                if (inputedString.length() > 10) {
                     mNickNameEditText.setText(curStr);
                     mNickNameEditText.setSelection(start);
                     mNickNameConstraintText.setTextColor(Color.RED);
+                } else if (inputedString.length() == 0) {
+                    mNickFiled = false;
                 } else {
-                    mNickNameConstraintText.setText(String.valueOf(s.length()) + "/10");
+                    mNickFiled = true;
+                    mNickNameConstraintText.setText(String.valueOf(inputedString.length()) + "/10");
                     mNickNameConstraintText.setTextColor(Color.BLACK);
                 }
+                checkSignupAble();
             }
 
             @Override
@@ -129,20 +148,24 @@ public class SignupActivity extends AppCompatActivity {
             String curStr;
 
             @Override
-            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
-                curStr = s.toString();
+            public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
+                curStr = inputedString.toString();
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 8) {
+            public void onTextChanged(CharSequence inputedString, int start, int before, int count) {
+                if (inputedString.length() > 8) {
                     mStdnumEditText.setText(curStr);
                     mStdnumEditText.setSelection(start);
                     mStdnumConstraintText.setTextColor(Color.RED);
+                } else if (inputedString.length() == 0) {
+                    mStdNumFilled = false;
                 } else {
-                    mStdnumConstraintText.setText(String.valueOf(s.length()) + "/8");
+                    mStdNumFilled = true;
+                    mStdnumConstraintText.setText(String.valueOf(inputedString.length()) + "/8");
                     mStdnumConstraintText.setTextColor(Color.BLACK);
                 }
+                checkSignupAble();
             }
 
             @Override
@@ -153,12 +176,61 @@ public class SignupActivity extends AppCompatActivity {
 
         ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.signup_major));
         mMajorEditText.setAdapter(autoCompleteAdapter);
+        mMajorEditText.addTextChangedListener(new TextWatcher() {
+            String curStr;
 
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // 회원가입 요청
+            public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
+                curStr = inputedString.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence inputedString, int i, int i1, int i2) {
+                if (inputedString.length() == 0) {
+                    mMajorFiiled = false;
+                } else {
+                    mMajorFiiled = true;
+                }
+                checkSignupAble();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
+
+        mSubmitBtn.setOnClickListener(view -> signupFinish());
+    }
+
+    public void signupFinish() {
+        Intent intent = getIntent();
+
+        String uid = intent.getStringExtra("uid");
+        String imgUrl = intent.getStringExtra("imgUrl");
+        String email = intent.getStringExtra("email");
+        String name = mNameEditText.getText().toString();
+        String nickname = mNickNameEditText.getText().toString();
+        String major = mMajorEditText.getText().toString();
+        long grade = mGradeSpinner.getSelectedItemPosition();
+        long schoolID = Long.parseLong(mStdnumEditText.getText().toString());
+        long gender = mGenderSpinner.getSelectedItemPosition();
+        UserInfoData data = new UserInfoData(uid, email, imgUrl, name, nickname, major, grade, schoolID, gender);
+
+        UserInfoDB db = new UserInfoDB();
+        db.writeNewUser(data);
+
+        Intent moveIntent = new Intent(this, MainActivity.class);
+        startActivity(moveIntent);
+        finish();
+    }
+
+    public void checkSignupAble() {
+        if (mStdNumFilled && mNickFiled && mNameFiiled && mMajorFiiled && mAgree) {
+            mSubmitBtn.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        mSubmitBtn.setVisibility(View.GONE);
     }
 }
