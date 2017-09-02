@@ -37,6 +37,7 @@ public class AccountPresenter implements AccountContract.UserActionListener {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                mView.showProgress();
                 AuthCredential credential = FacebookAuthProvider.getCredential(loginResult.getAccessToken().getToken());
                 mAuth.signInWithCredential(credential)
                         .addOnCompleteListener(mView, task -> {
@@ -82,6 +83,7 @@ public class AccountPresenter implements AccountContract.UserActionListener {
             }
         }
 
+        mView.hideProgress();
         mView.startActivity(intent);
         mView.finish();
     }

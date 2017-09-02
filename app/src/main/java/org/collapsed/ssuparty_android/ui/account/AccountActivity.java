@@ -3,6 +3,8 @@ package org.collapsed.ssuparty_android.ui.account;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
@@ -25,6 +27,7 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
 
     private AccountPresenter mPresenter;
     private CallbackManager mCallbackManager;
+    private ProgressBar mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
         mPresenter = new AccountPresenter(this);
         mCallbackManager = CallbackManager.Factory.create();
         mPresenter.setFacebookLoginCallback(mLoginButton, mCallbackManager);
+        mProgress = (ProgressBar) findViewById(R.id.account_progress_circle);
     }
 
     @Override
@@ -47,6 +51,14 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void showProgress() {
+        mProgress.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgress() {
+        mProgress.setVisibility(View.GONE);
     }
 
     @Override
