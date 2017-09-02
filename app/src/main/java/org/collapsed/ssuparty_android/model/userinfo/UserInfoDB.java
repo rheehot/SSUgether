@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.model.userprofile;
+package org.collapsed.ssuparty_android.model.userinfo;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -8,29 +8,29 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.collapsed.ssuparty_android.ui.account.AccountPresenter;
 
-public class UserProfileDB {
-    private DatabaseReference mUserProfileRef;
+public class UserInfoDB {
+    private DatabaseReference mUserInfoRef;
     private AccountPresenter mPresenter;
 
-    public UserProfileDB(AccountPresenter presenter) {
-        this.mUserProfileRef = FirebaseDatabase.getInstance().getReference().child("users");
+    public UserInfoDB(AccountPresenter presenter) {
+        this.mUserInfoRef = FirebaseDatabase.getInstance().getReference().child("users");
         this.mPresenter = presenter;
     }
 
-    public UserProfileDB() {
-        this.mUserProfileRef = FirebaseDatabase.getInstance().getReference().child("users");
+    public UserInfoDB() {
+        this.mUserInfoRef = FirebaseDatabase.getInstance().getReference().child("users");
     }
 
-    public void writeNewUser(UserProfileData userProfileData) {
-        mUserProfileRef.child(userProfileData.uid).setValue(userProfileData);
+    public void writeNewUser(UserInfoData userInfoData) {
+        mUserInfoRef.child(userInfoData.uid).setValue(userInfoData);
     }
 
     public void findUserProfileData(String uid) {
         if (mPresenter != null) {
-            mUserProfileRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            mUserInfoRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    UserProfileData data = dataSnapshot.getValue(UserProfileData.class);
+                    UserInfoData data = dataSnapshot.getValue(UserInfoData.class);
                     mPresenter.moveToNextActivity(data);
                 }
 

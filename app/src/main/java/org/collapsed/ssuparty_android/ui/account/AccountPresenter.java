@@ -13,8 +13,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.collapsed.ssuparty_android.model.userprofile.UserProfileDB;
-import org.collapsed.ssuparty_android.model.userprofile.UserProfileData;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoDB;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.main.MainActivity;
 import org.collapsed.ssuparty_android.ui.signup.SignupActivity;
 
@@ -62,13 +62,13 @@ public class AccountPresenter implements AccountContract.UserActionListener {
 
     private void checkAlreadySignUp() {
         FirebaseUser user = mAuth.getCurrentUser();
-        UserProfileDB db = new UserProfileDB(this);
+        UserInfoDB db = new UserInfoDB(this);
         if (user != null) {
             db.findUserProfileData(user.getUid());
         }
     }
 
-    public void moveToNextActivity(UserProfileData data) {
+    public void moveToNextActivity(UserInfoData data) {
         FirebaseUser user = mAuth.getCurrentUser();
         Intent intent;
         if (data != null) {

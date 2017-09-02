@@ -1,9 +1,9 @@
-package org.collapsed.ssuparty_android.model.userprofile;
+package org.collapsed.ssuparty_android.model.userinfo;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
-public class UserProfileData {
+public class UserInfoData {
     public String uid;
     public String email;
     public String name;
@@ -14,10 +14,10 @@ public class UserProfileData {
     public long schoolid;
     public long gender;
 
-    public UserProfileData() {
+    public UserInfoData() {
     }
 
-    public UserProfileData(String uid, String email, String imgUrl, String name, String nickname, String major, long grade, long schoolid, long gender) {
+    public UserInfoData(String uid, String email, String imgUrl, String name, String nickname, String major, long grade, long schoolid, long gender) {
         this.uid = uid;
         this.email = email;
         this.imgUrl = imgUrl;
