@@ -46,40 +46,6 @@ public class ProfileDB {
         mPersonalTagsDBRef = mProfileDBRef.child(personalId).child("tags");
         mPersonalIntroDBRef = mProfileDBRef.child(personalId).child("intro");
 
-        mEventBus = BusProvider.getInstance();
-
-        mPersonalIntroDBRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String introductionData = dataSnapshot.getValue(String.class);
-
-                //call setNewIntroduction(...) Method in profileFragment;
-                mEventBus.post(new IntroEvent(introductionData));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        mPersonalTagsDBRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> tagsData = (List<String>) dataSnapshot.getValue();
-
-                //call setNewTags(...) Method in profileFragment;
-                mEventBus.post(new TagEvent(tagsData));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         filename = personalId+"_profile_image.png";
         mRootStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ssugether.appspot.com/");
         mImageStorageRef = mRootStorageRef.child("images/"+filename);

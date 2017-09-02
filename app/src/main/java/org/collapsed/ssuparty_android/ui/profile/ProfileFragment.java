@@ -91,7 +91,6 @@ public class ProfileFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mEventBus.register(this);
 
         mUnbinder = ButterKnife.bind(this, view);
         mContext = getContext();
@@ -102,7 +101,6 @@ public class ProfileFragment extends BaseFragment {
 
     public void initView() {
         //mTagLayout.addTag("태그를 등록해주세요!");
-        inflateProfileImage();
 
         mClickListener = new View.OnClickListener() {
             @Override
@@ -160,24 +158,6 @@ public class ProfileFragment extends BaseFragment {
 
     public void inflateProfileImage() {
         mPresenter.loadImageUrlFromFirebase();
-    }
-
-    //called by ProfileDB
-    @Subscribe
-    public void setNewTags(TagEvent tagEvent) {
-        mTagLayout.setTags(tagEvent.getTags());
-    }
-
-    //called by ProfileDB
-    @Subscribe
-    public void setNewIntroduction(IntroEvent introEvent) {
-        mIntroContentText.setText(introEvent.getIntroduction());
-    }
-
-    //called by ProfileDB
-    @Subscribe
-    public void inflateProfileImageInFirstTime(FirstProfileEvent imageEvent) {
-        ImageUtil.loadUrlImage(mProfileImageView, imageEvent.getUrl());
     }
 
     @Override
