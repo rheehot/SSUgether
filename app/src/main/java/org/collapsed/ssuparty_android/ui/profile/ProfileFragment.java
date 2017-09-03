@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +14,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.event.BusProvider;
-import org.collapsed.ssuparty_android.event.profile.FirstProfileEvent;
-import org.collapsed.ssuparty_android.event.profile.IntroEvent;
-import org.collapsed.ssuparty_android.event.profile.TagEvent;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomDialog;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import co.lujun.androidtagview.TagContainerLayout;
-import co.lujun.androidtagview.TagView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -41,6 +38,10 @@ public class ProfileFragment extends BaseFragment {
     private static final int DIALOG_POSITIVE_MODE = 2;
     private static final int DIALOG_TAG = 11;
     private static final int DIALOG_INTRO = 12;
+
+    private static final Uri PROFILE_DEFAULT_IMAGE
+            = Uri.parse("android.resource://org.collapsed.ssuparty_android/drawable/camera");
+
 
     @BindView(R.id.profile_user_image)
     ImageView mProfileImageView;
@@ -59,6 +60,8 @@ public class ProfileFragment extends BaseFragment {
     ImageButton mWriteTagButton;
     @BindView(R.id.profile_tag_layout)
     TagContainerLayout mTagLayout;
+    /*@BindView(R.id.profile_tag_layout)
+    TagGroup mTagLayout;*/
 
     private Unbinder mUnbinder;
     private Context mContext;
@@ -100,7 +103,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void initView() {
-        //mTagLayout.addTag("태그를 등록해주세요!");
+        updateProfileView();
 
         mClickListener = new View.OnClickListener() {
             @Override
@@ -125,7 +128,19 @@ public class ProfileFragment extends BaseFragment {
         mWriteIntroButton.setOnClickListener(mClickListener);
         mWriteTagButton.setOnClickListener(mClickListener);
 
-        mTagLayout.setOnTagClickListener(new TagView.OnTagClickListener() {
+        /*mTagLayout.setOnTagChangeListener(new TagGroup.OnTagChangeListener() {
+            @Override
+            public void onAppend(TagGroup tagGroup, String tag) {
+
+            }
+
+            @Override
+            public void onDelete(TagGroup tagGroup, String tag) {
+
+            }
+        });*/
+
+        /*mTagLayout.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(final int position, String text) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -138,7 +153,6 @@ public class ProfileFragment extends BaseFragment {
                         }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mTagLayout.removeTag(position);
                     }
                 });
                 dialog.show();
@@ -146,18 +160,53 @@ public class ProfileFragment extends BaseFragment {
 
             @Override
             public void onTagLongClick(int position, String text) {
-
             }
 
             @Override
             public void onTagCrossClick(int position) {
-
             }
-        });
+        });*/
     }
 
-    public void inflateProfileImage() {
-        mPresenter.loadImageUrlFromFirebase();
+    private void updateProfileView() {
+        mPresenter.getPreviousProfileData();
+    }
+
+    public void inflateImageView(String imageUrl) {
+        if(imageUrl == null) {
+            mPresenter.changeProfileImageUrl(PROFILE_DEFAULT_IMAGE);
+        } else {
+            ImageUtil.loadUrlImage(mProfileImageView, imageUrl);
+        }
+    }
+    public void inflateIntroView(String introText) {
+        if(introText == null) {
+            mPresenter.changeProfileIntro("초기값입력");
+            mIntroContentText.setText("초기값입력");
+        } else {
+            mIntroContentText.setText(introText);
+        }
+    }
+    public void inflateTagView(List<String> tagList) {
+        if(tagList == null) {
+            List<String> defaultTagList = new ArrayList<>();
+            defaultTagList.add("정보대 5분컷");
+
+            mPresenter.changeProfileTagList(defaultTagList);
+            mTagLayout.setTags(defaultTagList);
+        } else {
+            mTagLayout.setTags(tagList);
+        }
+    }
+
+    public void startCropActivity() {
+        Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
+                .setActivityTitle("편집")
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setAspectRatio(1, 1)
+                .getIntent(mContext);
+
+        startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
     }
 
     @Override
@@ -167,8 +216,8 @@ public class ProfileFragment extends BaseFragment {
         if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                mPresenter.onChangedProfileImage(result.getUri());
-                mProfileImageView.setImageURI(result.getUri());
+                mPresenter.changeProfileImageUrl(result.getUri());
+                inflateImageView(result.getUri().toString());
             }
         }
     }
@@ -182,7 +231,8 @@ public class ProfileFragment extends BaseFragment {
                     public void onDismiss(DialogInterface dia) {
                         if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
                             if (!introDialog.getText().equals("")) {
-                                mPresenter.onChangedIntroduction(introDialog.getText());
+                                mPresenter.changeProfileIntro(introDialog.getText());
+                                inflateIntroView(introDialog.getText());
                             }
                         }
                     }
@@ -198,7 +248,7 @@ public class ProfileFragment extends BaseFragment {
                     public void onDismiss(DialogInterface dia) {
                         if (tagDialog.getMode() == DIALOG_POSITIVE_MODE) {
                             mTagLayout.addTag(tagDialog.getText());
-                            mPresenter.onChangedTags(mTagLayout.getTags());
+                            mPresenter.changeProfileTagList(mTagLayout.getTags());
                         }
                     }
                 });
@@ -206,16 +256,6 @@ public class ProfileFragment extends BaseFragment {
                 tagDialog.show();
                 break;
         }
-    }
-
-    public void startCropActivity() {
-        Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
-                .setActivityTitle("편집")
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setAspectRatio(1, 1)
-                .getIntent(mContext);
-
-        startActivityForResult(intent, CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
     }
 
     @Override

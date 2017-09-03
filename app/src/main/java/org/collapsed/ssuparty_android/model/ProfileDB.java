@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,61 +14,87 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.otto.Bus;
 
-import org.collapsed.ssuparty_android.event.BusProvider;
-import org.collapsed.ssuparty_android.event.profile.FirstProfileEvent;
-import org.collapsed.ssuparty_android.event.profile.ImageEvent;
-import org.collapsed.ssuparty_android.event.profile.IntroEvent;
-import org.collapsed.ssuparty_android.event.profile.TagEvent;
-import org.collapsed.ssuparty_android.utils.ImageUtil;
+import org.collapsed.ssuparty_android.ui.profile.ProfilePresenter;
 
 import java.util.List;
 
 public class ProfileDB {
 
+    private static final String TAG = ProfileDB.class.getSimpleName();
     private static final String DB_PROFILE_KEY = "profile";
 
-    private DatabaseReference mRootDBRef, mProfileDBRef, mPersonalTagsDBRef, mPersonalIntroDBRef;
+    private ProfilePresenter mProfilePresenter;
+    private DatabaseReference mRootDBRef, mProfileDBRef, mTagsDBRef, mIntroDBRef;
     private StorageReference mRootStorageRef, mImageStorageRef;
-    private Bus mEventBus;
-    private String filename;
+    private String mFilename, mUserUid;
 
     //테스트용 ID, 나중에는 로컬에 저장된 user id를 받아와서 이용.
-    String personalId = "kingjihoon123";
 
-    public ProfileDB() {
+    public ProfileDB(ProfilePresenter presenter) {
+        mProfilePresenter = presenter;
+        mUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         initModel();
     }
 
     public void initModel() {
         mRootDBRef = FirebaseDatabase.getInstance().getReference();
         mProfileDBRef = mRootDBRef.child(DB_PROFILE_KEY);
-        mPersonalTagsDBRef = mProfileDBRef.child(personalId).child("tags");
-        mPersonalIntroDBRef = mProfileDBRef.child(personalId).child("intro");
+        mTagsDBRef = mProfileDBRef.child(mUserUid).child("tags");
+        mIntroDBRef = mProfileDBRef.child(mUserUid).child("intro");
 
-        filename = personalId+"_profile_image.png";
+
+        mFilename = mUserUid+"_profile_image.png";
         mRootStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ssugether.appspot.com/");
-        mImageStorageRef = mRootStorageRef.child("images/"+filename);
+        mImageStorageRef = mRootStorageRef.child("images/"+ mFilename);
     }
 
-    public void writeNewUser(String userId, Object profileData) {
-        mProfileDBRef.child(userId).setValue(profileData);
+    public void readProfileImage() {
+        mImageStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String imageUrl = uri.toString();
+                mProfilePresenter.loadImageData(imageUrl);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
     }
 
-    public void writeNewTags(String userId, List<String> tags) {
-        mProfileDBRef.child(userId).child("tags").setValue(tags);
+    public void readProfileIntro() {
+        mIntroDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String introText = dataSnapshot.getValue(String.class);
+                mProfilePresenter.loadIntroData(introText);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
-    public void writeNewIntroduction(String userId, String introduction) {
-        mProfileDBRef.child(userId).child("intro").setValue(introduction);
+    public void readProfieTagList() {
+        mTagsDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> tagList = (List<String>) dataSnapshot.getValue();
+                mProfilePresenter.loadTagListData(tagList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
-    //추후에 프로필 리스트에서 업데이트 기능 구현할 때 onSuccess 부분 다시 작성
-    public void writeNewProfileImage(Uri imageUri) {
+    public void writeProfileImage(Uri imageUri) {
         Uri file = imageUri;
-        StorageReference reference = mRootStorageRef.child("images/"+filename);
-        UploadTask uploadTask = reference.putFile(file);
+        mImageStorageRef = mRootStorageRef.child("images/"+ mFilename);
+        UploadTask uploadTask = mImageStorageRef.putFile(file);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -75,26 +102,16 @@ public class ProfileDB {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                /*@SuppressWarnings("VisibleForTests") String url = taskSnapshot.getDownloadUrl().toString();
-                setImageUrl(url);*/
-                //mEventBus.post(new ImageEvent(url));
+                //프로필 리스트 업데이트 관련 코딩 작업
             }
         });
     }
 
-    public void loadImageUrl() {
-        StorageReference reference = mRootStorageRef.child("images/"+filename);
-        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                
-                //call inflateProfileImageInFirstTime(...) Method in profileFragment;
-                mEventBus.post(new FirstProfileEvent(uri.toString()));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-            }
-        });
+    public void writeIntroduction(String introText) {
+        mProfileDBRef.child(mUserUid).child("intro").setValue(introText);
+    }
+
+    public void writeTagList(List<String> tagList) {
+        mProfileDBRef.child(mUserUid).child("tags").setValue(tagList);
     }
 }
