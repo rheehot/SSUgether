@@ -5,11 +5,10 @@ import android.support.annotation.NonNull;
 
 import com.squareup.otto.Subscribe;
 
-import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.event.BusProvider;
 import org.collapsed.ssuparty_android.event.PartyEvent;
-import org.collapsed.ssuparty_android.model.PartyDB;
-import org.collapsed.ssuparty_android.model.PartyData;
+import org.collapsed.ssuparty_android.model.party.PartyDB;
+import org.collapsed.ssuparty_android.model.party.PartyData;
 
 import java.util.List;
 

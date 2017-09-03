@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.model;
+package org.collapsed.ssuparty_android.model.party;
 
 import java.util.ArrayList;
 import java.util.List;

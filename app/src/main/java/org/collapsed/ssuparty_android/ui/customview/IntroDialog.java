@@ -15,12 +15,12 @@ import org.collapsed.ssuparty_android.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CustomDialog extends Dialog {
+public class IntroDialog extends Dialog {
 
     private static final int NEGATIVE_MODE = 1;
     private static final int POSITIVE_MODE = 2;
 
-    public CustomDialog(Context context) {
+    public IntroDialog(Context context) {
         super(context);
     }
 

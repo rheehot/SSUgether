@@ -12,16 +12,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="64dp"
             android:background="#a15ffb">
-
-            <ImageButton
-                android:id="@+id/profile_cancel_btn"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/arrow" />
 
             <TextView
                 android:id="@+id/profile_title_txt"
@@ -30,7 +22,7 @@
                 android:layout_centerInParent="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:text="새 모임"
+                android:text="프로필 설정"
                 android:textColor="#ffffff"
                 android:textSize="15dp"
                 android:textStyle="bold" />
@@ -231,30 +223,17 @@
 
                     </RelativeLayout>
 
-                    <co.lujun.androidtagview.TagContainerLayout
+                    <me.gujun.android.taggroup.TagGroup
                         android:id="@+id/profile_tag_layout"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:padding="6dp"
-                        app:container_background_color="#ffffff"
-                        app:container_border_color="#00ff0000"
-                        app:container_enable_drag="true"
-                        app:container_max_lines="3"
-                        app:horizontal_interval="10dp"
-                        app:tag_background_color="#d7d0f9"
-                        app:tag_border_color="#d7d0f9"
-                        app:tag_clickable="true"
-                        app:tag_horizontal_padding="8dp"
-                        app:tag_text_color="#939297"
-                        app:tag_text_size="12sp"
-                        app:tag_theme="none"
-                        app:tag_vertical_padding="6dp"
-                        app:vertical_interval="10dp" />
-
-                    <!--<me.gujun.android.taggroup.TagGroup
-                        android:id="@+id/profile_tag_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"/>-->
+                        app:atg_isAppendMode="true"
+                        app:atg_textSize="12sp"
+                        app:atg_borderColor="#d7d0f9"
+                        app:atg_backgroundColor="#d7d0f9"
+                        app:atg_textColor="#939297"
+                        app:atg_inputHint="내용입력"/>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

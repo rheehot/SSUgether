@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.model;
+package org.collapsed.ssuparty_android.model.profile;
 
 
 import java.util.List;

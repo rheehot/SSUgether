@@ -1,6 +1,6 @@
 package org.collapsed.ssuparty_android.event;
 
-import org.collapsed.ssuparty_android.model.PartyData;
+import org.collapsed.ssuparty_android.model.party.PartyData;
 
 public class PartyEvent {
     private PartyData mPartyData;

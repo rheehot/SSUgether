@@ -13,31 +13,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.otto.Bus;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.event.BusProvider;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
-import org.collapsed.ssuparty_android.ui.customview.CustomDialog;
+import org.collapsed.ssuparty_android.ui.customview.IntroDialog;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import co.lujun.androidtagview.TagContainerLayout;
+import me.gujun.android.taggroup.TagGroup;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends BaseFragment {
 
     private static final int DIALOG_POSITIVE_MODE = 2;
-    private static final int DIALOG_TAG = 11;
-    private static final int DIALOG_INTRO = 12;
 
     private static final Uri PROFILE_DEFAULT_IMAGE
             = Uri.parse("android.resource://org.collapsed.ssuparty_android/drawable/camera");
@@ -59,18 +52,14 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.profile_tag_write_btn)
     ImageButton mWriteTagButton;
     @BindView(R.id.profile_tag_layout)
-    TagContainerLayout mTagLayout;
-    /*@BindView(R.id.profile_tag_layout)
-    TagGroup mTagLayout;*/
+    TagGroup mTagLayout;
 
     private Unbinder mUnbinder;
     private Context mContext;
     private Uri imageUri;
     private View.OnClickListener mClickListener;
-    private String mContentValue;
 
     private ProfilePresenter mPresenter;
-    private Bus mEventBus = BusProvider.getInstance();
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -114,11 +103,12 @@ public class ProfileFragment extends BaseFragment {
                         break;
 
                     case R.id.profile_intro_write_btn:
-                        showCustomDialog(DIALOG_INTRO);
+                        showCustomDialog();
                         break;
 
                     case R.id.profile_tag_write_btn:
-                        showCustomDialog(DIALOG_TAG);
+                        mTagLayout.submitTag();
+                        mPresenter.changeProfileTagList(mTagLayout.getTags());
                         break;
                 }
             }
@@ -128,44 +118,6 @@ public class ProfileFragment extends BaseFragment {
         mWriteIntroButton.setOnClickListener(mClickListener);
         mWriteTagButton.setOnClickListener(mClickListener);
 
-        /*mTagLayout.setOnTagChangeListener(new TagGroup.OnTagChangeListener() {
-            @Override
-            public void onAppend(TagGroup tagGroup, String tag) {
-
-            }
-
-            @Override
-            public void onDelete(TagGroup tagGroup, String tag) {
-
-            }
-        });*/
-
-        /*mTagLayout.setOnTagClickListener(new TagView.OnTagClickListener() {
-            @Override
-            public void onTagClick(final int position, String text) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setTitle("해당 내용을 삭제하시겠습니까?")
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                });
-                dialog.show();
-            }
-
-            @Override
-            public void onTagLongClick(int position, String text) {
-            }
-
-            @Override
-            public void onTagCrossClick(int position) {
-            }
-        });*/
     }
 
     private void updateProfileView() {
@@ -179,22 +131,15 @@ public class ProfileFragment extends BaseFragment {
             ImageUtil.loadUrlImage(mProfileImageView, imageUrl);
         }
     }
+
     public void inflateIntroView(String introText) {
-        if(introText == null) {
-            mPresenter.changeProfileIntro("초기값입력");
-            mIntroContentText.setText("초기값입력");
-        } else {
+        if(introText != null) {
             mIntroContentText.setText(introText);
         }
     }
-    public void inflateTagView(List<String> tagList) {
-        if(tagList == null) {
-            List<String> defaultTagList = new ArrayList<>();
-            defaultTagList.add("정보대 5분컷");
 
-            mPresenter.changeProfileTagList(defaultTagList);
-            mTagLayout.setTags(defaultTagList);
-        } else {
+    public void inflateTagView(String[] tagList) {
+        if(tagList != null) {
             mTagLayout.setTags(tagList);
         }
     }
@@ -222,10 +167,8 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    public void showCustomDialog(int mode) {
-        switch (mode) {
-            case DIALOG_INTRO:
-                final CustomDialog introDialog = new CustomDialog(getActivity());
+    public void showCustomDialog() {
+                final IntroDialog introDialog = new IntroDialog(getActivity());
                 introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dia) {
@@ -239,23 +182,6 @@ public class ProfileFragment extends BaseFragment {
                 });
 
                 introDialog.show();
-                break;
-
-            case DIALOG_TAG:
-                final CustomDialog tagDialog = new CustomDialog(getActivity());
-                tagDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dia) {
-                        if (tagDialog.getMode() == DIALOG_POSITIVE_MODE) {
-                            mTagLayout.addTag(tagDialog.getText());
-                            mPresenter.changeProfileTagList(mTagLayout.getTags());
-                        }
-                    }
-                });
-
-                tagDialog.show();
-                break;
-        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.model;
+package org.collapsed.ssuparty_android.model.profile;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -17,6 +17,8 @@ import com.google.firebase.storage.UploadTask;
 
 import org.collapsed.ssuparty_android.ui.profile.ProfilePresenter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProfileDB {
@@ -28,8 +30,6 @@ public class ProfileDB {
     private DatabaseReference mRootDBRef, mProfileDBRef, mTagsDBRef, mIntroDBRef;
     private StorageReference mRootStorageRef, mImageStorageRef;
     private String mFilename, mUserUid;
-
-    //테스트용 ID, 나중에는 로컬에 저장된 user id를 받아와서 이용.
 
     public ProfileDB(ProfilePresenter presenter) {
         mProfilePresenter = presenter;
@@ -111,7 +111,8 @@ public class ProfileDB {
         mProfileDBRef.child(mUserUid).child("intro").setValue(introText);
     }
 
-    public void writeTagList(List<String> tagList) {
-        mProfileDBRef.child(mUserUid).child("tags").setValue(tagList);
+    public void writeTagList(String[] tagList) {
+        mProfileDBRef.child(mUserUid).child("tags").setValue(new ArrayList<String>(Arrays.asList(tagList)));
+
     }
 }
