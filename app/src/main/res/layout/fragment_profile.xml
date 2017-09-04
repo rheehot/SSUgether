@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/profile_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -166,8 +167,8 @@
 
                         <ImageButton
                             android:id="@+id/profile_intro_write_btn"
-                            android:layout_width="40dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
@@ -213,8 +214,8 @@
 
                         <ImageButton
                             android:id="@+id/profile_tag_write_btn"
-                            android:layout_width="40dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"

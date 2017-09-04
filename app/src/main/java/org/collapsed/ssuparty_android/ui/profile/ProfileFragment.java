@@ -7,10 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -36,6 +39,8 @@ public class ProfileFragment extends BaseFragment {
             = Uri.parse("android.resource://org.collapsed.ssuparty_android/drawable/camera");
 
 
+    @BindView(R.id.profile_main_layout)
+    LinearLayout mMainLayout;
     @BindView(R.id.profile_user_image)
     ImageView mProfileImageView;
     @BindView(R.id.profile_nickname_txt)
@@ -58,6 +63,7 @@ public class ProfileFragment extends BaseFragment {
     private Context mContext;
     private Uri imageUri;
     private View.OnClickListener mClickListener;
+    private View.OnTouchListener mTouchListener;
 
     private ProfilePresenter mPresenter;
 
@@ -118,6 +124,13 @@ public class ProfileFragment extends BaseFragment {
         mWriteIntroButton.setOnClickListener(mClickListener);
         mWriteTagButton.setOnClickListener(mClickListener);
 
+        mMainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                hideVirtualKeyboard(view);
+                return false;
+            }
+        });
     }
 
     private void updateProfileView() {
@@ -180,6 +193,13 @@ public class ProfileFragment extends BaseFragment {
         });
 
         introDialog.show();
+    }
+
+    public void hideVirtualKeyboard(View view) {
+        if (view != null) {
+            InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override
