@@ -109,7 +109,7 @@ public class ProfileFragment extends BaseFragment {
                         break;
 
                     case R.id.profile_intro_write_btn:
-                        showCustomDialog();
+                        showIntroDialog();
                         break;
 
                     case R.id.profile_tag_write_btn:
@@ -134,18 +134,18 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void updateProfileView() {
-        mPresenter.getPreviousProfileData();
+        mPresenter.getPreviousProfileDatas();
     }
 
     public void inflateImageView(String imageUrl) {
         if (imageUrl == null) {
-            mPresenter.changeProfileImageUrl(PROFILE_DEFAULT_IMAGE);
+            mPresenter.changeProfileImage(PROFILE_DEFAULT_IMAGE);
         } else {
             ImageUtil.loadUrlImage(mProfileImageView, imageUrl);
         }
     }
 
-    public void inflateIntroView(String introText) {
+    public void inflateIntroText(String introText) {
         if (introText != null) {
             mIntroContentText.setText(introText);
         }
@@ -174,20 +174,20 @@ public class ProfileFragment extends BaseFragment {
         if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                mPresenter.changeProfileImageUrl(result.getUri());
+                mPresenter.changeProfileImage(result.getUri());
                 inflateImageView(result.getUri().toString());
             }
         }
     }
 
-    public void showCustomDialog() {
+    public void showIntroDialog() {
         final IntroDialog introDialog = new IntroDialog(getActivity(), mIntroContentText.getText().toString());
         introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dia) {
                 if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
                     mPresenter.changeProfileIntro(introDialog.getText());
-                    inflateIntroView(introDialog.getText());
+                    inflateIntroText(introDialog.getText());
                 }
             }
         });

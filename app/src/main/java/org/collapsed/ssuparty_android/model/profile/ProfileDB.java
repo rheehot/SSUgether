@@ -2,6 +2,7 @@ package org.collapsed.ssuparty_android.model.profile;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,7 +55,7 @@ public class ProfileDB {
             @Override
             public void onSuccess(Uri uri) {
                 String imageUrl = uri.toString();
-                mProfilePresenter.updateImageData(imageUrl);
+                mProfilePresenter.updateImage(imageUrl);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -68,7 +69,7 @@ public class ProfileDB {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String introText = dataSnapshot.getValue(String.class);
-                mProfilePresenter.updateIntroData(introText);
+                mProfilePresenter.updateIntroText(introText);
             }
 
             @Override
@@ -84,7 +85,7 @@ public class ProfileDB {
                 List<String> tagList = (List<String>) dataSnapshot.getValue();
 
                 if (tagList != null) {
-                    mProfilePresenter.updateTagListData(tagList);
+                    mProfilePresenter.updateTagList(tagList);
                 }
             }
 

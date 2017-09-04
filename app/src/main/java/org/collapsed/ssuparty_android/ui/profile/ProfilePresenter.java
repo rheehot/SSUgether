@@ -19,13 +19,13 @@ public class ProfilePresenter {
         this.mModel = new ProfileDB(this);
     }
 
-    public void getPreviousProfileData() {
+    public void getPreviousProfileDatas() {
         mModel.readProfileImage();
         mModel.readProfileIntro();
         mModel.readProfieTagList();
     }
 
-    public void changeProfileImageUrl(Uri imageUri) {
+    public void changeProfileImage(Uri imageUri) {
         mModel.writeProfileImage(imageUri);
     }
 
@@ -37,16 +37,16 @@ public class ProfilePresenter {
         mModel.writeTagList(tagList);
     }
 
-    public void updateIntroData(String introText) {
-        mView.inflateIntroView(introText);
+    public void updateIntroText(String introText) {
+        mView.inflateIntroText(introText);
     }
 
-    public void updateTagListData(List<String> tagList) {
+    public void updateTagList(List<String> tagList) {
         String[] tagArray = tagList.toArray(new String[tagList.size()]);
         mView.inflateTagView(tagArray);
     }
 
-    public void updateImageData(String imageUrl) {
+    public void updateImage(String imageUrl) {
         mView.inflateImageView(imageUrl);
     }
 }
