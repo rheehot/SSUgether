@@ -6,22 +6,15 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/profile_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="64dp"
             android:background="#a15ffb">
-
-            <ImageButton
-                android:id="@+id/profile_cancel_btn"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/arrow" />
 
             <TextView
                 android:id="@+id/profile_title_txt"
@@ -30,19 +23,17 @@
                 android:layout_centerInParent="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:text="새 모임"
+                android:text="프로필 설정"
                 android:textColor="#ffffff"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
-
         <LinearLayout
             android:id="@+id/profile_top_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
             android:orientation="vertical">
 
@@ -55,14 +46,14 @@
                 android:clickable="true"
                 android:src="@drawable/camera"
                 app:civ_border_width="1dp"
-                app:civ_border_color="#cbc1f2"/>
+                app:civ_border_color="#00FF0000"/>
 
             <TextView
                 android:id="@+id/profile_nickname_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:text="User1234" />
 
             <LinearLayout
@@ -166,17 +157,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginLeft="12dp"
                             android:background="@android:color/transparent"
                             android:text="소개"
                             android:textColor="#000000"
-                            android:textSize="14sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <ImageButton
                             android:id="@+id/profile_intro_write_btn"
-                            android:layout_width="40dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
@@ -187,9 +179,8 @@
                         <TextView
                             android:id="@+id/profile_intro_content_txt"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
                             android:layout_marginBottom="10dp"
                             android:layout_height="80dp"
                             android:textSize="12sp" />
@@ -213,17 +204,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
                             android:background="@android:color/transparent"
                             android:text="보유기술"
                             android:textColor="#000000"
-                            android:textSize="14sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <ImageButton
                             android:id="@+id/profile_tag_write_btn"
-                            android:layout_width="40dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
@@ -231,25 +223,19 @@
 
                     </RelativeLayout>
 
-                    <co.lujun.androidtagview.TagContainerLayout
+                    <me.gujun.android.taggroup.TagGroup
                         android:id="@+id/profile_tag_layout"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
-                        android:padding="6dp"
-                        app:container_background_color="#ffffff"
-                        app:container_border_color="#00ff0000"
-                        app:container_enable_drag="true"
-                        app:container_max_lines="3"
-                        app:horizontal_interval="10dp"
-                        app:tag_background_color="#d7d0f9"
-                        app:tag_border_color="#d7d0f9"
-                        app:tag_clickable="true"
-                        app:tag_horizontal_padding="8dp"
-                        app:tag_text_color="#939297"
-                        app:tag_text_size="12sp"
-                        app:tag_theme="none"
-                        app:tag_vertical_padding="6dp"
-                        app:vertical_interval="10dp" />
+                        android:padding="12dp"
+                        app:atg_isAppendMode="true"
+                        app:atg_textSize="12sp"
+                        app:atg_borderColor="#d7d0f9"
+                        app:atg_backgroundColor="#d7d0f9"
+                        app:atg_textColor="#000000"
+                        app:atg_inputHintColor="#828282"
+                        app:atg_inputTextColor="#000000"
+                        app:atg_inputHint="내용입력"/>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

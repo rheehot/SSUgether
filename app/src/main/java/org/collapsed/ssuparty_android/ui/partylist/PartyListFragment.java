@@ -1,7 +1,6 @@
 package org.collapsed.ssuparty_android.ui.partylist;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,12 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
-import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.PartyData;
-import org.collapsed.ssuparty_android.model.ProfileData;
+import org.collapsed.ssuparty_android.model.party.PartyData;
+import org.collapsed.ssuparty_android.model.profile.ProfileData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;

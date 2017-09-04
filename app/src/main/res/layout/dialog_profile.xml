@@ -7,16 +7,18 @@
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:padding="10dp">
+        android:layout_centerInParent="true">
 
         <TextView
             android:id="@+id/intro_dialog_title_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="내용을 입력해주세요!"
-            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:text="본인을 소개해주세요!"
+            android:textSize="20sp"
+            android:textColor="#000000"
             android:textStyle="bold" />
 
         <EditText
@@ -24,31 +26,41 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_below="@+id/intro_dialog_title_txt"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="24dp"
+            android:textSize="12sp"
             android:background="@null"
             android:gravity="top" />
 
-
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_below="@+id/intro_dialog_content_edit"
             android:layout_alignParentRight="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginRight="8dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/intro_dialog_cancel_btn"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
+                android:layout_width="64dp"
+                android:layout_height="36dp"
                 android:layout_marginRight="10dp"
                 android:text="취소"
+                android:textSize="12sp"
+                android:textColor="#00AA00"
                 android:background="@android:color/transparent"/>
 
             <Button
-                android:id="@+id/intro_dialog_done_btn"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
+                android:id="@+id/intro_dialog_confirm_btn"
+                android:layout_width="64dp"
+                android:layout_height="36dp"
                 android:text="확인"
+                android:textSize="12sp"
+                android:textColor="#00AA00"
                 android:background="@android:color/transparent"/>
 
         </LinearLayout>

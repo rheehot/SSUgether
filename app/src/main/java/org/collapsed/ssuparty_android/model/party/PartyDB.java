@@ -1,4 +1,4 @@
-package org.collapsed.ssuparty_android.model;
+package org.collapsed.ssuparty_android.model.party;
 
 import android.util.Log;
 
@@ -7,9 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.otto.Bus;
 
-import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.event.BusProvider;
 import org.collapsed.ssuparty_android.event.PartyEvent;
 import org.collapsed.ssuparty_android.ui.main.MainPresenter;
