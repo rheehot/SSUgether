@@ -44,9 +44,9 @@ public class ProfileDB {
         mIntroDBRef = mProfileDBRef.child(mUserUid).child("intro");
 
 
-        mFilename = mUserUid+"_profile_image.png";
+        mFilename = mUserUid + "_profile_image.png";
         mRootStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ssugether.appspot.com/");
-        mImageStorageRef = mRootStorageRef.child("images/"+ mFilename);
+        mImageStorageRef = mRootStorageRef.child("images/" + mFilename);
     }
 
     public void readProfileImage() {
@@ -54,7 +54,7 @@ public class ProfileDB {
             @Override
             public void onSuccess(Uri uri) {
                 String imageUrl = uri.toString();
-                mProfilePresenter.loadImageData(imageUrl);
+                mProfilePresenter.updateImageData(imageUrl);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -68,7 +68,7 @@ public class ProfileDB {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String introText = dataSnapshot.getValue(String.class);
-                mProfilePresenter.loadIntroData(introText);
+                mProfilePresenter.updateIntroData(introText);
             }
 
             @Override
@@ -82,7 +82,10 @@ public class ProfileDB {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<String> tagList = (List<String>) dataSnapshot.getValue();
-                mProfilePresenter.loadTagListData(tagList);
+
+                if (tagList != null) {
+                    mProfilePresenter.updateTagListData(tagList);
+                }
             }
 
             @Override
@@ -93,7 +96,7 @@ public class ProfileDB {
 
     public void writeProfileImage(Uri imageUri) {
         Uri file = imageUri;
-        mImageStorageRef = mRootStorageRef.child("images/"+ mFilename);
+        mImageStorageRef = mRootStorageRef.child("images/" + mFilename);
         UploadTask uploadTask = mImageStorageRef.putFile(file);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override

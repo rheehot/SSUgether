@@ -19,12 +19,14 @@ public class IntroDialog extends Dialog {
 
     private static final int NEGATIVE_MODE = 1;
     private static final int POSITIVE_MODE = 2;
+    private String mPreviousIntroText;
 
-    public IntroDialog(Context context) {
+    public IntroDialog(Context context, String introText) {
         super(context);
+        mPreviousIntroText = introText;
     }
 
-    @BindView(R.id.intro_dialog_done_btn)
+    @BindView(R.id.intro_dialog_confirm_btn)
     Button mDoneButton;
     @BindView(R.id.intro_dialog_cancel_btn)
     Button mCancelButton;
@@ -43,6 +45,17 @@ public class IntroDialog extends Dialog {
         setContentView(R.layout.dialog_profile);
         ButterKnife.bind(this);
 
+        initView();
+
+
+    }
+
+    private void initView() {
+        if(mPreviousIntroText != null) {
+            mContentEditText.setText(mPreviousIntroText);
+            mContentEditText.setSelection(mContentEditText.length());
+        }
+
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +73,7 @@ public class IntroDialog extends Dialog {
             }
         });
     }
+
 
     public String getText() {
         return mContentText;

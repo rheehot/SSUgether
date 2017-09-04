@@ -125,7 +125,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void inflateImageView(String imageUrl) {
-        if(imageUrl == null) {
+        if (imageUrl == null) {
             mPresenter.changeProfileImageUrl(PROFILE_DEFAULT_IMAGE);
         } else {
             ImageUtil.loadUrlImage(mProfileImageView, imageUrl);
@@ -133,13 +133,13 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void inflateIntroView(String introText) {
-        if(introText != null) {
+        if (introText != null) {
             mIntroContentText.setText(introText);
         }
     }
 
     public void inflateTagView(String[] tagList) {
-        if(tagList != null) {
+        if (tagList != null) {
             mTagLayout.setTags(tagList);
         }
     }
@@ -168,20 +168,18 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void showCustomDialog() {
-                final IntroDialog introDialog = new IntroDialog(getActivity());
-                introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dia) {
-                        if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
-                            if (!introDialog.getText().equals("")) {
-                                mPresenter.changeProfileIntro(introDialog.getText());
-                                inflateIntroView(introDialog.getText());
-                            }
-                        }
-                    }
-                });
+        final IntroDialog introDialog = new IntroDialog(getActivity(), mIntroContentText.getText().toString());
+        introDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dia) {
+                if (introDialog.getMode() == DIALOG_POSITIVE_MODE) {
+                    mPresenter.changeProfileIntro(introDialog.getText());
+                    inflateIntroView(introDialog.getText());
+                }
+            }
+        });
 
-                introDialog.show();
+        introDialog.show();
     }
 
     @Override

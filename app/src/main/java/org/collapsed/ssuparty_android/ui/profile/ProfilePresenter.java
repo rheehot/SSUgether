@@ -37,16 +37,16 @@ public class ProfilePresenter {
         mModel.writeTagList(tagList);
     }
 
-    public void loadIntroData(String introText) {
+    public void updateIntroData(String introText) {
         mView.inflateIntroView(introText);
     }
 
-    public void loadTagListData(List<String> tagList) {
+    public void updateTagListData(List<String> tagList) {
         String[] tagArray = tagList.toArray(new String[tagList.size()]);
         mView.inflateTagView(tagArray);
     }
 
-    public void loadImageData(String imageUrl) {
+    public void updateImageData(String imageUrl) {
         mView.inflateImageView(imageUrl);
     }
 }
