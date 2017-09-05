@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="56dp"
             android:background="#a15ffb">
 
             <TextView
@@ -34,7 +34,7 @@
             android:id="@+id/profile_top_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <org.collapsed.ssuparty_android.ui.customview.CircleImageView
@@ -53,14 +53,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:text="User1234" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -87,8 +87,11 @@
             android:padding="5dp">
 
             <android.support.v7.widget.CardView
-                style="@style/ProfileCardViewTheme"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -226,7 +229,7 @@
                     <me.gujun.android.taggroup.TagGroup
                         android:id="@+id/profile_tag_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
+                        android:layout_height="74dp"
                         android:padding="12dp"
                         app:atg_isAppendMode="true"
                         app:atg_textSize="12sp"

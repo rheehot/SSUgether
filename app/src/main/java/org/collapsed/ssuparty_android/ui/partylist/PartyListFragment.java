@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.gujun.android.taggroup.TagGroup;
 
 public class PartyListFragment extends BaseFragment implements PartyListContract.View {
 
@@ -155,20 +156,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             ((CustomViewHolder) viewHolder).titleText.setText(item.getTitle());
             ((CustomViewHolder) viewHolder).categoryText.setText(item.getCategory());
-            ((CustomViewHolder) viewHolder).deadlineText.setText(item.getDeadline());
             ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMemberNum());
 
             List<String> tagList = item.getTags();
 
-            if (tagList == null) {
-                ((CustomViewHolder) viewHolder).tagText.setText("");
-            } else {
-                String tagText = "";
-
-                for (String tag : tagList) {
-                    tagText += "#" + tag + " ";
-                    ((CustomViewHolder) viewHolder).tagText.setText(tagText);
-                }
+            if (tagList != null) {
+                ((CustomViewHolder) viewHolder).tagList.setTags(tagList);
             }
 
             ((CustomViewHolder) viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
@@ -187,8 +180,9 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
-            public TextView titleText, memberText, categoryText, deadlineText, tagText;
+            public TextView titleText, memberText, categoryText;
             public LinearLayout rootView;
+            public TagGroup tagList;
 
             public CustomViewHolder(View view) {
                 super(view);
@@ -196,8 +190,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
                 titleText = view.findViewById(R.id.party_item_title_txt);
                 memberText = view.findViewById(R.id.party_item_member_num_txt);
                 categoryText = view.findViewById(R.id.party_item_category_txt);
-                deadlineText = view.findViewById(R.id.party_item_deadline_txt);
-                tagText = view.findViewById(R.id.party_item_tag_txt);
+                tagList = view.findViewById(R.id.party_item_tag_layout);
 
                 rootView = view.findViewById(R.id.party_item_root_layout);
             }
