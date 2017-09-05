@@ -99,7 +99,7 @@
                         style="@style/SGEditTextTheme"
                         android:hint="모임명을 입력해주세요!"
                         android:inputType="text"
-                        android:maxLength="13" />
+                        android:maxLength="16" />
                 </LinearLayout>
 
                 <TextView

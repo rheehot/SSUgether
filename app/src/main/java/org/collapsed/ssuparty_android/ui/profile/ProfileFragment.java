@@ -131,6 +131,18 @@ public class ProfileFragment extends BaseFragment {
                 return false;
             }
         });
+
+        mTagLayout.setOnTagChangeListener(new TagGroup.OnTagChangeListener() {
+            @Override
+            public void onAppend(TagGroup tagGroup, String tag) {
+                mPresenter.changeProfileTagList(tagGroup.getTags());
+            }
+
+            @Override
+            public void onDelete(TagGroup tagGroup, String tag) {
+                mPresenter.changeProfileTagList(tagGroup.getTags());
+            }
+        });
     }
 
     private void updateProfileView() {
