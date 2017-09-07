@@ -118,11 +118,11 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 19) {
-                    mTitleConstraintText.setText("20/20");
+                if (s.length() > 15) {
+                    mTitleConstraintText.setText("16/16");
                     mTitleConstraintText.setTextColor(Color.RED);
                 } else {
-                    mTitleConstraintText.setText(String.valueOf(s.length()) + "/20");
+                    mTitleConstraintText.setText(String.valueOf(s.length()) + "/16");
                     mTitleConstraintText.setTextColor(Color.parseColor(TEXT_COLOR));
                 }
             }
