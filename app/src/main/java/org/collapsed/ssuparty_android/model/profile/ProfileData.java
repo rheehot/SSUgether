@@ -1,80 +1,97 @@
 package org.collapsed.ssuparty_android.model.profile;
 
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.List;
 
+@IgnoreExtraProperties
 public class ProfileData {
-    private String mId;
-    private String mNickname;
-    private String mGrade;
-    private String mMajor;
-    private String mProfileImageUri;
-    private String mIntroduction;
-    private List<String> mTags;
+    private Long id;
+    private String nickName;
+    private String grade;
+    private String major;
+    private String email;
+    private String image_uri;
+    private String simpleUserIntro;
+    private List<String> tag;
 
-    public ProfileData(String id, String nickname, String major, String image, String intro, List<String> tags){
-        this.mId = id;
-        this.mNickname = nickname;
-        this.mMajor = major;
-        this.mProfileImageUri = image;
-        this.mIntroduction = intro;
-        this.mTags = tags;
+    public ProfileData() {
     }
 
-    public void setId(String id) {
-        this.mId = id;
+    public ProfileData(Long id, String nickname, String email, String major, String image, String intro, List<String> tags, String grade){
+        this.id = id;
+        this.nickName = nickname;
+        this.email = email;
+        this.major = major;
+        this.grade = grade;
+        this.image_uri = image;
+        this.simpleUserIntro = intro;
+        this.tag = tags;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setNickname(String nickname) {
-        this.mNickname = nickname;
+        this.nickName = nickname;
     }
 
     public void setGrade(String grade) {
-        this.mGrade = grade;
+        this.grade = grade;
     }
 
     public void setMajor(String major) {
-        this.mMajor = major;
+        this.major = major;
     }
 
     public void setProfileImageUrl(String profileImageUri) {
-        this.mProfileImageUri = profileImageUri;
+        this.image_uri = profileImageUri;
     }
 
     public void setIntroduction(String introduction) {
-        this.mIntroduction = mIntroduction;
+        this.simpleUserIntro = simpleUserIntro;
     }
 
     public void setTags(List<String> tags) {
-        this.mTags = mTags;
+        this.tag = tag;
     }
 
-    public String getId() {
-        return mId;
+    public String getEmail() {
+        return email;
     }
 
-    public String getNickname() {
-        return mNickname;
+    public void setEmail(String mEmail) {
+        this.email = mEmail;
     }
 
     public String getGrade() {
-        return mGrade;
+        return grade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNickname() {
+        return nickName;
     }
 
     public String getMajor() {
-        return mMajor;
+        return major;
     }
 
     public String getProfileImageUri() {
-        return mProfileImageUri;
+        return image_uri;
     }
 
     public String getIntroduction() {
-        return mIntroduction;
+        return simpleUserIntro;
     }
 
     public List<String> getTags() {
-        return mTags;
+        return tag;
     }
 
 }

@@ -41,12 +41,14 @@
                     android:padding="8dp">
 
                     <EditText
+                        android:id="@+id/home_search_edittext"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="9"
                         android:background="@android:color/transparent"
                         android:hint="보유 기술 및 모임, 공모전 이름 검색"
                         android:inputType="text"
+                        android:imeOptions="actionSearch"
                         android:maxLines="1" />
 
                     <ImageView
@@ -108,9 +110,11 @@
                         android:textSize="@dimen/secondary_text_size" />
                 </RelativeLayout>
 
-                <include layout="@layout/layout_userprofile_row" />
+                <include layout="@layout/layout_userprofile_row"
+                    android:id="@+id/home_userprofile_layout1"/>
 
-                <include layout="@layout/layout_userprofile_row" />
+                <include layout="@layout/layout_userprofile_row"
+                    android:id="@+id/home_userprofile_layout2"/>
 
                 <include layout="@layout/divider" />
 
