@@ -1,8 +1,11 @@
 package org.collapsed.ssuparty_android.model.party;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@IgnoreExtraProperties
 public class PartyData {
     private String mTitle;
     private String mMemberNum;
@@ -21,14 +24,6 @@ public class PartyData {
         this.mDeadline = deadline;
         this.mInformation = information;
         this.mTags = (ArrayList<String>) tags;
-    }
-    public PartyData(String title, String memberNum, String category,
-                      String deadline, String information){
-        this.mTitle = title;
-        this.mMemberNum = memberNum;
-        this.mCategory = category;
-        this.mDeadline = deadline;
-        this.mInformation = information;
     }
 
     public void setTitle(String mTitle) {

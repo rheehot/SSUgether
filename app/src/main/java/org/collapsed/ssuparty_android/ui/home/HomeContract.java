@@ -13,5 +13,6 @@ public interface HomeContract {
     }
 
     interface UserActionListener {
+        void performSearch(CharSequence text);
     }
 }

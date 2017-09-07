@@ -15,10 +15,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
-import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -44,7 +43,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         mBinding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
         mBinding.setView(this);
         mBinding.setPresenter(mPresenter);
@@ -56,6 +54,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onViewCreated(rootView, savedInstanceState);
 
         mPositionYToolbar = mBinding.homeToolbar.getY();
+        mBinding.homeSearchEdittext.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                mPresenter.performSearch(textView.getText());
+                changeSearchResultState();
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override
