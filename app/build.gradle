@@ -26,7 +26,7 @@ android {
     }
 
     productFlavors {
-        
+
     }
 
     compileOptions {
@@ -71,6 +71,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:' + rootProject.butterknifeVersion;
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterknifeVersion;
 
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.2'
@@ -85,5 +86,4 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:10.0.1'
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
-
 }
