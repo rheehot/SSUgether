@@ -62,7 +62,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
@@ -71,9 +70,7 @@
             android:name=".ui.signup.SignupActivity"
             android:theme="@style/SSUPartyTheme.NoActionBar" />
 
-        <activity android:name=".ui.partydetail.PartyDetailActivity">
-
-        </activity>
+        <activity android:name=".ui.partydetail.PartyDetailActivity"></activity>
     </application>
 
 </manifest>

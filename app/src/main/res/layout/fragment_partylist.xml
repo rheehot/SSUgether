@@ -18,7 +18,7 @@
             android:layout_centerInParent="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:text="파티 찾기 및 생성"
+            android:text="내 파티 리스트"
             android:textColor="#ffffff"
             android:textSize="15dp"
             android:textStyle="bold" />
