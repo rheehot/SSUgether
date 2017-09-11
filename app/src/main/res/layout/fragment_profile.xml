@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="User1234" />
+                android:text="김종찬" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
