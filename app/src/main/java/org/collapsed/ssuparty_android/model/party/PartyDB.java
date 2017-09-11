@@ -1,5 +1,6 @@
 package org.collapsed.ssuparty_android.model.party;
 
+
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -8,22 +9,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.collapsed.ssuparty_android.event.BusProvider;
-import org.collapsed.ssuparty_android.event.PartyEvent;
 import org.collapsed.ssuparty_android.ui.main.MainPresenter;
+import org.collapsed.ssuparty_android.ui.partylist.PartyListPresenter;
 
 public class PartyDB {
 
     private static final String DB_ALL_PARTY_KEY = "all_party";
     private static final String DB_MY_PARTY_KEY = "my_party";
-    private static final int INDEX_HOME = 0;
-    private static final int INDEX_MY_PARTY = 1;
-    private static final int INDEX_ALL_PARTY = 2;
 
+    private MainPresenter mPresenter;
     private DatabaseReference mRootRef, mAllPartyRef, mMyPartyRef;
 
     public PartyDB(MainPresenter presenter) {
-
+        mPresenter = presenter;
         initModel();
     }
 
@@ -32,41 +30,38 @@ public class PartyDB {
         this.mAllPartyRef = mRootRef.child(DB_ALL_PARTY_KEY);
         this.mMyPartyRef = mRootRef.child(DB_MY_PARTY_KEY);
 
-        mAllPartyRef.addChildEventListener(new ChildEventListener() {
+        this.mAllPartyRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                PartyData partydata = dataSnapshot.getValue(PartyData.class);
-                BusProvider.getInstance().post(new PartyEvent(partydata, INDEX_ALL_PARTY));
-                Log.d("dasd","ok!");
+                PartyData partyData = dataSnapshot.getValue(PartyData.class);
+                mPresenter.updatePartyList(partyData);
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) { }
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
 
     }
 
-    public void writeNewParty(String key, Object data) {
-        switch (key) {
-            case DB_ALL_PARTY_KEY:
-                mAllPartyRef.push().setValue(data);
-                break;
-
-            case DB_MY_PARTY_KEY:
-                //mMyPartyRef.push().setValue(data);
-                break;
-
-            default:
-                break;
-        }
+    public void writeNewParty(PartyData partyData) {
+                mAllPartyRef.push().setValue(partyData);
+        Log.d("PartyDB",partyData.getTitle());
     }
 }

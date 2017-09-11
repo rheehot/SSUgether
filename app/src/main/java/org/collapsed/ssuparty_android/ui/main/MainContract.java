@@ -5,6 +5,5 @@ public interface MainContract {
     }
 
     interface UserActionListener {
-        void initMain();
     }
 }
