@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,13 +105,10 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     }
 
     public void addPartyItemToList(PartyData partyData) {
-        mPartyDataList.add(partyData);
-        mPartyAdapter.notifyDataSetChanged();
-    }
-
-    public void addProfileItemToList(ProfileData profileData) {
-        mProfileDataList.add(profileData);
-        mProflieAdapter.notifyDataSetChanged();
+        if (partyData != null) {
+            mPartyDataList.add(partyData);
+            mPartyAdapter.notifyDataSetChanged();
+        }
     }
 
     public void inflateView(int index) {
@@ -210,12 +208,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
             ProfileData item = mProfileDataList.get(position);
 
-            ImageUtil.loadUrlImage(((ProfileViewHolder)viewHolder).profileImgae, item.getProfileImageUri());
-            ((ProfileViewHolder)viewHolder).nicknameText.setText(item.getNickname());
-            ((ProfileViewHolder)viewHolder).majorText.setText(item.getMajor());
-            ((ProfileViewHolder)viewHolder).gradeText.setText(item.getGrade());
+            ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getProfileImageUri());
+            ((ProfileViewHolder) viewHolder).nicknameText.setText(item.getNickname());
+            ((ProfileViewHolder) viewHolder).majorText.setText(item.getMajor());
+            ((ProfileViewHolder) viewHolder).gradeText.setText(item.getGrade());
 
-            ((ProfileViewHolder)viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
+            ((ProfileViewHolder) viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                 }

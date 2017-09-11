@@ -69,20 +69,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ButterKnife.bind(this);
 
         mPresenter = new MainPresenter(this);
-        mPresenter.initMain();
 
         initView();
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE)
-            if(resultCode == CreatePartyActivity.RESULT_OK) {
-                mPresenter.getCreatedPartyInfo(data);
-            }
-        }
 
     private void initView() {
         mBottomNaviAdapter = new BottomNaviPagerAdapter(getSupportFragmentManager(), PAGE_COUNT);
@@ -258,5 +247,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     public PartyListFragment getAllPartyFragment() {
         return mAllPartyView;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent partyIndent) {
+        super.onActivityResult(requestCode, resultCode, partyIndent);
+
+        if (requestCode == CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == CreatePartyActivity.RESULT_OK) {
+                mPresenter.setNewPartyInfo(partyIndent);
+            }
+        }
     }
 }
