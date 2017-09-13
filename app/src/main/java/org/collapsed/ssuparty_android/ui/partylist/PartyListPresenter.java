@@ -36,7 +36,7 @@ public class PartyListPresenter {
         intent.putExtra(DEADLINE_KEY, partyData.getDeadline());
         intent.putExtra(MEMBER_KEY, partyData.getMemberNum());
         intent.putExtra(INFO_KEY, partyData.getInformation());
-        //intent.putExtra(PARTY_KEY, partyData.getKey());
+        intent.putExtra(PARTY_KEY, partyData.getKey());
         intent.putStringArrayListExtra(TAG_KEY, (ArrayList<String>) partyData.getTags());
 
         mView.showPartyDetail(intent);
