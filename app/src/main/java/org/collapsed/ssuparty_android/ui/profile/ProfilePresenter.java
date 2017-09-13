@@ -2,6 +2,7 @@ package org.collapsed.ssuparty_android.ui.profile;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.collapsed.ssuparty_android.model.profile.ProfileDB;
 
@@ -23,6 +24,11 @@ public class ProfilePresenter {
         mModel.readProfileImage();
         mModel.readProfileIntro();
         mModel.readProfieTagList();
+        mModel.readProfileName();
+        mModel.readProfileGrade();
+        mModel.readProfileMajor();
+
+        Log.d("Profile","update");
     }
 
     public void changeProfileImage(Uri imageUri) {
@@ -37,7 +43,7 @@ public class ProfilePresenter {
         mModel.writeTagList(tagList);
     }
 
-    public void updateIntroText(String introText) {
+    public void updateIntro(String introText) {
         mView.inflateIntroText(introText);
     }
 
@@ -49,4 +55,20 @@ public class ProfilePresenter {
     public void updateImage(String imageUrl) {
         mView.inflateImageView(imageUrl);
     }
+
+    public void updateName(String nameText) {
+        mView.inflateNameText(nameText);
+    }
+
+    public void updateGrade(String gradeText) {
+        mView.inflateGradeText(gradeText);
+    }
+
+    public void updateMajor(String majorText) {
+        mView.inflateMajorText(majorText);
+    }
+
+
+
+
 }

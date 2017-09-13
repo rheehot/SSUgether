@@ -51,7 +51,7 @@
                 android:layout_marginRight="10dp"
                 android:text="취소"
                 android:textSize="12sp"
-                android:textColor="#00AA00"
+                android:textColor="#a15ffb"
                 android:background="@android:color/transparent"/>
 
             <Button
@@ -60,7 +60,7 @@
                 android:layout_height="36dp"
                 android:text="확인"
                 android:textSize="12sp"
-                android:textColor="#00AA00"
+                android:textColor="#a15ffb"
                 android:background="@android:color/transparent"/>
 
         </LinearLayout>

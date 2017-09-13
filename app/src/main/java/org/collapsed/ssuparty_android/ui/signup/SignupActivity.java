@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.profile.ProfileDB;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoDB;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.main.MainActivity;
@@ -212,13 +213,18 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         String name = mNameEditText.getText().toString();
         String nickname = mNickNameEditText.getText().toString();
         String major = mMajorEditText.getText().toString();
-        long grade = mGradeSpinner.getSelectedItemPosition();
+        int grade = mGradeSpinner.getSelectedItemPosition();
         long schoolID = Long.parseLong(mStdnumEditText.getText().toString());
         long gender = mGenderSpinner.getSelectedItemPosition();
         UserInfoData data = new UserInfoData(uid, email, imgUrl, name, nickname, major, grade, schoolID, gender);
 
-        UserInfoDB db = new UserInfoDB();
-        db.writeNewUser(data);
+        UserInfoDB userDB = new UserInfoDB();
+        userDB.writeNewUser(data);
+
+        ProfileDB profileDB = new ProfileDB();
+        profileDB.writeName(name);
+        profileDB.writeMajor(major);
+        profileDB.writeGrade(Integer.toString(grade));
 
         Intent moveIntent = new Intent(this, MainActivity.class);
         startActivity(moveIntent);

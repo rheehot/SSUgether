@@ -10,7 +10,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.collapsed.ssuparty_android.ui.main.MainPresenter;
-import org.collapsed.ssuparty_android.ui.partylist.PartyListPresenter;
 
 public class PartyDB {
 
@@ -61,7 +60,8 @@ public class PartyDB {
     }
 
     public void writeNewParty(PartyData partyData) {
-                mAllPartyRef.push().setValue(partyData);
-        Log.d("PartyDB",partyData.getTitle());
+        String partyKey = mAllPartyRef.push().getKey();
+        partyData.setKey(partyKey);
+        mAllPartyRef.child(partyKey).setValue(partyData);
     }
 }
