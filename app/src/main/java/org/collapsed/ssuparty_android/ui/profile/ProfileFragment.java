@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,13 +39,12 @@ public class ProfileFragment extends BaseFragment {
     private static final Uri PROFILE_DEFAULT_IMAGE
             = Uri.parse("android.resource://org.collapsed.ssuparty_android/drawable/camera");
 
-
     @BindView(R.id.profile_main_layout)
     LinearLayout mMainLayout;
     @BindView(R.id.profile_user_image)
     ImageView mProfileImageView;
-    @BindView(R.id.profile_nickname_txt)
-    TextView mNicknameText;
+    @BindView(R.id.profile_name_txt)
+    TextView mNameText;
     @BindView(R.id.profile_major_txt)
     TextView mMajorText;
     @BindView(R.id.profile_grade_txt)
@@ -166,6 +166,24 @@ public class ProfileFragment extends BaseFragment {
     public void inflateTagView(String[] tagList) {
         if (tagList != null) {
             mTagLayout.setTags(tagList);
+        }
+    }
+
+    public void inflateNameText(String nameValue) {
+        if (nameValue != null) {
+            mNameText.setText(nameValue);
+        }
+    }
+
+    public void inflateMajorText(String majorValue) {
+        if (majorValue != null) {
+            mMajorText.setText(majorValue);
+        }
+    }
+
+    public void inflateGradeText(String gradeValue) {
+        if (gradeValue != null) {
+            mGradeText.setText(gradeValue + "학년");
         }
     }
 

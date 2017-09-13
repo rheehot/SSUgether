@@ -2,7 +2,6 @@ package org.collapsed.ssuparty_android.model.profile;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,22 +27,29 @@ public class ProfileDB {
     private static final String DB_PROFILE_KEY = "profile";
 
     private ProfilePresenter mProfilePresenter;
-    private DatabaseReference mRootDBRef, mProfileDBRef, mTagsDBRef, mIntroDBRef;
+    private DatabaseReference  mProfileDBRef, mTagsDBRef, mIntroDBRef,
+            mNameDBRef, mGradeDBRef, mMajorDBRef;
     private StorageReference mRootStorageRef, mImageStorageRef;
     private String mFilename, mUserUid;
 
+    public ProfileDB() {
+        initModel();
+    }
+
     public ProfileDB(ProfilePresenter presenter) {
         mProfilePresenter = presenter;
-        mUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         initModel();
     }
 
     public void initModel() {
-        mRootDBRef = FirebaseDatabase.getInstance().getReference();
-        mProfileDBRef = mRootDBRef.child(DB_PROFILE_KEY);
+        mUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        mProfileDBRef = FirebaseDatabase.getInstance().getReference().child(DB_PROFILE_KEY);
         mTagsDBRef = mProfileDBRef.child(mUserUid).child("tags");
         mIntroDBRef = mProfileDBRef.child(mUserUid).child("intro");
-
+        mNameDBRef = mProfileDBRef.child(mUserUid).child("name");
+        mGradeDBRef = mProfileDBRef.child(mUserUid).child("grade");
+        mMajorDBRef = mProfileDBRef.child(mUserUid).child("major");
 
         mFilename = mUserUid + "_profile_image.png";
         mRootStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ssugether.appspot.com/");
@@ -69,7 +75,7 @@ public class ProfileDB {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String introText = dataSnapshot.getValue(String.class);
-                mProfilePresenter.updateIntroText(introText);
+                mProfilePresenter.updateIntro(introText);
             }
 
             @Override
@@ -95,6 +101,48 @@ public class ProfileDB {
         });
     }
 
+    public void readProfileName() {
+        mNameDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String nameText = dataSnapshot.getValue(String.class);
+                mProfilePresenter.updateName(nameText);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public void readProfileMajor() {
+        mMajorDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String majorText = dataSnapshot.getValue(String.class);
+                mProfilePresenter.updateMajor(majorText);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public void readProfileGrade() {
+        mGradeDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String gradeText = dataSnapshot.getValue(String.class);
+                mProfilePresenter.updateGrade(gradeText);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
     public void writeProfileImage(Uri imageUri) {
         Uri file = imageUri;
         mImageStorageRef = mRootStorageRef.child("images/" + mFilename);
@@ -112,11 +160,22 @@ public class ProfileDB {
     }
 
     public void writeIntroduction(String introText) {
-        mProfileDBRef.child(mUserUid).child("intro").setValue(introText);
+        mIntroDBRef.setValue(introText);
     }
 
     public void writeTagList(String[] tagList) {
-        mProfileDBRef.child(mUserUid).child("tags").setValue(new ArrayList<String>(Arrays.asList(tagList)));
+        mTagsDBRef.setValue(new ArrayList<String>(Arrays.asList(tagList)));
+    }
 
+    public void writeName(String nameText) {
+       mNameDBRef.setValue(nameText);
+    }
+
+    public void writeMajor(String majorText) {
+        mMajorDBRef.setValue(majorText);
+    }
+
+    public void writeGrade(String gradeText) {
+        mGradeDBRef.setValue(gradeText);
     }
 }

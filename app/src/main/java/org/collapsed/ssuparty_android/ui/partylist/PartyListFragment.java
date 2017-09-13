@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     private static final int INDEX_MY_PARTY = 1;
     private static final int INDEX_ALL_PARTY = 2;
 
+    @BindView(R.id.partylist_title_txt)
+    TextView mTitleText;
     @BindView(R.id.partylist_fab_btn)
     FloatingActionButton mAddPartyButton;
     @BindView(R.id.partylist_list)
@@ -117,9 +118,11 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
                 break;
 
             case INDEX_MY_PARTY:
+                mTitleText.setText("내 모임 리스트");
                 break;
 
             case INDEX_ALL_PARTY:
+                mTitleText.setText("전체 모임 리스트");
                 showAddPartyButton();
                 mRecyclerView.setAdapter(mPartyAdapter);
                 break;
@@ -127,6 +130,10 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             default:
                 break;
         }
+    }
+
+    public void showPartyDetail(Intent intent) {
+        getActivity().startActivity(intent);
     }
 
     @Override
@@ -161,10 +168,17 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             if (tagList != null) {
                 ((CustomViewHolder) viewHolder).tagList.setTags(tagList);
             }
+            ((CustomViewHolder) viewHolder).tagList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPresenter.createPartyDetail(getActivity(), item);
+                }
+            });
 
             ((CustomViewHolder) viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    mPresenter.createPartyDetail(getActivity(), item);
                 }
             });
 
@@ -201,6 +215,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         public ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_profile, parent, false);
+
             return new ProfileViewHolder(view);
         }
 

@@ -12,6 +12,7 @@ public class PartyData {
     private String mCategory;
     private String mDeadline;
     private String mInformation;
+    private String mKey;
     private ArrayList<String> mTags;
 
     public PartyData(){}
@@ -48,6 +49,14 @@ public class PartyData {
 
     public void setTags(ArrayList<String> mTags) {
         this.mTags = mTags;
+    }
+
+    public void setKey(String key) {
+        this.mKey = key;
+    }
+
+    public String getKey() {
+        return mKey;
     }
 
     public String getTitle() {
