@@ -214,17 +214,12 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         String nickname = mNickNameEditText.getText().toString();
         String major = mMajorEditText.getText().toString();
         int grade = mGradeSpinner.getSelectedItemPosition();
-        long schoolID = Long.parseLong(mStdnumEditText.getText().toString());
+        long studentID = Long.parseLong(mStdnumEditText.getText().toString());
         long gender = mGenderSpinner.getSelectedItemPosition();
-        UserInfoData data = new UserInfoData(uid, email, imgUrl, name, nickname, major, grade, schoolID, gender);
 
+        UserInfoData data = new UserInfoData(uid, email, name, nickname, imgUrl, major, grade, studentID, gender, "", null, null);
         UserInfoDB userDB = new UserInfoDB();
         userDB.writeNewUser(data);
-
-        ProfileDB profileDB = new ProfileDB();
-        profileDB.writeName(name);
-        profileDB.writeMajor(major);
-        profileDB.writeGrade(Integer.toString(grade));
 
         Intent moveIntent = new Intent(this, MainActivity.class);
         startActivity(moveIntent);
