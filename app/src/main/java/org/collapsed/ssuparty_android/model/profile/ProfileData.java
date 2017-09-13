@@ -3,8 +3,6 @@ package org.collapsed.ssuparty_android.model.profile;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.List;
-
 @IgnoreExtraProperties
 public class ProfileData {
     private Long id;
@@ -12,30 +10,24 @@ public class ProfileData {
     private String grade;
     private String major;
     private String email;
-    private String image_uri;
+    private String imageUrl;
     private String simpleUserIntro;
-    private List<String> tag;
 
     public ProfileData() {
     }
 
-    public ProfileData(Long id, String nickname, String email, String major, String image, String intro, List<String> tags, String grade){
+    public ProfileData(Long id, String nickName, String email, String major, String imageUrl, String simpleUserIntro, String grade) {
         this.id = id;
-        this.nickName = nickname;
+        this.nickName = nickName;
         this.email = email;
         this.major = major;
         this.grade = grade;
-        this.image_uri = image;
-        this.simpleUserIntro = intro;
-        this.tag = tags;
+        this.imageUrl = imageUrl;
+        this.simpleUserIntro = simpleUserIntro;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickName = nickname;
     }
 
     public void setGrade(String grade) {
@@ -46,16 +38,12 @@ public class ProfileData {
         this.major = major;
     }
 
-    public void setProfileImageUrl(String profileImageUri) {
-        this.image_uri = profileImageUri;
+    public String getSimpleUserIntro() {
+        return simpleUserIntro;
     }
 
-    public void setIntroduction(String introduction) {
+    public void setSimpleUserIntro(String simpleUserIntro) {
         this.simpleUserIntro = simpleUserIntro;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tag = tag;
     }
 
     public String getEmail() {
@@ -74,24 +62,23 @@ public class ProfileData {
         return id;
     }
 
-    public String getNickname() {
+    public String getNickName() {
         return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getMajor() {
         return major;
     }
 
-    public String getProfileImageUri() {
-        return image_uri;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getIntroduction() {
-        return simpleUserIntro;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
-
-    public List<String> getTags() {
-        return tag;
-    }
-
 }

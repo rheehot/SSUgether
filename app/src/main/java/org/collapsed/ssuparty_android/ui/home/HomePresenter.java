@@ -26,5 +26,7 @@ public class HomePresenter implements HomeContract.UserActionListener, OnUnionSe
     @Override
     public void onUnionSearched(UnionSearchData data) {
         this.fetchedData = data;
+        mView.setupProfileList(data.getProfiles());
+        mView.setupPartyList(data.getPartys());
     }
 }

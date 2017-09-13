@@ -208,8 +208,8 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
             ProfileData item = mProfileDataList.get(position);
 
-            ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getProfileImageUri());
-            ((ProfileViewHolder) viewHolder).nicknameText.setText(item.getNickname());
+            ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getImageUrl());
+            ((ProfileViewHolder) viewHolder).nicknameText.setText(item.getNickName());
             ((ProfileViewHolder) viewHolder).majorText.setText(item.getMajor());
             ((ProfileViewHolder) viewHolder).gradeText.setText(item.getGrade());
 

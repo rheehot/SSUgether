@@ -107,42 +107,38 @@ public class UnionSearchRepository {
                 filteredPartys.add(party);
             }
 
-            try {
-                for (String tag : party.getTags()) {
-                    if (tag.contains(mSearchKeyword)) {
-                        filteredPartys.add(party);
-                    }
-                }
-            }catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
+//            try {
+//                for (String tag : party.getTags()) {
+//                    if (tag.contains(mSearchKeyword)) {
+//                        filteredPartys.add(party);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                Log.e(TAG, e.getMessage());
+//            }
         }
 
         mfetchedParty = filteredPartys;
 
         ArrayList<ProfileData> filteredProfiles = new ArrayList<>();
         for (ProfileData profile : mfetchedProfiles) {
-            if (profile.getNickname().contains(mSearchKeyword)) {
-                filteredProfiles.add(profile);
-            }
-
             try {
-                if (profile.getIntroduction().contains(mSearchKeyword)) {
+                if (profile.getNickName().contains(mSearchKeyword) || profile.getSimpleUserIntro().contains(mSearchKeyword)) {
                     filteredProfiles.add(profile);
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
 
-            try {
-                for (String tag : profile.getTags()) {
-                    if (tag.contains(mSearchKeyword)) {
-                        filteredProfiles.add(profile);
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
+//            try {
+//                for (HashMap<String, String> tag : profile.getTag()) {
+//                    if (tag.values().contains(mSearchKeyword)) {
+//                        filteredProfiles.add(profile);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                Log.e(TAG, e.getMessage());
+//            }
         }
 
         mfetchedProfiles = filteredProfiles;
