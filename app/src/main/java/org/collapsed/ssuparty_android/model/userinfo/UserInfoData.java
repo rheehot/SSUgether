@@ -13,7 +13,7 @@ public class UserInfoData {
     public String imgUrl;
     public String major;
     public String grade;
-    public long studentID;
+    public String studentID;
     public long gender;
     public String intro;
     public List<String> tags;
@@ -22,7 +22,7 @@ public class UserInfoData {
     public UserInfoData() {
     }
 
-    public UserInfoData(String uid, String email, String name, String nickname, String imgUrl, String major, String grade, long studentID, long gender, String intro, List<String> tags, List<UserPartyStatus> myParty) {
+    public UserInfoData(String uid, String email, String name, String nickname, String imgUrl, String major, String grade, String studentID, long gender, String intro, List<String> tags, List<UserPartyStatus> myParty) {
         this.uid = uid;
         this.email = email;
         this.name = name;
@@ -93,11 +93,11 @@ public class UserInfoData {
         this.grade = grade;
     }
 
-    public long getStudentID() {
+    public String getStudentID() {
         return studentID;
     }
 
-    public void setStudentID(long studentID) {
+    public void setStudentID(String studentID) {
         this.studentID = studentID;
     }
 

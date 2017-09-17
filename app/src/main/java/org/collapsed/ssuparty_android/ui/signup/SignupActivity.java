@@ -213,7 +213,7 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         String nickname = mNickNameEditText.getText().toString();
         String major = mMajorEditText.getText().toString();
         String grade = mGradeSpinner.getSelectedItem().toString();
-        long studentID = Long.parseLong(mStdnumEditText.getText().toString());
+        String studentID = mStdnumEditText.getText().toString();
         long gender = mGenderSpinner.getSelectedItemPosition();
 
         UserInfoData data = new UserInfoData(uid, email, name, nickname, imgUrl, major, grade, studentID, gender, "", null, null);

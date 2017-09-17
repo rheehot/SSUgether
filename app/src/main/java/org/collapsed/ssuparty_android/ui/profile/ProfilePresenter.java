@@ -66,6 +66,10 @@ public class ProfilePresenter implements UserInfoDB.OnUserInfoFetchListener {
 
     @Override
     public void onFetched(UserInfoData data) {
-
+        updateName(data.getName());
+        updateGrade(data.getGrade());
+        updateMajor(data.getMajor());
+        updateTagList(data.getTags());
+        updateIntro(data.getIntro());
     }
 }
