@@ -2,33 +2,28 @@ package org.collapsed.ssuparty_android.ui.profile;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import org.collapsed.ssuparty_android.model.profile.ProfileDB;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoDB;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ProfilePresenter {
-
+public class ProfilePresenter implements UserInfoDB.OnUserInfoFetchListener {
     private ProfileFragment mView;
-    private ProfileDB mModel;
+    private UserInfoDB mModel;
 
     public ProfilePresenter(@NonNull ProfileFragment view) {
         this.mView = checkNotNull(view);
-        this.mModel = new ProfileDB(this);
+        this.mModel = new UserInfoDB(this, FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     public void getPreviousProfileDatas() {
-        mModel.readProfileImage();
-        mModel.readProfileIntro();
-        mModel.readProfieTagList();
-        mModel.readProfileName();
-        mModel.readProfileGrade();
-        mModel.readProfileMajor();
-
-        Log.d("Profile","update");
+        mModel.fetchUserProfileData();
     }
 
     public void changeProfileImage(Uri imageUri) {
@@ -69,6 +64,8 @@ public class ProfilePresenter {
     }
 
 
+    @Override
+    public void onFetched(UserInfoData data) {
 
-
+    }
 }

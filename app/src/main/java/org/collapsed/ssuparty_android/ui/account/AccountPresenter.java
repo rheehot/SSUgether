@@ -2,6 +2,7 @@ package org.collapsed.ssuparty_android.ui.account;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -20,7 +21,7 @@ import org.collapsed.ssuparty_android.ui.signup.SignupActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class AccountPresenter implements AccountContract.UserActionListener {
+public class AccountPresenter implements AccountContract.UserActionListener, UserInfoDB.OnUserInfoFetchListener {
 
     private static final String TAG = AccountPresenter.class.getSimpleName();
     private AccountActivity mView;
@@ -32,7 +33,6 @@ public class AccountPresenter implements AccountContract.UserActionListener {
     }
 
     public void setFacebookLoginCallback(LoginButton loginButton, CallbackManager callbackManager) {
-
         loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -63,9 +63,11 @@ public class AccountPresenter implements AccountContract.UserActionListener {
 
     private void checkAlreadySignUp() {
         FirebaseUser user = mAuth.getCurrentUser();
-        UserInfoDB db = new UserInfoDB(this);
-        if (user != null) {
-            db.findUserProfileData(user.getUid());
+        try {
+            UserInfoDB db = new UserInfoDB(this, user.getUid());
+            db.fetchUserProfileData();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -86,5 +88,10 @@ public class AccountPresenter implements AccountContract.UserActionListener {
         mView.hideProgress();
         mView.startActivity(intent);
         mView.finish();
+    }
+
+    @Override
+    public void onFetched(UserInfoData data) {
+        moveToNextActivity(data);
     }
 }

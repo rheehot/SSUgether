@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
-import org.collapsed.ssuparty_android.model.profile.ProfileData;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
@@ -48,7 +48,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     private PartyListAdapter mPartyAdapter;
     private ProfileListAdapter mProflieAdapter;
     private ArrayList<PartyData> mPartyDataList = new ArrayList<>();
-    private ArrayList<ProfileData> mProfileDataList = new ArrayList<>();
+    private ArrayList<UserInfoData> mProfileDataList = new ArrayList<>();
     private Unbinder mUnbinder;
 
     public static PartyListFragment newInstance() {
@@ -94,12 +94,9 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mRecyclerView.setAdapter(mPartyAdapter);
 
 
-        mAddPartyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
-                getActivity().startActivityForResult(intent, CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE);
-            }
+        mAddPartyButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
+            getActivity().startActivityForResult(intent, CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE);
         });
 
         mAddPartyButton.setVisibility(View.GONE);
@@ -168,19 +165,9 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             if (tagList != null) {
                 ((CustomViewHolder) viewHolder).tagList.setTags(tagList);
             }
-            ((CustomViewHolder) viewHolder).tagList.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.createPartyDetail(getActivity(), item);
-                }
-            });
+            ((CustomViewHolder) viewHolder).tagList.setOnClickListener(view -> mPresenter.createPartyDetail(getActivity(), item));
 
-            ((CustomViewHolder) viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.createPartyDetail(getActivity(), item);
-                }
-            });
+            ((CustomViewHolder) viewHolder).rootView.setOnClickListener(view -> mPresenter.createPartyDetail(getActivity(), item));
 
             viewHolder.itemView.setTag(item);
         }
@@ -221,17 +208,14 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            ProfileData item = mProfileDataList.get(position);
+            UserInfoData item = mProfileDataList.get(position);
 
-            ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getImageUrl());
-            ((ProfileViewHolder) viewHolder).nicknameText.setText(item.getNickName());
+            ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getImgUrl());
+            ((ProfileViewHolder) viewHolder).nicknameText.setText(item.getNickname());
             ((ProfileViewHolder) viewHolder).majorText.setText(item.getMajor());
             ((ProfileViewHolder) viewHolder).gradeText.setText(item.getGrade());
 
-            ((ProfileViewHolder) viewHolder).rootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
+            ((ProfileViewHolder) viewHolder).rootView.setOnClickListener(view -> {
             });
 
             viewHolder.itemView.setTag(item);

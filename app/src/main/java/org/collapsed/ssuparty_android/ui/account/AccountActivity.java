@@ -70,5 +70,4 @@ public class AccountActivity extends AppCompatActivity implements AccountContrac
     public void showCanceledFBLogin() {
         Toast.makeText(this, "페이스북 로그인이 완료되지 않았습니다.", Toast.LENGTH_LONG).show();
     }
-
 }

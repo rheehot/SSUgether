@@ -124,12 +124,9 @@ public class ProfileFragment extends BaseFragment {
         mWriteIntroButton.setOnClickListener(mClickListener);
         mWriteTagButton.setOnClickListener(mClickListener);
 
-        mMainLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                hideVirtualKeyboard(view);
-                return false;
-            }
+        mMainLayout.setOnTouchListener((view, motionEvent) -> {
+            hideVirtualKeyboard(view);
+            return false;
         });
 
         mTagLayout.setOnTagChangeListener(new TagGroup.OnTagChangeListener() {

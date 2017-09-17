@@ -2,30 +2,30 @@ package org.collapsed.ssuparty_android.model.unionsearch;
 
 import org.collapsed.ssuparty_android.model.contest.ContestData;
 import org.collapsed.ssuparty_android.model.party.PartyData;
-import org.collapsed.ssuparty_android.model.profile.ProfileData;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 
 import java.util.ArrayList;
 
 public class UnionSearchData {
-    private ArrayList<ProfileData> profiles;
+    private ArrayList<UserInfoData> userDatas;
     private ArrayList<PartyData> partys;
     private ArrayList<ContestData> contests;
 
     public UnionSearchData() {
     }
 
-    public UnionSearchData(ArrayList<ProfileData> profiles, ArrayList<PartyData> partys, ArrayList<ContestData> contests) {
-        this.profiles = profiles;
+    public UnionSearchData(ArrayList<UserInfoData> userDatas, ArrayList<PartyData> partys, ArrayList<ContestData> contests) {
+        this.userDatas = userDatas;
         this.partys = partys;
         this.contests = contests;
     }
 
-    public ArrayList<ProfileData> getProfiles() {
-        return profiles;
+    public ArrayList<UserInfoData> getProfiles() {
+        return userDatas;
     }
 
-    public void setProfiles(ArrayList<ProfileData> profiles) {
-        this.profiles = profiles;
+    public void setProfiles(ArrayList<UserInfoData> profiles) {
+        this.userDatas = profiles;
     }
 
     public ArrayList<PartyData> getPartys() {

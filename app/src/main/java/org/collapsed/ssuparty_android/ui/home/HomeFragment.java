@@ -3,7 +3,7 @@ package org.collapsed.ssuparty_android.ui.home;
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.databinding.HomeFragmentBinding;
 import org.collapsed.ssuparty_android.model.party.PartyData;
-import org.collapsed.ssuparty_android.model.profile.ProfileData;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
@@ -180,7 +180,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         Toast.makeText(getActivity(), "dfdfdf", Toast.LENGTH_SHORT).show();
     }
 
-    public void setupProfileList(ArrayList<ProfileData> profiles) {
+    public void setupProfileList(ArrayList<UserInfoData> profiles) {
         ListView listView = mBinding.homeProfileList;
         listView.setAdapter(new ProfileSearchAdapter(getActivity(), profiles));
 
@@ -193,23 +193,23 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     private class ProfileSearchAdapter extends BaseAdapter {
-        private final ArrayList<ProfileData> mProfiles;
+        private final ArrayList<UserInfoData> mUserInfos;
         private LayoutInflater mInflater;
         private ViewHolder viewHolder;
 
-        public ProfileSearchAdapter(Context context, ArrayList<ProfileData> profiles) {
-            this.mProfiles = profiles;
+        public ProfileSearchAdapter(Context context, ArrayList<UserInfoData> profiles) {
+            this.mUserInfos = profiles;
             this.mInflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return mProfiles.size();
+            return mUserInfos.size();
         }
 
         @Override
-        public ProfileData getItem(int i) {
-            return mProfiles.get(i);
+        public UserInfoData getItem(int i) {
+            return mUserInfos.get(i);
         }
 
         @Override
@@ -234,16 +234,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 viewHolder = (ViewHolder) view.getTag();
             }
 
-            ProfileData profile = mProfiles.get(i);
+            UserInfoData userData = mUserInfos.get(i);
 
-            if (profile.getImageUrl() != null) {
-                ImageUtil.loadUrlImage(viewHolder.profileImage, profile.getImageUrl());
+            if (userData.getImgUrl() != null) {
+                ImageUtil.loadUrlImage(viewHolder.profileImage, userData.getImgUrl());
             }
-            viewHolder.profileNickText.setText(profile.getNickName());
-            if (profile.getSimpleUserIntro() != null) {
-                viewHolder.profileIntroduce.setText("Bio : "+profile.getSimpleUserIntro());
+            viewHolder.profileNickText.setText(userData.getNickname());
+            if (userData.getIntro() != null) {
+                viewHolder.profileIntroduce.setText("Bio : " + userData.getIntro());
             }
-            viewHolder.profileEmailText.setText("Email : "+profile.getEmail());
+            viewHolder.profileEmailText.setText("Email : " + userData.getEmail());
 
             return view;
         }

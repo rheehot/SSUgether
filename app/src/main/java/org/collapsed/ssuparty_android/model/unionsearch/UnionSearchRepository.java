@@ -10,14 +10,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.collapsed.ssuparty_android.model.contest.ContestData;
 import org.collapsed.ssuparty_android.model.party.PartyData;
-import org.collapsed.ssuparty_android.model.profile.ProfileData;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 
 import java.util.ArrayList;
 
 public class UnionSearchRepository {
     private static final String TAG = UnionSearchRepository.class.getSimpleName();
 
-    private ArrayList<ProfileData> mfetchedProfiles;
+    private ArrayList<UserInfoData> mfetchedProfiles;
     private ArrayList<ContestData> mfetchedContest;
     private ArrayList<PartyData> mfetchedParty;
 
@@ -59,7 +59,7 @@ public class UnionSearchRepository {
                 mfetchedProfiles = new ArrayList<>();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ProfileData data = snapshot.getValue(ProfileData.class);
+                    UserInfoData data = snapshot.getValue(UserInfoData.class);
                     mfetchedProfiles.add(data);
                 }
 
@@ -120,11 +120,11 @@ public class UnionSearchRepository {
 
         mfetchedParty = filteredPartys;
 
-        ArrayList<ProfileData> filteredProfiles = new ArrayList<>();
-        for (ProfileData profile : mfetchedProfiles) {
+        ArrayList<UserInfoData> filteredProfiles = new ArrayList<>();
+        for (UserInfoData userData : mfetchedProfiles) {
             try {
-                if (profile.getNickName().contains(mSearchKeyword) || profile.getSimpleUserIntro().contains(mSearchKeyword)) {
-                    filteredProfiles.add(profile);
+                if (userData.getNickname().contains(mSearchKeyword) || userData.getIntro().contains(mSearchKeyword)) {
+                    filteredProfiles.add(userData);
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
