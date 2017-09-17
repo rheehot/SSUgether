@@ -59,10 +59,15 @@ public class UserInfoDB {
         Uri file = imageUri;
         String mFilename = mUid + "_profile_image.png";
         StorageReference mImageStorageRef = mRootStorageRef.child("images/" + mFilename);
+
         UploadTask uploadTask = mImageStorageRef.putFile(file);
+
         uploadTask.addOnFailureListener(exception -> {
         }).addOnSuccessListener(taskSnapshot -> {
-            //프로필 리스트 업데이트 관련 코딩 작업
+
+            @SuppressWarnings("VisibleForTests")
+            String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+            mUserInfoRef.child(mUid).child("imgUrl").setValue(downloadUrl);
         });
     }
 

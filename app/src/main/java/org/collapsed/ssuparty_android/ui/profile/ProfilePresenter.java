@@ -70,5 +70,6 @@ public class ProfilePresenter implements UserInfoDB.OnUserInfoFetchListener {
         updateMajor(data.getMajor());
         updateTagList(data.getTags());
         updateIntro(data.getIntro());
+        updateImage(data.getImgUrl());
     }
 }
