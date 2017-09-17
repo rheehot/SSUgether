@@ -71,6 +71,7 @@ public class UnionSearchRepository {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PartyData data = snapshot.getValue(PartyData.class);
                     if (data.getTitle().contains(mSearchKeyword) || data.getDescription().contains(mSearchKeyword)) {
+                        isAdded = true;
                         mfetchedParty.add(data);
                     }
 

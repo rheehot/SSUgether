@@ -10,11 +10,10 @@ import org.collapsed.ssuparty_android.ui.main.MainPresenter;
 
 public class PartyDB {
 
-    private static final String DB_ALL_PARTY_KEY = "all_party";
-    private static final String DB_MY_PARTY_KEY = "my_party";
+    private static final String DB_ALL_PARTY_KEY = "allParty";
 
     private MainPresenter mPresenter;
-    private DatabaseReference mRootRef, mAllPartyRef, mMyPartyRef;
+    private DatabaseReference mRootRef, mAllPartyRef;
 
     public PartyDB(MainPresenter presenter) {
         mPresenter = presenter;
@@ -24,7 +23,6 @@ public class PartyDB {
     public void initModel() {
         this.mRootRef = FirebaseDatabase.getInstance().getReference();
         this.mAllPartyRef = mRootRef.child(DB_ALL_PARTY_KEY);
-        this.mMyPartyRef = mRootRef.child(DB_MY_PARTY_KEY);
 
         this.mAllPartyRef.addChildEventListener(new ChildEventListener() {
             @Override
