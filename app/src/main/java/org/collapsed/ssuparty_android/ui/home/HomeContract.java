@@ -7,9 +7,6 @@ public interface HomeContract {
         void animateToDefaultState();
 
         void animateToSearchResultState();
-
-        void showAllProfiles();
-
     }
 
     interface UserActionListener {

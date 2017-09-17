@@ -2,12 +2,13 @@ package org.collapsed.ssuparty_android.model.party;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @IgnoreExtraProperties
-public class PartyData {
+public class PartyData implements Serializable {
     private String title;
     private boolean status;
     private String category;

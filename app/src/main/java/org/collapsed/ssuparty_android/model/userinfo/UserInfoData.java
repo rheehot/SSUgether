@@ -2,10 +2,11 @@ package org.collapsed.ssuparty_android.model.userinfo;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
 import java.util.List;
 
 @IgnoreExtraProperties
-public class UserInfoData {
+public class UserInfoData implements Serializable {
     public String uid;
     public String email;
     public String name;

@@ -108,7 +108,6 @@
                         android:layout_centerVertical="true"
                         android:drawablePadding="10dp"
                         android:drawableRight="@drawable/more"
-                        android:onClick="@{() -> view.showAllProfiles()}"
                         android:text="전체보기"
                         android:textColor="@color/titleTextPrimary"
                         android:textSize="@dimen/secondary_text_size" />

@@ -6,6 +6,7 @@ import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
+import org.collapsed.ssuparty_android.ui.unionsearchlist.UnionSearchListActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import android.animation.Animator;
@@ -14,6 +15,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +41,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private float mPositionYToolbar = 0.0f;
     private InputMethodManager mIMM;
     private ProgressDialog mDialog;
+
+    private ProfileSearchAdapter mProfileAdapter;
+    private PartySearchAdapter mPartyAdapter;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -74,9 +79,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             return false;
         });
 
+        mBinding.homeShowAllProfile.setOnClickListener(view -> {
+            moveToAllResultWithProfile();
+        });
+
+        mBinding.homeShowAllMeetups.setOnClickListener(view -> {
+            moveToAllResultWithParty();
+        });
+
         mDialog = new ProgressDialog(getActivity());
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.setMessage("검색 결과를 로딩중입니다..");
+    }
+
+    public void moveToAllResultWithProfile() {
+        Intent intent = new Intent(getActivity(), UnionSearchListActivity.class);
+        intent.putExtra("ListResultCategory", 0);
+        intent.putExtra("Items", mProfileAdapter.getItems());
+        startActivity(intent);
+    }
+
+    public void moveToAllResultWithParty() {
+        Intent intent = new Intent(getActivity(), UnionSearchListActivity.class);
+        intent.putExtra("ListResultCategory", 1);
+        intent.putExtra("Items", mPartyAdapter.getItems());
+        startActivity(intent);
     }
 
     @Override
@@ -176,22 +203,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         bgToPrimaryColor.start();
     }
 
-    public void showAllProfiles() {
-        Toast.makeText(getActivity(), "dfdfdf", Toast.LENGTH_SHORT).show();
-    }
-
     public void setupProfileList(ArrayList<UserInfoData> profiles) {
         ListView listView = mBinding.homeProfileList;
-        listView.setAdapter(new ProfileSearchAdapter(getActivity(), profiles));
-
-        mDialog.hide();
+        mProfileAdapter = new ProfileSearchAdapter(getActivity(), profiles);
+        listView.setAdapter(mProfileAdapter);
     }
 
     public void setupPartyList(ArrayList<PartyData> parties) {
         ListView listView = mBinding.homePartyList;
-        listView.setAdapter(new PartySearchAdapter(getActivity(), parties));
-
-        mDialog.hide();
+        mPartyAdapter = new PartySearchAdapter(getActivity(), parties);
+        listView.setAdapter(mPartyAdapter);
     }
 
     private class ProfileSearchAdapter extends BaseAdapter {
@@ -217,6 +238,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         @Override
         public long getItemId(int i) {
             return i;
+        }
+
+        public ArrayList<UserInfoData> getItems() {
+            return mUserInfos;
         }
 
         @Override
@@ -281,6 +306,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         @Override
         public long getItemId(int i) {
             return i;
+        }
+
+        public ArrayList<PartyData> getItems() {
+            return mParties;
         }
 
         @Override
