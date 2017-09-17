@@ -43,8 +43,7 @@ public class ProfilePresenter implements UserInfoDB.OnUserInfoFetchListener {
     }
 
     public void updateTagList(List<String> tagList) {
-        String[] tagArray = tagList.toArray(new String[tagList.size()]);
-        mView.inflateTagView(tagArray);
+        mView.inflateTagView(tagList);
     }
 
     public void updateImage(String imageUrl) {

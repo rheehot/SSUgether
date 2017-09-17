@@ -25,6 +25,8 @@ import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.IntroDialog;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -160,7 +162,7 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    public void inflateTagView(String[] tagList) {
+    public void inflateTagView(List<String> tagList) {
         if (tagList != null) {
             mTagLayout.setTags(tagList);
         }
