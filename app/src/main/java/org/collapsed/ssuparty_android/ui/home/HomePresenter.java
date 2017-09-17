@@ -1,6 +1,7 @@
 package org.collapsed.ssuparty_android.ui.home;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.collapsed.ssuparty_android.model.unionsearch.OnUnionSearchedListener;
 import org.collapsed.ssuparty_android.model.unionsearch.UnionSearchData;

@@ -33,10 +33,10 @@ public class PartyListPresenter {
         Intent intent = new Intent(context, PartyDetailActivity.class);
         intent.putExtra(TITLE_KEY, partyData.getTitle());
         intent.putExtra(CATEGORY_KEY, partyData.getCategory());
-        intent.putExtra(DEADLINE_KEY, partyData.getDeadline());
-        intent.putExtra(MEMBER_KEY, partyData.getMemberNum());
-        intent.putExtra(INFO_KEY, partyData.getInformation());
-        intent.putExtra(PARTY_KEY, partyData.getKey());
+        intent.putExtra(DEADLINE_KEY, partyData.getRecruitDate());
+        intent.putExtra(MEMBER_KEY, partyData.getMaxMumberNum());
+        intent.putExtra(INFO_KEY, partyData.getDescription());
+        intent.putExtra(PARTY_KEY, partyData.getPartyID());
         intent.putStringArrayListExtra(TAG_KEY, (ArrayList<String>) partyData.getTags());
 
         mView.showPartyDetail(intent);

@@ -158,7 +158,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             ((CustomViewHolder) viewHolder).titleText.setText(item.getTitle());
             ((CustomViewHolder) viewHolder).categoryText.setText(item.getCategory());
-            ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMemberNum());
+            ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMaxMumberNum());
 
             List<String> tagList = item.getTags();
 
@@ -211,7 +211,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             UserInfoData item = mProfileDataList.get(position);
 
             ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getImgUrl());
-            ((ProfileViewHolder) viewHolder).nicknameText.setText(item.getNickname());
+            ((ProfileViewHolder) viewHolder).nameText.setText(item.getName());
             ((ProfileViewHolder) viewHolder).majorText.setText(item.getMajor());
             ((ProfileViewHolder) viewHolder).gradeText.setText(item.getGrade());
 
@@ -228,14 +228,14 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
         private class ProfileViewHolder extends RecyclerView.ViewHolder {
 
-            public TextView nicknameText, gradeText, majorText;
+            public TextView nameText, gradeText, majorText;
             public ImageView profileImgae;
             public LinearLayout rootView;
 
             public ProfileViewHolder(View itemView) {
                 super(itemView);
 
-                nicknameText = itemView.findViewById(R.id.profile_item_nickname_txt);
+                nameText = itemView.findViewById(R.id.profile_item_name_txt);
                 majorText = itemView.findViewById(R.id.profile_item_major_txt);
                 gradeText = itemView.findViewById(R.id.profile_item_grade_txt);
                 profileImgae = itemView.findViewById(R.id.profile_item_image);

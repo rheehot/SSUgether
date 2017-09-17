@@ -9,15 +9,13 @@ import java.util.ArrayList;
 public class UnionSearchData {
     private ArrayList<UserInfoData> userDatas;
     private ArrayList<PartyData> partys;
-    private ArrayList<ContestData> contests;
 
     public UnionSearchData() {
     }
 
-    public UnionSearchData(ArrayList<UserInfoData> userDatas, ArrayList<PartyData> partys, ArrayList<ContestData> contests) {
+    public UnionSearchData(ArrayList<UserInfoData> userDatas, ArrayList<PartyData> partys) {
         this.userDatas = userDatas;
         this.partys = partys;
-        this.contests = contests;
     }
 
     public ArrayList<UserInfoData> getProfiles() {
@@ -34,13 +32,5 @@ public class UnionSearchData {
 
     public void setPartys(ArrayList<PartyData> partys) {
         this.partys = partys;
-    }
-
-    public ArrayList<ContestData> getContests() {
-        return contests;
-    }
-
-    public void setContests(ArrayList<ContestData> contests) {
-        this.contests = contests;
     }
 }

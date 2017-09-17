@@ -1,6 +1,5 @@
 package org.collapsed.ssuparty_android.ui.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -14,17 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.theartofdev.edmodo.cropper.CropImage;
-
-import org.collapsed.ssuparty_android.AppConfig;
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
 import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;

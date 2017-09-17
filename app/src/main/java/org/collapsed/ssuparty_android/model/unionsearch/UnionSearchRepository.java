@@ -1,7 +1,5 @@
 package org.collapsed.ssuparty_android.model.unionsearch;
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,37 +28,29 @@ public class UnionSearchRepository {
     }
 
     public void fetch() {
-        DatabaseReference contestRef = FirebaseDatabase.getInstance().getReference().child("contest");
-        DatabaseReference profileRef = FirebaseDatabase.getInstance().getReference().child("profile");
-        DatabaseReference partyRef = FirebaseDatabase.getInstance().getReference().child("all_party");
-
-        contestRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mfetchedContest = new ArrayList<>();
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ContestData data = snapshot.getValue(ContestData.class);
-                    mfetchedContest.add(data);
-                }
-
-                wrappingData();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        DatabaseReference profileRef = FirebaseDatabase.getInstance().getReference().child("users");
+        DatabaseReference partyRef = FirebaseDatabase.getInstance().getReference().child("allParty");
 
         profileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean isAdded = false;
                 mfetchedProfiles = new ArrayList<>();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserInfoData data = snapshot.getValue(UserInfoData.class);
-                    mfetchedProfiles.add(data);
+                    if (data.getName().contains(mSearchKeyword) || data.getIntro().contains(mSearchKeyword)) {
+                        isAdded = true;
+                        mfetchedProfiles.add(data);
+                    }
+
+                    if (data.getTags() != null) {
+                        for (String tag : data.getTags()) {
+                            if (tag.contains(mSearchKeyword) && !isAdded) {
+                                mfetchedProfiles.add(data);
+                            }
+                        }
+                    }
                 }
 
                 wrappingData();
@@ -75,11 +65,22 @@ public class UnionSearchRepository {
         partyRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean isAdded = false;
                 mfetchedParty = new ArrayList<>();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PartyData data = snapshot.getValue(PartyData.class);
-                    mfetchedParty.add(data);
+                    if (data.getTitle().contains(mSearchKeyword) || data.getDescription().contains(mSearchKeyword)) {
+                        mfetchedParty.add(data);
+                    }
+
+                    if (data.getTags()!=null) {
+                        for (String tag : data.getTags()) {
+                            if (tag.contains(mSearchKeyword) && !isAdded) {
+                                mfetchedParty.add(data);
+                            }
+                        }
+                    }
                 }
 
                 wrappingData();
@@ -93,63 +94,9 @@ public class UnionSearchRepository {
     }
 
     private void wrappingData() {
-        if ((mfetchedParty != null) && (mfetchedProfiles != null) && (mfetchedContest != null)) {
-            filteringWithKeyword();
-            UnionSearchData wrappedData = new UnionSearchData(mfetchedProfiles, mfetchedParty, mfetchedContest);
+        if ((mfetchedParty != null) && (mfetchedProfiles != null)) {
+            UnionSearchData wrappedData = new UnionSearchData(mfetchedProfiles, mfetchedParty);
             mListener.onUnionSearched(wrappedData);
         }
-    }
-
-    private void filteringWithKeyword() {
-        ArrayList<PartyData> filteredPartys = new ArrayList<>();
-        for (PartyData party : mfetchedParty) {
-            if (party.getTitle().contains(mSearchKeyword) || party.getInformation().contains(mSearchKeyword)) {
-                filteredPartys.add(party);
-            }
-
-//            try {
-//                for (String tag : party.getTags()) {
-//                    if (tag.contains(mSearchKeyword)) {
-//                        filteredPartys.add(party);
-//                    }
-//                }
-//            } catch (Exception e) {
-//                Log.e(TAG, e.getMessage());
-//            }
-        }
-
-        mfetchedParty = filteredPartys;
-
-        ArrayList<UserInfoData> filteredProfiles = new ArrayList<>();
-        for (UserInfoData userData : mfetchedProfiles) {
-            try {
-                if (userData.getNickname().contains(mSearchKeyword) || userData.getIntro().contains(mSearchKeyword)) {
-                    filteredProfiles.add(userData);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-
-//            try {
-//                for (HashMap<String, String> tag : profile.getTag()) {
-//                    if (tag.values().contains(mSearchKeyword)) {
-//                        filteredProfiles.add(profile);
-//                    }
-//                }
-//            } catch (Exception e) {
-//                Log.e(TAG, e.getMessage());
-//            }
-        }
-
-        mfetchedProfiles = filteredProfiles;
-
-        ArrayList<ContestData> filteredContests = new ArrayList<>();
-        for (ContestData contest : mfetchedContest) {
-            if (contest.getTitle().contains(mSearchKeyword)) {
-                filteredContests.add(contest);
-            }
-        }
-
-        mfetchedContest = filteredContests;
     }
 }

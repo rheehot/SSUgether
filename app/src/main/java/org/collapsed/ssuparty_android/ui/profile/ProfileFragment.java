@@ -182,7 +182,7 @@ public class ProfileFragment extends BaseFragment {
 
     public void inflateGradeText(String gradeValue) {
         if (gradeValue != null) {
-            mGradeText.setText(gradeValue + "학년");
+            mGradeText.setText(gradeValue);
         }
     }
 

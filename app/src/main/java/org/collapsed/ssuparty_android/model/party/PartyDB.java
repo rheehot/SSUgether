@@ -1,8 +1,5 @@
 package org.collapsed.ssuparty_android.model.party;
 
-
-import android.util.Log;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,7 +58,7 @@ public class PartyDB {
 
     public void writeNewParty(PartyData partyData) {
         String partyKey = mAllPartyRef.push().getKey();
-        partyData.setKey(partyKey);
+        partyData.setPartyID(partyKey);
         mAllPartyRef.child(partyKey).setValue(partyData);
     }
 }

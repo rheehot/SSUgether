@@ -156,7 +156,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             public void onAnimationEnd(Animator animator) {
                 mBinding.homeSearchResultLayout.setVisibility(View.VISIBLE);
                 mExecutingAnimation = false;
-                mDialog.show();
+//                mDialog.show();
             }
 
             @Override
@@ -190,6 +190,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void setupPartyList(ArrayList<PartyData> parties) {
         ListView listView = mBinding.homePartyList;
         listView.setAdapter(new PartySearchAdapter(getActivity(), parties));
+
+        mDialog.hide();
     }
 
     private class ProfileSearchAdapter extends BaseAdapter {
@@ -225,7 +227,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 viewHolder = new ViewHolder();
                 view = mInflater.inflate(R.layout.layout_userprofile_row, null);
                 viewHolder.profileImage = view.findViewById(R.id.userprofile_image);
-                viewHolder.profileNickText = view.findViewById(R.id.userprofile_nick_txt);
+                viewHolder.profileNameText = view.findViewById(R.id.userprofile_name_txt);
                 viewHolder.profileIntroduce = view.findViewById(R.id.userprofile_intro_txt);
                 viewHolder.profileEmailText = view.findViewById(R.id.userprofile_email_txt);
 
@@ -239,7 +241,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             if (userData.getImgUrl() != null) {
                 ImageUtil.loadUrlImage(viewHolder.profileImage, userData.getImgUrl());
             }
-            viewHolder.profileNickText.setText(userData.getNickname());
+            viewHolder.profileNameText.setText(userData.getName());
             if (userData.getIntro() != null) {
                 viewHolder.profileIntroduce.setText("Bio : " + userData.getIntro());
             }
@@ -250,7 +252,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         class ViewHolder {
             CircleImageView profileImage = null;
-            TextView profileNickText = null;
+            TextView profileNameText = null;
             TextView profileIntroduce = null;
             TextView profileEmailText = null;
         }

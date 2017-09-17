@@ -3,6 +3,7 @@ package org.collapsed.ssuparty_android.ui.main;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.otto.Subscribe;
 
 import org.collapsed.ssuparty_android.event.BusProvider;
@@ -37,11 +38,12 @@ public class MainPresenter implements MainContract.UserActionListener {
         String title = partyIntent.getStringExtra(TITLE_KEY);
         String category = partyIntent.getStringExtra(CATEGORY_KEY);
         String deadline = partyIntent.getStringExtra(DEADLINE_KEY);
-        String memberNum = partyIntent.getStringExtra(MEMBER_KEY);
+        long memberNum = Long.parseLong(partyIntent.getStringExtra(MEMBER_KEY));
         String info = partyIntent.getStringExtra(INFO_KEY);
         List<String> tags = partyIntent.getStringArrayListExtra(TAG_KEY);
+        String founder = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        PartyData partyData = new PartyData(title, memberNum, category, deadline, info, tags);
+        PartyData partyData = new PartyData(title, true, category, 1, info, founder, memberNum, deadline, tags);
 
         addNewParty(partyData);
     }
@@ -50,7 +52,7 @@ public class MainPresenter implements MainContract.UserActionListener {
         mModel.writeNewParty(partyData);
     }
 
-    public void updatePartyList (PartyData partyData) {
+    public void updatePartyList(PartyData partyData) {
         mView.getAllPartyFragment().addPartyItemToList(partyData);
     }
 }
