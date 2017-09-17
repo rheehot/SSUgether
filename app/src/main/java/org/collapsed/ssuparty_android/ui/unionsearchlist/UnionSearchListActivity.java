@@ -1,6 +1,7 @@
 package org.collapsed.ssuparty_android.ui.unionsearchlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import org.collapsed.ssuparty_android.databinding.UnionSearchListActivityBinding
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
+import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import java.util.ArrayList;
@@ -46,6 +48,11 @@ public class UnionSearchListActivity extends AppCompatActivity {
             mToolbar.setTitle("전체 모임 검색결과");
             mParties = (ArrayList<PartyData>) getIntent().getSerializableExtra("Items");
             mListView.setAdapter(new AllPartySearchAdapter(this, mParties));
+            mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+                Intent intent = new Intent(this, PartyDetailActivity.class);
+                intent.putExtra("PartyData", (PartyData) adapterView.getItemAtPosition(i));
+                startActivity(intent);
+            });
         }
     }
 

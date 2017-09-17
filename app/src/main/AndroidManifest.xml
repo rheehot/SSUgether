@@ -68,7 +68,8 @@
             android:name=".ui.signup.SignupActivity"
             android:theme="@style/SSUPartyTheme.NoActionBar" />
         <activity android:name=".ui.partydetail.PartyDetailActivity" />
-        <activity android:name=".ui.unionsearchlist.UnionSearchListActivity"></activity>
+        <activity android:name=".ui.unionsearchlist.UnionSearchListActivity" />
+        <activity android:name=".ui.userprofiledetail.UserProfileDetailActivity"></activity>
     </application>
 
 </manifest>

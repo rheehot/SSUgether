@@ -6,6 +6,7 @@ import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
+import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 import org.collapsed.ssuparty_android.ui.unionsearchlist.UnionSearchListActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -207,12 +209,23 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         ListView listView = mBinding.homeProfileList;
         mProfileAdapter = new ProfileSearchAdapter(getActivity(), profiles);
         listView.setAdapter(mProfileAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     }
 
     public void setupPartyList(ArrayList<PartyData> parties) {
         ListView listView = mBinding.homePartyList;
         mPartyAdapter = new PartySearchAdapter(getActivity(), parties);
         listView.setAdapter(mPartyAdapter);
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getActivity(), PartyDetailActivity.class);
+            intent.putExtra("PartyData", (PartyData)adapterView.getItemAtPosition(i));
+            startActivity(intent);
+        });
     }
 
     private class ProfileSearchAdapter extends BaseAdapter {
