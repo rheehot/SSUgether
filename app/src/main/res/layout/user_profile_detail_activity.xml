@@ -1,9 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-</android.support.constraint.ConstraintLayout>
+    <data>
+        <variable
+            name="view"
+            type="org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/profile_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#a15ffb">
+
+                <TextView
+                    android:id="@+id/userdetailprofile_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/profile_top_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <org.collapsed.ssuparty_android.ui.customview.CircleImageView
+                    android:id="@+id/userdetailprofile_user_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="true"
+                    android:src="@drawable/camera"
+                    app:civ_border_color="#00FF0000"
+                    app:civ_border_width="1dp" />
+
+                <TextView
+                    android:id="@+id/userdetailprofile_name_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="김종찬" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/userdetailprofile_major_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="컴퓨터학부" />
+
+                    <TextView
+                        android:id="@+id/userdetailprofile_grade_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="3학년" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/profile_bottom_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <android.support.v7.widget.CardView style="@style/ProfileCardViewTheme">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/profile_intro_title_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="12dp"
+                                android:background="@android:color/transparent"
+                                android:text="소개"
+                                android:textColor="#000000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/userdetailprofile_intro_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView style="@style/ProfileCardViewTheme">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/profile_tag_title_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginTop="12dp"
+                                android:background="@android:color/transparent"
+                                android:text="보유기술"
+                                android:textColor="#000000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                        <me.gujun.android.taggroup.TagGroup
+                            android:id="@+id/userdetailprofile_tags"
+                            android:layout_width="match_parent"
+                            android:layout_height="74dp"
+                            android:padding="12dp"
+                            app:atg_backgroundColor="#d7d0f9"
+                            app:atg_borderColor="#d7d0f9"
+                            app:atg_inputHint="내용입력"
+                            app:atg_inputHintColor="#828282"
+                            app:atg_inputTextColor="#000000"
+                            app:atg_isAppendMode="true"
+                            app:atg_textColor="#000000"
+                            app:atg_textSize="12sp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

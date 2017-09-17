@@ -4,7 +4,6 @@
     android:focusableInTouchMode="true">
 
     <data>
-
         <variable
             name="view"
             type="org.collapsed.ssuparty_android.ui.unionsearchlist.UnionSearchListActivity" />
@@ -21,7 +20,7 @@
             android:layout_height="64dp"
             android:background="@color/colorPrimary"
             android:titleTextColor="#ffffff" />
-        
+
         <ListView
             android:id="@+id/unionsearch_list"
             android:layout_width="match_parent"

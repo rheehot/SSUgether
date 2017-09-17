@@ -8,6 +8,7 @@ import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 import org.collapsed.ssuparty_android.ui.unionsearchlist.UnionSearchListActivity;
+import org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import android.animation.Animator;
@@ -212,7 +213,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(getActivity(), UserProfileDetailActivity.class);
+                intent.putExtra("UserInfo", (UserInfoData) adapterView.getItemAtPosition(i));
+                startActivity(intent);
             }
         });
     }

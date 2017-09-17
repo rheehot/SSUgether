@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
+import org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import java.util.ArrayList;
@@ -44,6 +46,11 @@ public class UnionSearchListActivity extends AppCompatActivity {
             mToolbar.setTitle("전체 프로필 검색결과");
             mProfiles = (ArrayList<UserInfoData>) getIntent().getSerializableExtra("Items");
             mListView.setAdapter(new AllProfileSearchAdapter(this, mProfiles));
+            mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+                Intent intent = new Intent(this, UserProfileDetailActivity.class);
+                intent.putExtra("UserInfo", (UserInfoData) adapterView.getItemAtPosition(i));
+                startActivity(intent);
+            });
         } else {
             mToolbar.setTitle("전체 모임 검색결과");
             mParties = (ArrayList<PartyData>) getIntent().getSerializableExtra("Items");
