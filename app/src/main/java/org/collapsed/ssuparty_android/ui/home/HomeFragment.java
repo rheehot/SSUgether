@@ -350,4 +350,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             TextView partyTitleText = null;
         }
     }
+
+    public boolean getSearchResultState() {
+        return mSearchResultState;
+    }
 }

@@ -251,4 +251,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        boolean checkState = mHomeView.getSearchResultState();
+
+        if (checkState) {
+            mHomeView.changeSearchResultState();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

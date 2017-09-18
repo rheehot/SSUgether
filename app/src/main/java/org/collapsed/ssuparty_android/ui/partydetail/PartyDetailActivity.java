@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.gujun.android.taggroup.TagGroup;
@@ -45,8 +46,11 @@ public class PartyDetailActivity extends AppCompatActivity {
         mCategoryText.setText(mPartyData.getCategory());
         mDeadlineText.setText(mPartyData.getRecruitDate());
         mInfoText.setText(mPartyData.getDescription());
-        mMemberNumText.setText(mPartyData.getCurrentMemberNum() + " / " + mPartyData.getMaxMumberNum() + "명 ");
-        mTagLayout.setTags(mPartyData.getTags());
+        mMemberNumText.setText(mPartyData.getCurrentMemberNum() + " / " + mPartyData.getMaxMemberNum() + "명 ");
+
+        if (mPartyData.getTags() != null) {
+            mTagLayout.setTags(mPartyData.getTags());
+        }
 
         mCancelButton.setOnClickListener(view -> finish());
     }

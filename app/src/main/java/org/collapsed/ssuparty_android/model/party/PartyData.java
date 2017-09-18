@@ -3,8 +3,6 @@ package org.collapsed.ssuparty_android.model.party;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @IgnoreExtraProperties
@@ -15,7 +13,7 @@ public class PartyData implements Serializable {
     private long currentMemberNum;
     private String description;
     private String founder;
-    private long maxMumberNum;
+    private long maxMemberNum;
     private String partyID;
     private String recruitDate;
     private List<String> participants;
@@ -24,14 +22,14 @@ public class PartyData implements Serializable {
     public PartyData() {
     }
 
-    public PartyData(String title, boolean status, String category, long currentMemberNum, String description, String founder, long maxMumberNum, String recruitDate, List<String> tags) {
+    public PartyData(String title, boolean status, String category, long currentMemberNum, String description, String founder, long maxMemberNum, String recruitDate, List<String> tags) {
         this.title = title;
         this.status = status;
         this.category = category;
         this.currentMemberNum = currentMemberNum;
         this.description = description;
         this.founder = founder;
-        this.maxMumberNum = maxMumberNum;
+        this.maxMemberNum = maxMemberNum;
         this.recruitDate = recruitDate;
     }
 
@@ -83,12 +81,12 @@ public class PartyData implements Serializable {
         this.founder = founder;
     }
 
-    public long getMaxMumberNum() {
-        return maxMumberNum;
+    public long getMaxMemberNum() {
+        return maxMemberNum;
     }
 
-    public void setMaxMumberNum(long maxMumberNum) {
-        this.maxMumberNum = maxMumberNum;
+    public void setMaxMemberNum(long maxMemberNum) {
+        this.maxMemberNum = maxMemberNum;
     }
 
     public String getPartyID() {

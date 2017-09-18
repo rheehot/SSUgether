@@ -158,7 +158,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             ((CustomViewHolder) viewHolder).titleText.setText(item.getTitle());
             ((CustomViewHolder) viewHolder).categoryText.setText(item.getCategory());
-            ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMaxMumberNum());
+            ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMaxMemberNum());
 
             List<String> tagList = item.getTags();
 
