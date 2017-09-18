@@ -11,16 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
-import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
-import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +43,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     private PartyListPresenter mPresenter;
     private RecyclerView.LayoutManager mLayoutManager;
     private PartyListAdapter mPartyAdapter;
-    private ProfileListAdapter mProflieAdapter;
     private ArrayList<PartyData> mPartyDataList = new ArrayList<>();
-    private ArrayList<UserInfoData> mProfileDataList = new ArrayList<>();
     private Unbinder mUnbinder;
 
     public static PartyListFragment newInstance() {
@@ -85,14 +80,11 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mPartyAdapter = new PartyListAdapter();
-        mProflieAdapter = new ProfileListAdapter();
-
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(0);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mPartyAdapter);
-
 
         mAddPartyButton.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), CreatePartyActivity.class);
@@ -116,10 +108,13 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             case INDEX_MY_PARTY:
                 mTitleText.setText("내 모임 리스트");
+                mPresenter.fetchMyPartyList();
+                mRecyclerView.setAdapter(mPartyAdapter);
                 break;
 
             case INDEX_ALL_PARTY:
                 mTitleText.setText("전체 모임 리스트");
+                mPresenter.fetchAllPartyList();
                 showAddPartyButton();
                 mRecyclerView.setAdapter(mPartyAdapter);
                 break;
@@ -127,6 +122,10 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             default:
                 break;
         }
+    }
+
+    public void clearList() {
+        mPartyDataList.clear();
     }
 
     public void showPartyDetail(Intent intent) {
@@ -192,55 +191,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
                 tagList = view.findViewById(R.id.party_item_tag_layout);
 
                 rootView = view.findViewById(R.id.party_item_root_layout);
-            }
-        }
-    }
-
-    class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-        @Override
-        public ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_profile, parent, false);
-
-            return new ProfileViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            UserInfoData item = mProfileDataList.get(position);
-
-            ImageUtil.loadUrlImage(((ProfileViewHolder) viewHolder).profileImgae, item.getImgUrl());
-            ((ProfileViewHolder) viewHolder).nameText.setText(item.getName());
-            ((ProfileViewHolder) viewHolder).majorText.setText(item.getMajor());
-            ((ProfileViewHolder) viewHolder).gradeText.setText(item.getGrade());
-
-            ((ProfileViewHolder) viewHolder).rootView.setOnClickListener(view -> {
-            });
-
-            viewHolder.itemView.setTag(item);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mProfileDataList.size();
-        }
-
-        private class ProfileViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView nameText, gradeText, majorText;
-            public ImageView profileImgae;
-            public LinearLayout rootView;
-
-            public ProfileViewHolder(View itemView) {
-                super(itemView);
-
-                nameText = itemView.findViewById(R.id.profile_item_name_txt);
-                majorText = itemView.findViewById(R.id.profile_item_major_txt);
-                gradeText = itemView.findViewById(R.id.profile_item_grade_txt);
-                profileImgae = itemView.findViewById(R.id.profile_item_image);
-
-                rootView = itemView.findViewById(R.id.profile_item_root_layout);
             }
         }
     }

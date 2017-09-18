@@ -54,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:clickable="false"
+                android:focusable="false"
                 app:atg_textSize="12sp"
                 app:atg_borderColor="#d7d0f9"
                 app:atg_backgroundColor="#d7d0f9"
