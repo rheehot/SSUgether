@@ -166,7 +166,7 @@
                             app:atg_inputHint="내용입력"
                             app:atg_inputHintColor="#828282"
                             app:atg_inputTextColor="#000000"
-                            app:atg_isAppendMode="true"
+                            app:atg_isAppendMode="false"
                             app:atg_textColor="#000000"
                             app:atg_textSize="12sp" />
 
