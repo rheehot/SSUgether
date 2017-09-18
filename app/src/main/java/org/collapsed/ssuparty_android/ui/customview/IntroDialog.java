@@ -3,7 +3,10 @@ package org.collapsed.ssuparty_android.ui.customview;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -34,6 +37,8 @@ public class IntroDialog extends Dialog {
     TextView mTitleText;
     @BindView(R.id.intro_dialog_content_edit)
     EditText mContentEditText;
+    @BindView(R.id.intro_dialog_constraint_txt)
+    TextView mDialogConstraintText;
 
     private String mContentText;
     private int mModeNumber;
@@ -72,7 +77,28 @@ public class IntroDialog extends Dialog {
                 dismiss();
             }
         });
-    }
+
+        mContentEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence inputedText, int start, int before, int count) {
+                if (inputedText.length() > 99) {
+                    mDialogConstraintText.setText("100/100");
+                    mDialogConstraintText.setTextColor(Color.RED);
+                } else {
+                    mDialogConstraintText.setText(String.valueOf(inputedText.length()) + "/100");
+                    mDialogConstraintText.setTextColor(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });    }
 
 
     public String getText() {
