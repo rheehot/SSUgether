@@ -244,5 +244,4 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             }
         }
     }
-
 }

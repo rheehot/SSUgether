@@ -168,12 +168,13 @@
 
                         <ImageButton
                             android:id="@+id/profile_intro_write_btn"
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="12dp"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/write" />
+                            android:src="@drawable/ic_add_black_24px" />
 
                     </RelativeLayout>
 
