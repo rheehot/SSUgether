@@ -38,6 +38,8 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
     TextView mNickNameConstraintText;
     @BindView(R.id.signup_major_edittxt)
     AutoCompleteTextView mMajorEditText;
+    @BindView(R.id.signup_major_constraint_txt)
+    TextView mMajorConstraintText;
     @BindView(R.id.signup_grade_spinner)
     AppCompatSpinner mGradeSpinner;
     @BindView(R.id.signup_stdnum_edittxt)
@@ -95,9 +97,8 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
 
             @Override
             public void onTextChanged(CharSequence inputedString, int start, int before, int count) {
-                if (inputedString.length() > 10) {
-                    mNameEditText.setText(curStr);
-                    mNameEditText.setSelection(start);
+                if (inputedString.length() > 9) {
+                    mNameConstraintText.setText("10/10");
                     mNameConstraintText.setTextColor(Color.RED);
                 } else if (inputedString.length() == 0) {
                     mNameFiiled = false;
@@ -116,18 +117,15 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         });
 
         mNickNameEditText.addTextChangedListener(new TextWatcher() {
-            String curStr;
 
             @Override
             public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
-                curStr = inputedString.toString();
             }
 
             @Override
             public void onTextChanged(CharSequence inputedString, int start, int before, int count) {
-                if (inputedString.length() > 10) {
-                    mNickNameEditText.setText(curStr);
-                    mNickNameEditText.setSelection(start);
+                if (inputedString.length() > 9) {
+                    mNickNameConstraintText.setText("10/10");
                     mNickNameConstraintText.setTextColor(Color.RED);
                 } else if (inputedString.length() == 0) {
                     mNickFiled = false;
@@ -146,18 +144,15 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         });
 
         mStdnumEditText.addTextChangedListener(new TextWatcher() {
-            String curStr;
 
             @Override
             public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
-                curStr = inputedString.toString();
             }
 
             @Override
             public void onTextChanged(CharSequence inputedString, int start, int before, int count) {
-                if (inputedString.length() > 8) {
-                    mStdnumEditText.setText(curStr);
-                    mStdnumEditText.setSelection(start);
+                if (inputedString.length() > 7) {
+                    mStdnumConstraintText.setText("8/8");
                     mStdnumConstraintText.setTextColor(Color.RED);
                 } else if (inputedString.length() == 0) {
                     mStdNumFilled = false;
@@ -177,20 +172,25 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
 
         ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.signup_major));
         mMajorEditText.setAdapter(autoCompleteAdapter);
+
         mMajorEditText.addTextChangedListener(new TextWatcher() {
-            String curStr;
 
             @Override
             public void beforeTextChanged(CharSequence inputedString, int i, int i1, int i2) {
-                curStr = inputedString.toString();
             }
 
             @Override
             public void onTextChanged(CharSequence inputedString, int i, int i1, int i2) {
-                if (inputedString.length() == 0) {
+                if (inputedString.length() > 11) {
+                    mMajorConstraintText.setText("12/12");
+                    mMajorConstraintText.setTextColor(Color.RED);
+                }
+                else if (inputedString.length() == 0) {
                     mMajorFiiled = false;
                 } else {
                     mMajorFiiled = true;
+                    mMajorConstraintText.setText(String.valueOf(inputedString.length()) + "/12");
+                    mMajorConstraintText.setTextColor(Color.BLACK);
                 }
                 checkSignupAble();
             }
