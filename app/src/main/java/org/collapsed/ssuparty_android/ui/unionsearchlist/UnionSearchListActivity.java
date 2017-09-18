@@ -3,6 +3,7 @@ package org.collapsed.ssuparty_android.ui.unionsearchlist;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ public class UnionSearchListActivity extends AppCompatActivity {
         mListResultCategory = getIntent().getIntExtra("ListResultCategory", 0);
         if (mListResultCategory == 0) {
             mToolbar.setTitle("전체 프로필 검색결과");
+            mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
             mProfiles = (ArrayList<UserInfoData>) getIntent().getSerializableExtra("Items");
             mListView.setAdapter(new AllProfileSearchAdapter(this, mProfiles));
             mListView.setOnItemClickListener((adapterView, view, i, l) -> {
@@ -53,6 +55,7 @@ public class UnionSearchListActivity extends AppCompatActivity {
             });
         } else {
             mToolbar.setTitle("전체 모임 검색결과");
+            mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
             mParties = (ArrayList<PartyData>) getIntent().getSerializableExtra("Items");
             mListView.setAdapter(new AllPartySearchAdapter(this, mParties));
             mListView.setOnItemClickListener((adapterView, view, i, l) -> {
