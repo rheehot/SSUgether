@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,12 +159,13 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             ((CustomViewHolder) viewHolder).titleText.setText(item.getTitle());
             ((CustomViewHolder) viewHolder).categoryText.setText(item.getCategory());
-            ((CustomViewHolder) viewHolder).memberText.setText("0/" + item.getMaxMemberNum());
+            ((CustomViewHolder) viewHolder).memberText.setText(item.getCurrentMemberNum()+"/" + item.getMaxMemberNum());
 
             List<String> tagList = item.getTags();
 
             if (tagList != null) {
                 ((CustomViewHolder) viewHolder).tagList.setTags(tagList);
+                Log.d("PartyList","null check");
             }
             ((CustomViewHolder) viewHolder).tagList.setOnClickListener(view -> mPresenter.createPartyDetail(getActivity(), item));
 

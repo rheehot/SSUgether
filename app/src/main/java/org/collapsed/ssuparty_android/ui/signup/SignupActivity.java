@@ -72,6 +72,7 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
 
     private void initView() {
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("회원가입");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);

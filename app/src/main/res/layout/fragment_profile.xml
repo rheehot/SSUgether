@@ -158,8 +158,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
                             android:background="@android:color/transparent"
                             android:text="소개"
                             android:textColor="#000000"
@@ -171,10 +171,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="12dp"
+                            android:layout_marginEnd="14dp"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/ic_add_black_24px" />
+                            android:src="@drawable/ic_create_black_24px" />
 
                     </RelativeLayout>
 
@@ -183,8 +183,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -206,8 +206,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="16dp"
                             android:background="@android:color/transparent"
                             android:text="보유기술"
                             android:textColor="#000000"
@@ -216,12 +216,13 @@
 
                         <ImageButton
                             android:id="@+id/profile_tag_write_btn"
-                            android:layout_width="60dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="12dp"
                             android:layout_centerVertical="true"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/write" />
+                            android:src="@drawable/ic_add_black_24px" />
 
                     </RelativeLayout>
 
