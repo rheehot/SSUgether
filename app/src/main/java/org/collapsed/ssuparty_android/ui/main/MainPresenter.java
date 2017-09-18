@@ -4,10 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.otto.Subscribe;
-
-import org.collapsed.ssuparty_android.event.BusProvider;
-import org.collapsed.ssuparty_android.event.PartyEvent;
 import org.collapsed.ssuparty_android.model.party.PartyDB;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 
@@ -15,7 +11,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class MainPresenter implements MainContract.UserActionListener {
+public class MainPresenter implements MainContract.UserActionListener, PartyDB.OnPartyDataFetchedListener {
 
     private static final String TAG = MainPresenter.class.getSimpleName();
 
@@ -27,11 +23,9 @@ public class MainPresenter implements MainContract.UserActionListener {
     private static final String TAG_KEY = "tag";
 
     private MainActivity mView;
-    private PartyDB mModel;
 
     public MainPresenter(@NonNull MainActivity view) {
         this.mView = checkNotNull(view);
-        this.mModel = new PartyDB(this);
     }
 
     public void setNewPartyInfo(Intent partyIntent) {
@@ -49,10 +43,11 @@ public class MainPresenter implements MainContract.UserActionListener {
     }
 
     public void addNewParty(PartyData partyData) {
-        mModel.writeNewParty(partyData);
+        PartyDB.writeNewParty(partyData);
     }
 
-    public void updatePartyList(PartyData partyData) {
-        mView.getAllPartyFragment().addPartyItemToList(partyData);
+    @Override
+    public void onFetched(PartyData data) {
+
     }
 }
