@@ -1,11 +1,16 @@
 package org.collapsed.ssuparty_android.model.party;
 
+import android.net.Uri;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailPresenter;
 
@@ -15,6 +20,7 @@ public class PartyDB {
 
     private static OnPartyDataFetchedListener mPresenter;
     private static DatabaseReference mRootRef, mAllPartyRef, mCreatedPartyRef;
+    private static StorageReference mRootStorageRef;
 
     public static void fetchAllParty(OnPartyDataFetchedListener listener) {
         mPresenter = listener;
@@ -57,10 +63,26 @@ public class PartyDB {
         mAllPartyRef.child(partyKey).setValue(partyData);
     }
 
-    public static void writePartyImage(String partyId, String imageUrl) {
+    public static void writePartyImage(String partyId, Uri imageUri) {
         mRootRef = FirebaseDatabase.getInstance().getReference();
+
         mCreatedPartyRef = mRootRef.child(DB_ALL_PARTY_KEY).child(partyId);
-        mCreatedPartyRef.child("imageUrl").setValue(imageUrl);
+
+        mRootStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://ssugether.appspot.com/");
+
+        Uri file = imageUri;
+        String mFilename = partyId + "_party_image.png";
+        StorageReference mImageStorageRef = mRootStorageRef.child("images/" + mFilename);
+
+        UploadTask uploadTask = mImageStorageRef.putFile(file);
+
+        uploadTask.addOnFailureListener(exception -> {
+        }).addOnSuccessListener(taskSnapshot -> {
+
+            @SuppressWarnings("VisibleForTests")
+            String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+            mCreatedPartyRef.child("imageUrl").setValue(downloadUrl);
+        });
     }
 
     public static void readPartyImage(String partyId, PartyDetailPresenter presenter) {

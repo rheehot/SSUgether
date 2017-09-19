@@ -1,5 +1,6 @@
 package org.collapsed.ssuparty_android.ui.partydetail;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 
@@ -19,8 +20,8 @@ public class PartyDetailPresenter {
         PartyDB.readPartyImage(partyId, this);
     }
 
-    public void changePartyImage(String partyId, String imageUrl){
-        PartyDB.writePartyImage(partyId, imageUrl.toString());
+    public void changePartyImage(String partyId, Uri imageUri){
+        PartyDB.writePartyImage(partyId, imageUri);
     }
 
     public void updatePartyImage(String imageUrl) {

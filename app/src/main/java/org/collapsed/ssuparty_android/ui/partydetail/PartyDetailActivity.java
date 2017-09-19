@@ -102,9 +102,9 @@ public class PartyDetailActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-                String imageUrl = result.getUri().toString();
+                Uri imageUrl = result.getUri();
                 mPresenter.changePartyImage(mPartyId, imageUrl);
-                inflateImageView(imageUrl);
+                inflateImageView(imageUrl.toString());
             }
         }
     }
