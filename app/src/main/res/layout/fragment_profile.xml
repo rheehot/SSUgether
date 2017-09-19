@@ -43,8 +43,8 @@
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
                 android:src="@drawable/camera"
-                app:civ_border_color="#00FF0000"
-                app:civ_border_width="1dp" />
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="12dp" />
 
             <TextView
                 android:id="@+id/profile_name_txt"

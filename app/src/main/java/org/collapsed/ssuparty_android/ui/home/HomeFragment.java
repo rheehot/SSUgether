@@ -28,6 +28,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -208,27 +209,46 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     public void setupProfileList(ArrayList<UserInfoData> profiles) {
         ListView listView = mBinding.homeProfileList;
-        mProfileAdapter = new ProfileSearchAdapter(getActivity(), profiles);
-        listView.setAdapter(mProfileAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), UserProfileDetailActivity.class);
-                intent.putExtra("UserInfo", (UserInfoData) adapterView.getItemAtPosition(i));
-                startActivity(intent);
-            }
-        });
+        LinearLayout profilePlaceLayout = mBinding.homeProfilePlaceLayout;
+
+        if (profiles.size() == 0) {
+            listView.setVisibility(View.GONE);
+            profilePlaceLayout.setVisibility(View.VISIBLE);
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            profilePlaceLayout.setVisibility(View.GONE);
+
+            mProfileAdapter = new ProfileSearchAdapter(getActivity(), profiles);
+            listView.setAdapter(mProfileAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(getActivity(), UserProfileDetailActivity.class);
+                    intent.putExtra("UserInfo", (UserInfoData) adapterView.getItemAtPosition(i));
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     public void setupPartyList(ArrayList<PartyData> parties) {
         ListView listView = mBinding.homePartyList;
-        mPartyAdapter = new PartySearchAdapter(getActivity(), parties);
-        listView.setAdapter(mPartyAdapter);
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(getActivity(), PartyDetailActivity.class);
-            intent.putExtra("PartyData", (PartyData)adapterView.getItemAtPosition(i));
-            startActivity(intent);
-        });
+        LinearLayout partyPlaceLayout = mBinding.homePartyPlaceLayout;
+        if (parties.size() == 0) {
+            listView.setVisibility(View.GONE);
+            partyPlaceLayout.setVisibility(View.VISIBLE);
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            partyPlaceLayout.setVisibility(View.GONE);
+
+            mPartyAdapter = new PartySearchAdapter(getActivity(), parties);
+            listView.setAdapter(mPartyAdapter);
+            listView.setOnItemClickListener((adapterView, view, i, l) -> {
+                Intent intent = new Intent(getActivity(), PartyDetailActivity.class);
+                intent.putExtra("PartyData", (PartyData) adapterView.getItemAtPosition(i));
+                startActivity(intent);
+            });
+        }
     }
 
     private class ProfileSearchAdapter extends BaseAdapter {

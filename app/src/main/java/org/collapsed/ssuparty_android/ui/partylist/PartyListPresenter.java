@@ -3,7 +3,6 @@ package org.collapsed.ssuparty_android.ui.partylist;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -47,13 +46,11 @@ public class PartyListPresenter implements PartyDB.OnPartyDataFetchedListener {
     //전체파티 탭 눌렀을때
     public void fetchAllPartyList() {
         mView.clearList();
-        Log.d("PartyList","FetchAllPartyList");
         PartyDB.fetchAllParty(this);
     }
 
     @Override
     public void onFetched(PartyData data) {
-
         mView.addPartyItemToList(data);
     }
 
