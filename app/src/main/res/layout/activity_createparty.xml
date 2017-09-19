@@ -27,8 +27,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/arrow"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:src="@drawable/arrow" />
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -64,9 +64,9 @@
             android:id="@+id/createparty_partycontent_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/createactivity_boudary_margin"
             android:layout_marginRight="@dimen/createactivity_boudary_margin"
+            android:layout_marginTop="10dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
@@ -174,13 +174,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="6dp"
                         android:clickable="true"
                         android:drawablePadding="8dp"
                         android:drawableRight="@drawable/cal"
                         android:focusable="true"
+                        android:gravity="center_vertical"
                         android:text="모집 마감기간을 선택해주세요!"
                         android:textColor="#828282"
                         android:textSize="12sp" />
@@ -339,17 +339,32 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/createparty_register_party_btn"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
-            android:background="#a75feb"
-            android:text="등록하기"
-            android:textColor="#ffffff"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/createparty_register_party_btn"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:background="#a75feb"
+                android:text="등록하기"
+                android:textColor="#ffffff"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/createparty_creatable_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="아직 입력되지 않은 정보가 있어요!"
+                android:textColor="#a15ffb"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

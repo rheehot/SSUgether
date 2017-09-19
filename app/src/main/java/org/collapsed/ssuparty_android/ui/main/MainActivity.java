@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         if (requestCode == CreatePartyActivity.CREATE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == CreatePartyActivity.RESULT_OK) {
-                mPresenter.setNewPartyInfo(partyIndent);
+                getAllPartyFragment().setNewPartyInfo(partyIndent);
             }
         }
     }

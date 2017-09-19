@@ -102,6 +102,8 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
                     mNameConstraintText.setTextColor(Color.RED);
                 } else if (inputedString.length() == 0) {
                     mNameFiiled = false;
+                    mNameConstraintText.setText(String.valueOf("0/12"));
+                    mNameConstraintText.setTextColor(Color.BLACK);
                 } else {
                     mNameFiiled = true;
                     mNameConstraintText.setText(String.valueOf(inputedString.length()) + "/10");
@@ -129,6 +131,8 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
                     mNickNameConstraintText.setTextColor(Color.RED);
                 } else if (inputedString.length() == 0) {
                     mNickFiled = false;
+                    mNickNameConstraintText.setText(String.valueOf("0/12"));
+                    mNickNameConstraintText.setTextColor(Color.BLACK);
                 } else {
                     mNickFiled = true;
                     mNickNameConstraintText.setText(String.valueOf(inputedString.length()) + "/10");
@@ -156,6 +160,8 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
                     mStdnumConstraintText.setTextColor(Color.RED);
                 } else if (inputedString.length() == 0) {
                     mStdNumFilled = false;
+                    mStdnumConstraintText.setText(String.valueOf("0/12"));
+                    mStdnumConstraintText.setTextColor(Color.BLACK);
                 } else {
                     mStdNumFilled = true;
                     mStdnumConstraintText.setText(String.valueOf(inputedString.length()) + "/8");
@@ -187,6 +193,8 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
                 }
                 else if (inputedString.length() == 0) {
                     mMajorFiiled = false;
+                    mMajorConstraintText.setText(String.valueOf("0/12"));
+                    mMajorConstraintText.setTextColor(Color.BLACK);
                 } else {
                     mMajorFiiled = true;
                     mMajorConstraintText.setText(String.valueOf(inputedString.length()) + "/12");

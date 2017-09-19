@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.party.PartyDB;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
@@ -127,6 +128,10 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     public void clearList() {
         mPartyDataList.clear();
+    }
+
+    public void setNewPartyInfo(Intent intent) {
+        mPresenter.addNewParty(intent);
     }
 
     public void showPartyDetail(Intent intent) {

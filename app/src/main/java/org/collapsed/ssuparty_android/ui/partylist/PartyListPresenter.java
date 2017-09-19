@@ -31,6 +31,11 @@ public class PartyListPresenter implements PartyDB.OnPartyDataFetchedListener {
         mView.showPartyDetail(intent);
     }
 
+    public void addNewParty(Intent intent) {
+        PartyData newPartyData = (PartyData) intent.getSerializableExtra("PartyData");
+        PartyDB.writeNewParty(newPartyData);
+    }
+
     public void fetchMyPartyList() {
         mView.clearList();
         PartyDB.executeFetch(this, FirebaseAuth.getInstance().getCurrentUser().getUid());

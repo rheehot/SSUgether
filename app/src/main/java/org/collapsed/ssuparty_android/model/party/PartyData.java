@@ -10,10 +10,10 @@ public class PartyData implements Serializable {
     private String title;
     private boolean status;
     private String category;
-    private long currentMemberNum;
+    private int currentMemberNum;
     private String description;
     private String founder;
-    private long maxMemberNum;
+    private int maxMemberNum;
     private String partyID;
     private String recruitDate;
     private String imageUrl;
@@ -24,7 +24,8 @@ public class PartyData implements Serializable {
     public PartyData() {
     }
 
-    public PartyData(String title, boolean status, String category, long currentMemberNum, String description, String founder, long maxMemberNum, String recruitDate, List<String> tags) {
+    public PartyData(String title, boolean status, String category, int currentMemberNum, String description,
+                     String founder, int maxMemberNum, String recruitDate, List<String> tags) {
         this.title = title;
         this.status = status;
         this.category = category;
@@ -64,7 +65,7 @@ public class PartyData implements Serializable {
         return currentMemberNum;
     }
 
-    public void setCurrentMemberNum(long currentMemberNum) {
+    public void setCurrentMemberNum(int currentMemberNum) {
         this.currentMemberNum = currentMemberNum;
     }
 
@@ -88,7 +89,7 @@ public class PartyData implements Serializable {
         return maxMemberNum;
     }
 
-    public void setMaxMemberNum(long maxMemberNum) {
+    public void setMaxMemberNum(int maxMemberNum) {
         this.maxMemberNum = maxMemberNum;
     }
 
@@ -113,7 +114,6 @@ public class PartyData implements Serializable {
     }
 
     public String getImageUrl() {
-
         return imageUrl;
     }
 

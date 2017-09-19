@@ -3,10 +3,12 @@ package org.collapsed.ssuparty_android.ui.createparty;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -24,9 +26,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.collapsed.ssuparty_android.R;
+import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.ui.customview.TagsEditText;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -71,6 +77,8 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     Spinner mCategorySelectSpinner;
     @BindView(R.id.createparty_tag_edt)
     TagsEditText mTagEditText;
+    @BindView(R.id.createparty_creatable_txt)
+    TextView mCreatableText;
 
     private View.OnClickListener mClickListner;
     private View.OnFocusChangeListener mFocusListner;
@@ -82,6 +90,11 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     private ArrayAdapter mCategoryAdapter;
     private Intent mIntentForResult;
     private Calendar mDateData;
+
+    private boolean mTitleFilled = false;
+    private boolean mDeadlineSelected = false;
+    private boolean mMemNumFilled = false;
+    private boolean mInfoFilled = false;
 
     private Unbinder mUnbinder;
 
@@ -117,14 +130,47 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 15) {
+            public void onTextChanged(CharSequence inputText, int start, int before, int count) {
+                if (inputText.length() > 15) {
                     mTitleConstraintText.setText("16/16");
                     mTitleConstraintText.setTextColor(Color.RED);
                 } else {
-                    mTitleConstraintText.setText(String.valueOf(s.length()) + "/16");
+                    mTitleConstraintText.setText(String.valueOf(inputText.length()) + "/16");
                     mTitleConstraintText.setTextColor(Color.parseColor(TEXT_COLOR));
                 }
+
+                if (inputText.length() > 0) {
+                    mTitleFilled = true;
+                } else {
+                    mTitleFilled = false;
+                }
+
+                checkCreateable();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mMemberNumEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence inputText, int i, int i1, int i2) {
+
+                if (inputText.length() > 0) {
+                    mMemNumFilled = true;
+                } else {
+                    mMemNumFilled = false;
+                    setMemberNumTextByException("모집 인원수 제한을 초과했어요!");
+                }
+
+                checkCreateable();
             }
 
             @Override
@@ -140,14 +186,22 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 59) {
+            public void onTextChanged(CharSequence inputText, int start, int before, int count) {
+                if (inputText.length() > 59) {
                     mInfoConstraintText.setText("60/60");
                     mInfoConstraintText.setTextColor(Color.RED);
                 } else {
-                    mInfoConstraintText.setText(String.valueOf(s.length()) + "/60");
+                    mInfoConstraintText.setText(String.valueOf(inputText.length()) + "/60");
                     mInfoConstraintText.setTextColor(Color.parseColor(TEXT_COLOR));
                 }
+
+                if (inputText.length() > 0) {
+                    mInfoFilled = true;
+                } else {
+                    mInfoFilled = false;
+                }
+
+                checkCreateable();
             }
 
             @Override
@@ -213,15 +267,9 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.createparty_register_party_btn:
-                        if (mPresenter.checkInputData(mTitleEditText, mCategorySelectSpinner,
-                                mDeadlineText, mMemberNumEditText, mInfoEditText, mTagEditText)) {
-                            mIntentForResult = mPresenter.putDataToIntent();
-                            setResult(CreatePartyActivity.RESULT_OK, mIntentForResult);
-                            finish();
-                        } else {
-                            Toast.makeText(CreatePartyActivity.this,
-                                    "입력되지 않은 정보가 있습니다!", Toast.LENGTH_SHORT).show();
-                        }
+                        createdFinish();
+                        finish();
+
                         break;
 
                     case R.id.createparty_confirm_btn:
@@ -229,7 +277,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                         break;
 
                     case R.id.createparty_cancel_party_btn:
-                        finish();
+                        showCancelDaialog();
                         break;
 
                     case R.id.createparty_select_deadline_txt:
@@ -292,8 +340,14 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String dateText = mPresenter.checkCorrectDeadline(year, month, day);
+
+                if (!dateText.equals("마감날짜를 다시 선택해주세요!")) {
+                    mDeadlineSelected = true;
+                }
                 mDeadlineText.setText(dateText);
                 mDeadlineText.setTextColor(Color.parseColor(TEXT_COLOR));
+
+                checkCreateable();
             }
         };
 
@@ -302,10 +356,32 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                 mDateData.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    public void showCancelDaialog() {
+        if(mTitleFilled || mMemNumFilled || mDeadlineSelected || mInfoFilled) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("모임등록 취소").setMessage("아직 입력이 완료되지 않았습니다. \n\n모임 등록을 취소하시겠어요?")
+                    .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            }).show();
+        }
+        else {
+            finish();
+        }
+    }
+
     public void setVisibility() {
         mInfoConfirmBtn.setVisibility(View.GONE);
         mTagHelpText.setVisibility(View.GONE);
         mMemberNumHelpText.setVisibility(View.GONE);
+        mPartyRegisterBtn.setVisibility(View.GONE);
     }
 
     public void setMemberNumTextByException(String errorText) {
@@ -324,6 +400,36 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
     public void setFocusListner(View view) {
         view.setOnFocusChangeListener(mFocusListner);
+    }
+
+    public void checkCreateable() {
+        if (mTitleFilled && mDeadlineSelected && mMemNumFilled && mInfoFilled) {
+            mPartyRegisterBtn.setVisibility(View.VISIBLE);
+            mCreatableText.setVisibility(View.GONE);
+        } else {
+            mPartyRegisterBtn.setVisibility(View.GONE);
+            mCreatableText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void createdFinish() {
+        mIntentForResult = new Intent();
+
+        String title = mTitleEditText.getText().toString();
+        boolean status = true;
+        String category = mCategorySelectSpinner.getSelectedItem().toString();
+        String deadline = mDeadlineText.getText().toString();
+        int currentMemberNum = 1;
+        int maxMemberNum = Integer.parseInt(mMemberNumEditText.getText().toString());
+        String info = mInfoEditText.getText().toString();
+        String fouderId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        List<String> tagList = mTagEditText.getTags();
+
+        PartyData partyData = new PartyData(title, status, category, currentMemberNum, info, fouderId,
+                maxMemberNum, deadline, tagList);
+
+        mIntentForResult.putExtra("PartyData",partyData);
+        setResult(CreatePartyActivity.RESULT_OK, mIntentForResult);
     }
 
     @Override
