@@ -132,5 +132,4 @@ public class CreatePartyPresenter implements CreatePartyContract.Presenter {
             return year + "." + month + "." + day;
         }
     }
-
 }

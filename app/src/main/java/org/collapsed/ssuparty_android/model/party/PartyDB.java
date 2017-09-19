@@ -5,13 +5,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailPresenter;
 
 public class PartyDB {
 
     private static final String DB_ALL_PARTY_KEY = "allParty";
 
     private static OnPartyDataFetchedListener mPresenter;
-    private static DatabaseReference mRootRef, mAllPartyRef;
+    private static DatabaseReference mRootRef, mAllPartyRef, mCreatedPartyRef;
 
     public static void fetchAllParty(OnPartyDataFetchedListener listener) {
         mPresenter = listener;
@@ -52,6 +55,32 @@ public class PartyDB {
         String partyKey = mAllPartyRef.push().getKey();
         partyData.setPartyID(partyKey);
         mAllPartyRef.child(partyKey).setValue(partyData);
+    }
+
+    public static void writePartyImage(String partyId, String imageUrl) {
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        mCreatedPartyRef = mRootRef.child(DB_ALL_PARTY_KEY).child(partyId);
+        mCreatedPartyRef.child("imageUrl").setValue(imageUrl);
+    }
+
+    public static void readPartyImage(String partyId, PartyDetailPresenter presenter) {
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        mCreatedPartyRef = mRootRef.child(DB_ALL_PARTY_KEY).child(partyId);
+        mCreatedPartyRef.child("imageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String imageUrl = dataSnapshot.getValue(String.class);
+
+                if(imageUrl != null) {
+                    presenter.updatePartyImage(imageUrl);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public static void executeFetch(OnPartyDataFetchedListener listener, String uid) {

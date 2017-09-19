@@ -16,6 +16,8 @@ public class PartyData implements Serializable {
     private long maxMemberNum;
     private String partyID;
     private String recruitDate;
+    private String imageUrl;
+
     private List<String> participants;
     private List<String> tags;
 
@@ -104,6 +106,15 @@ public class PartyData implements Serializable {
 
     public void setRecruitDate(String recruitDate) {
         this.recruitDate = recruitDate;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+
+        return imageUrl;
     }
 
     public List<String> getParticipants() {
