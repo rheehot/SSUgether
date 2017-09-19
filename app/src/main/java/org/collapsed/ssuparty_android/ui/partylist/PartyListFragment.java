@@ -169,7 +169,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             if (tagList != null) {
                 ((CustomViewHolder) viewHolder).tagList.setTags(tagList);
-                Log.d("PartyList","null check");
             }
             ((CustomViewHolder) viewHolder).tagList.setOnClickListener(view -> mPresenter.createPartyDetail(getActivity(), item));
 

@@ -82,7 +82,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         if (mFounderId.equals(mMyId)) {
             Intent intent = CropImage.activity(imageUri).setGuidelines(CropImageView.Guidelines.ON)
                     .setActivityTitle("편집")
-                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setCropShape(CropImageView.CropShape.RECTANGLE)
                     .setAspectRatio(1, 1)
                     .getIntent(mContext);
 

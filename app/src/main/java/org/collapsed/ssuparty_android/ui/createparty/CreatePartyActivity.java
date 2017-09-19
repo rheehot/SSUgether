@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,7 +25,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,7 +32,6 @@ import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.ui.customview.TagsEditText;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -95,6 +94,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     private boolean mDeadlineSelected = false;
     private boolean mMemNumFilled = false;
     private boolean mInfoFilled = false;
+    private boolean mCategorySelected = false;
 
     private Unbinder mUnbinder;
 
@@ -154,30 +154,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             }
         });
 
-        mMemberNumEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence inputText, int i, int i1, int i2) {
-
-                if (inputText.length() > 0) {
-                    mMemNumFilled = true;
-                } else {
-                    mMemNumFilled = false;
-                    setMemberNumTextByException("모집 인원수 제한을 초과했어요!");
-                }
-
-                checkCreateable();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         mInfoEditText.addTextChangedListener(new TextWatcher() {
 
@@ -296,6 +273,23 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         setClickListner(mDeadlineText);
         setClickListner(mPartyRegisterBtn);
 
+        mCategorySelectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mCategorySelectSpinner.getSelectedItem().toString().equals("카테고리선택")) {
+                    mCategorySelected = false;
+                } else {
+                    mCategorySelected = true;
+                }
+                checkCreateable();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         mFocusListner = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean getFocus) {
@@ -314,10 +308,18 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                             break;
                     }
                 } else {
+
+                    if(view.getId() == R.id.createparty_membernum_edt){
+                        String numText = mMemberNumEditText.getText().toString();
+
+                        if(!numText.equals("")) {
+                            mMemNumFilled = checkOverNumber(mMemberNumEditText.getText().toString());
+                            checkCreateable();
+                        }
+                    }
                     mPartyCancelBtn.setVisibility(View.VISIBLE);
                     mInfoConfirmBtn.setVisibility(View.GONE);
                     mTagHelpText.setVisibility(View.GONE);
-                    mMemberNumHelpText.setVisibility(View.GONE);
                 }
             }
         };
@@ -341,9 +343,12 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String dateText = mPresenter.checkCorrectDeadline(year, month, day);
 
-                if (!dateText.equals("마감날짜를 다시 선택해주세요!")) {
+                if (dateText.equals("마감날짜를 다시 선택해주세요!")) {
+                    mDeadlineSelected = false;
+                } else {
                     mDeadlineSelected = true;
                 }
+
                 mDeadlineText.setText(dateText);
                 mDeadlineText.setTextColor(Color.parseColor(TEXT_COLOR));
 
@@ -384,7 +389,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         mPartyRegisterBtn.setVisibility(View.GONE);
     }
 
-    public void setMemberNumTextByException(String errorText) {
+    public void setMemNumException(String errorText) {
         mMemberNumHelpText.setText(errorText);
         mMemberNumHelpText.setVisibility(View.VISIBLE);
         mMemberNumEditText.setText("");
@@ -403,7 +408,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     }
 
     public void checkCreateable() {
-        if (mTitleFilled && mDeadlineSelected && mMemNumFilled && mInfoFilled) {
+        if (mTitleFilled && mDeadlineSelected && mMemNumFilled && mInfoFilled && mCategorySelected) {
             mPartyRegisterBtn.setVisibility(View.VISIBLE);
             mCreatableText.setVisibility(View.GONE);
         } else {
@@ -430,6 +435,17 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
         mIntentForResult.putExtra("PartyData",partyData);
         setResult(CreatePartyActivity.RESULT_OK, mIntentForResult);
+    }
+
+    public boolean checkOverNumber(String numberText) {
+
+        if (Integer.parseInt(numberText) <= 100) {
+            mMemberNumHelpText.setVisibility(View.GONE);
+            return true;
+        } else {
+            setMemNumException("모집 인원수는 100명을 초과할 수 없어요!");
+            return false;
+        }
     }
 
     @Override

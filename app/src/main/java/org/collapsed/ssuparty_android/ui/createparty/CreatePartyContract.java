@@ -18,7 +18,7 @@ public interface CreatePartyContract {
 
         void setVisibility();
 
-        void setMemberNumTextByException(String errorText);
+        void setMemNumException(String errorText);
 
         void setTouchListner(android.view.View view);
 
@@ -28,16 +28,8 @@ public interface CreatePartyContract {
     }
 
     interface Presenter {
-        boolean checkInputData(EditText title, Spinner category, TextView deadline,
-                               EditText member, EditText info, TagsEditText tag);
-
-        boolean checkTextLength(EditText view);
-
-        boolean checkOverNumber(String numberText);
-
         String checkCorrectDeadline(int year, int month, int day);
 
-        Intent putDataToIntent();
 
     }
 }

@@ -44,7 +44,7 @@ public class CreatePartyPresenter implements CreatePartyContract.Presenter {
         return mCalender;
     }
 
-    public boolean checkInputData(EditText title, Spinner category, TextView deadline,
+    /*public boolean checkInputData(EditText title, Spinner category, TextView deadline,
                                   EditText member, EditText info, TagsEditText tag) {
         boolean checkValue = true;
         if (checkTextLength(title)) {
@@ -69,7 +69,7 @@ public class CreatePartyPresenter implements CreatePartyContract.Presenter {
             if (checkOverNumber(member.getText().toString())) {
                 mPartyMemberNum = member.getText().toString();
             } else {
-                mView.setMemberNumTextByException("모집 인원수 제한을 초과했어요!");
+                mView.setMemNumException("모집 인원수 제한을 초과했어요!");
                 checkValue = false;
             }
         } else {
@@ -100,8 +100,8 @@ public class CreatePartyPresenter implements CreatePartyContract.Presenter {
 
         return intent;
     }
-
-    public boolean checkTextLength(EditText view) {
+*/
+    /*public boolean checkTextLength(EditText view) {
         if (view.getText().toString().length() > 0) {
             return true;
         } else
@@ -115,7 +115,7 @@ public class CreatePartyPresenter implements CreatePartyContract.Presenter {
             return false;
         }
     }
-
+*/
     public String checkCorrectDeadline(int year, int month, int day) {
         Calendar dateData = getCalenderData();
 
