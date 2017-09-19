@@ -35,7 +35,9 @@ public class UserProfileDetailActivity extends AppCompatActivity {
         mBinding.userdetailprofileGradeTxt.setText(mUserInfo.getGrade());
         mBinding.userdetailprofileIntroTxt.setText(mUserInfo.getIntro());
         mTagLayout = mBinding.userdetailprofileTags;
-        mTagLayout.setTags(mUserInfo.getTags());
+        if (mUserInfo.getTags() != null) {
+            mTagLayout.setTags(mUserInfo.getTags());
+        }
 
         mBinding.userdetailprofileCancelBtn.setOnClickListener(view -> finish());
     }
