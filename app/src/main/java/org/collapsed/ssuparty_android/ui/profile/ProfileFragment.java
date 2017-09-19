@@ -56,10 +56,10 @@ public class ProfileFragment extends BaseFragment {
     ImageButton mWriteIntroButton;
     @BindView(R.id.profile_intro_content_txt)
     TextView mIntroContentText;
-    @BindView(R.id.profile_tag_write_btn)
-    ImageButton mWriteTagButton;
     @BindView(R.id.profile_tag_layout)
     TagGroup mTagLayout;
+    @BindView(R.id.profile_tag_hint_txt)
+    TextView mTagHintText;
 
     private Unbinder mUnbinder;
     private Context mContext;
@@ -114,17 +114,12 @@ public class ProfileFragment extends BaseFragment {
                         showIntroDialog();
                         break;
 
-                    case R.id.profile_tag_write_btn:
-                        mTagLayout.submitTag();
-                        mPresenter.changeProfileTagList(mTagLayout.getTags());
-                        break;
                 }
             }
         };
 
         mProfileImageView.setOnClickListener(mClickListener);
         mWriteIntroButton.setOnClickListener(mClickListener);
-        mWriteTagButton.setOnClickListener(mClickListener);
 
         mMainLayout.setOnTouchListener((view, motionEvent) -> {
             hideVirtualKeyboard(view);
