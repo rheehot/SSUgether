@@ -19,6 +19,7 @@ import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
+import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +136,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     }
 
     public void showPartyDetail(Intent intent) {
-        getActivity().startActivity(intent);
+        getActivity().startActivityForResult(intent, PartyDetailActivity.PARTY_DETAIL_ACTIVITY_REQUEST_CODE);
     }
 
     @Override
@@ -146,6 +147,12 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
     public void showAddPartyButton() {
         mAddPartyButton.setVisibility(View.VISIBLE);
+    }
+
+    public void refreshPartyItems() {
+
+        mPresenter.fetchAllPartyList();
+        mPartyAdapter.notifyDataSetChanged();
     }
 
     class PartyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -163,7 +170,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
 
             ((CustomViewHolder) viewHolder).titleText.setText(item.getTitle());
             ((CustomViewHolder) viewHolder).categoryText.setText(item.getCategory());
-            ((CustomViewHolder) viewHolder).memberText.setText(item.getCurrentMemberNum()+"/" + item.getMaxMemberNum());
+            ((CustomViewHolder) viewHolder).memberText.setText(item.getParticipants().size() + "/" + item.getMaxMemberNum());
 
             List<String> tagList = item.getTags();
 

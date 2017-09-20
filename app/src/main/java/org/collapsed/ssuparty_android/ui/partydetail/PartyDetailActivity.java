@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import butterknife.BindView;
@@ -22,6 +26,8 @@ import butterknife.ButterKnife;
 import me.gujun.android.taggroup.TagGroup;
 
 public class PartyDetailActivity extends AppCompatActivity {
+
+    public static int PARTY_DETAIL_ACTIVITY_REQUEST_CODE = 100;
 
     @BindView(R.id.party_detail_main_img)
     ImageView mMainImageView;
@@ -39,12 +45,19 @@ public class PartyDetailActivity extends AppCompatActivity {
     TagGroup mTagLayout;
     @BindView(R.id.party_detail_cancel_btn)
     ImageButton mCancelButton;
+    @BindView(R.id.party_detail_apply_btn)
+    Button mApplyBtn;
+    @BindView(R.id.party_detail_member_list)
+    RecyclerView mMemberList;
 
     private PartyData mPartyData;
     private PartyDetailPresenter mPresenter;
     private Context mContext;
     private Uri imageUri;
     private String mFounderId, mMyId, mPartyId;
+
+    private PartycipateAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +74,32 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
         mPresenter.getPreviousPartyImage(mPartyId);
         mTitleText.setText(mPartyData.getTitle());
         mCategoryText.setText(mPartyData.getCategory());
         mDeadlineText.setText(mPartyData.getRecruitDate());
         mInfoText.setText(mPartyData.getDescription());
-        mMemberNumText.setText(mPartyData.getCurrentMemberNum() + " / " + mPartyData.getMaxMemberNum() + "명 ");
+        mMemberNumText.setText(mPartyData.getParticipants().size() + " / " + mPartyData.getMaxMemberNum() + "명 ");
 
         if (mPartyData.getTags() != null) {
             mTagLayout.setTags(mPartyData.getTags());
         }
+        mMemberList.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mMemberList.setLayoutManager(mLayoutManager);
 
+        mAdapter = new PartycipateAdapter(this, mPartyData, mPartyData.getParticipants().size());
+        mMemberList.setAdapter(mAdapter);
+
+        mPresenter.createAdapterItems(mPartyData);
         mMainImageView.setOnClickListener(view -> startCropActivity());
-
         mCancelButton.setOnClickListener(view -> finish());
+
+        mApplyBtn.setOnClickListener(view -> {
+            mPresenter.applyParty(mPartyData);
+        });
+
+        mPresenter.syncApplyBtnWithStatus(mPartyData);
     }
 
     public void startCropActivity() {
@@ -91,7 +115,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     }
 
     public void inflateImageView(String imageUrl) {
-            ImageUtil.loadUrlImage(mMainImageView, imageUrl);
+        ImageUtil.loadUrlImage(mMainImageView, imageUrl);
     }
 
     @Override
@@ -113,5 +137,14 @@ public class PartyDetailActivity extends AppCompatActivity {
         mFounderId = mPartyData.getFounder();
         mMyId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mPartyId = mPartyData.getPartyID();
+    }
+
+    public void changeApplyButtonText(String btnText) {
+        mApplyBtn.setText(btnText);
+        mApplyBtn.setEnabled(false);
+    }
+
+    public void addItemIntoAdapter(UserInfoData info) {
+        mAdapter.addItem(info);
     }
 }

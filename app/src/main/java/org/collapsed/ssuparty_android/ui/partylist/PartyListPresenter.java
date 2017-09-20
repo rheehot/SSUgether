@@ -10,8 +10,6 @@ import org.collapsed.ssuparty_android.model.party.PartyDB;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 
-import java.util.ArrayList;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class PartyListPresenter implements PartyDB.OnPartyDataFetchedListener {
@@ -26,7 +24,6 @@ public class PartyListPresenter implements PartyDB.OnPartyDataFetchedListener {
 
     public void createPartyDetail(Context context, PartyData partyData) {
         Intent intent = new Intent(context, PartyDetailActivity.class);
-
         intent.putExtra("PartyData", partyData);
         mView.showPartyDetail(intent);
     }

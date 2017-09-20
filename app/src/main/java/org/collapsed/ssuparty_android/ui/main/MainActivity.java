@@ -19,6 +19,7 @@ import android.view.SubMenu;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
+import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 import org.collapsed.ssuparty_android.ui.partylist.PartyListFragment;
 import org.collapsed.ssuparty_android.ui.customview.CustomTypefaceSpan;
 import org.collapsed.ssuparty_android.ui.customview.MainViewPager;
@@ -249,6 +250,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             if (resultCode == CreatePartyActivity.RESULT_OK) {
                 getAllPartyFragment().setNewPartyInfo(partyIndent);
             }
+        } else if (requestCode == PartyDetailActivity.PARTY_DETAIL_ACTIVITY_REQUEST_CODE) {
+            getAllPartyFragment().refreshPartyItems();
         }
     }
 
