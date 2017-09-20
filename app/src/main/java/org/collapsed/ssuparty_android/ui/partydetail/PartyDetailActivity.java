@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -95,6 +96,15 @@ public class PartyDetailActivity extends AppCompatActivity {
         }
         mAdapter = new ParticipantAdapter(this);
         mMemberList.setAdapter(mAdapter);
+        mMemberList.setOnItemClickListener((adapterView, view, i, l) -> {
+            UserInfoData data = (UserInfoData) mAdapter.getItem(i);
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("plain/text");
+            String[] address = {data.getEmail()};
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, address);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SSUgether를 통해서 " + data.getName() + "님께 연락드립니다.");
+            startActivity(emailIntent);
+        });
 
         mPresenter.createAdapterItems(mPartyData);
 
