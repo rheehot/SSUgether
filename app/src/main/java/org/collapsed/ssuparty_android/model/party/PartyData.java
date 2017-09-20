@@ -37,6 +37,8 @@ public class PartyData implements Serializable {
         this.recruitDate = recruitDate;
         this.tags = tags;
         this.applyMemberStatus = new ArrayList<>();
+        this.participants = new ArrayList<>();
+        this.participants.add(founder);
     }
 
     public String getTitle() {
