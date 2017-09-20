@@ -121,7 +121,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="정보를 추가해 프로필 완성도를 높혀보세요"
+                                android:text="정보를 추가해 프로필 완성도를 높여보세요"
                                 android:textColor="#cbc1f2"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -131,7 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="3dp"
-                                android:text="추가된 정보가 많을 수록 이득이에요!"
+                                android:text="당신의 능력을 보여주세요!"
                                 android:textColor="#939297"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
@@ -161,7 +161,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginTop="16dp"
                             android:background="@android:color/transparent"
-                            android:text="소개"
+                            android:text="간단자기소개"
                             android:textColor="#000000"
                             android:textSize="16sp"
                             android:textStyle="bold" />
