@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,6 +50,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private float mPositionYToolbar = 0.0f;
     private InputMethodManager mIMM;
     private ProgressDialog mDialog;
+
+    private EditText mSearchEditText;
+    private Toolbar mToolbar;
 
     private ProfileSearchAdapter mProfileAdapter;
     private PartySearchAdapter mPartyAdapter;
@@ -77,14 +82,33 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         super.onViewCreated(rootView, savedInstanceState);
 
         mPositionYToolbar = mBinding.homeToolbar.getY();
+        mSearchEditText = mBinding.homeSearchEdittext;
+        mToolbar = mBinding.homeToolbar;
+
         mBinding.homeSearchEdittext.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 mPresenter.performSearch(textView.getText());
-                changeSearchResultState();
+                hideVirtualKeyboard(mSearchEditText);
+
+                if (!getSearchResultState()) {
+                    changeSearchResultState();
+                }
                 return true;
             }
             return false;
         });
+
+        mBinding.homeSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.performSearch(mSearchEditText.getText());
+                hideVirtualKeyboard(mSearchEditText);
+
+                if (!getSearchResultState()) {
+                    changeSearchResultState();
+                }
+            }}
+        );
 
         mBinding.homeShowAllProfile.setOnClickListener(view -> {
             moveToAllResultWithProfile();
@@ -383,6 +407,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             public TextView titleText, memberText, categoryText;
             public TagGroup tagList;
         }
+    }
+
+    public void hideVirtualKeyboard(View view) {
+        mSearchEditText.requestFocus();
+        InputMethodManager imManager =
+                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public boolean getSearchResultState() {
