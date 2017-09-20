@@ -26,7 +26,6 @@ public class PartyListPresenter implements PartyDB.OnPartyDataFetchedListener {
 
     public void createPartyDetail(Context context, PartyData partyData) {
         Intent intent = new Intent(context, PartyDetailActivity.class);
-
         intent.putExtra("PartyData", partyData);
         mView.showPartyDetail(intent);
     }

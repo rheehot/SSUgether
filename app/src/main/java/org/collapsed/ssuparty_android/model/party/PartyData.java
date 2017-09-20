@@ -3,6 +3,7 @@ package org.collapsed.ssuparty_android.model.party;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @IgnoreExtraProperties
@@ -17,7 +18,7 @@ public class PartyData implements Serializable {
     private String partyID;
     private String recruitDate;
     private String imageUrl;
-
+    private List<ApplyMemberStatus> applyMemberStatus;
     private List<String> participants;
     private List<String> tags;
 
@@ -35,6 +36,7 @@ public class PartyData implements Serializable {
         this.maxMemberNum = maxMemberNum;
         this.recruitDate = recruitDate;
         this.tags = tags;
+        this.applyMemberStatus = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -131,5 +133,13 @@ public class PartyData implements Serializable {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public List<ApplyMemberStatus> getApplyMemberStatus() {
+        return applyMemberStatus;
+    }
+
+    public void setApplyMemberStatus(List<ApplyMemberStatus> applyMemberStatus) {
+        this.applyMemberStatus = applyMemberStatus;
     }
 }

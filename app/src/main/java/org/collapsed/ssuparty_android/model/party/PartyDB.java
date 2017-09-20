@@ -2,6 +2,8 @@ package org.collapsed.ssuparty_android.model.party;
 
 import android.net.Uri;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,11 +14,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailPresenter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PartyDB {
 
-    private static final String DB_ALL_PARTY_KEY = "allParty";
+    private static final String DB_ALL_PARTY_KEY = "testParty";
 
     private static OnPartyDataFetchedListener mPresenter;
     private static DatabaseReference mRootRef, mAllPartyRef, mCreatedPartyRef;
@@ -93,7 +99,7 @@ public class PartyDB {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String imageUrl = dataSnapshot.getValue(String.class);
 
-                if(imageUrl != null) {
+                if (imageUrl != null) {
                     presenter.updatePartyImage(imageUrl);
                 }
             }
@@ -150,7 +156,44 @@ public class PartyDB {
         });
     }
 
+    public static void sendApplyRequest(OnApplyStatusChangeListener listener, PartyData partyData) {
+        // 비 검증 함수
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        mAllPartyRef = mRootRef.child("testParty").child(partyData.getPartyID());
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        partyData.getApplyMemberStatus().add(new ApplyMemberStatus(uid, 2));
+        mAllPartyRef.setValue(partyData);
+
+        listener.onApplyChanged(partyData);
+    }
+
+    public static void convertUidToUserInfo(OnConvertParticipantListener listener, String uid) {
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userInfoRef = mRootRef.child("users").child(uid);
+        userInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserInfoData data = dataSnapshot.getValue(UserInfoData.class);
+                listener.onConvertParticipant(data);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public interface OnPartyDataFetchedListener {
         void onFetched(PartyData data);
+    }
+
+    public interface OnApplyStatusChangeListener {
+        void onApplyChanged(PartyData changedPartyData);
+    }
+
+    public interface OnConvertParticipantListener {
+        void onConvertParticipant(UserInfoData info);
     }
 }
