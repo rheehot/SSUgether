@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,17 +21,21 @@ import org.collapsed.ssuparty_android.databinding.UnionSearchListActivityBinding
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
+import org.collapsed.ssuparty_android.ui.home.HomeFragment;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailActivity;
 import org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import java.util.ArrayList;
 
+import me.gujun.android.taggroup.TagGroup;
+
 public class UnionSearchListActivity extends AppCompatActivity {
 
     private UnionSearchListActivityBinding mBinding;
     private ListView mListView;
-    private Toolbar mToolbar;
+    private TextView mToolbar;
+    private ImageButton mBackButton;
     private int mListResultCategory;
     private ArrayList<UserInfoData> mProfiles;
     private ArrayList<PartyData> mParties;
@@ -39,31 +44,44 @@ public class UnionSearchListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.union_search_list_activity);
+        mBackButton = mBinding.unionsearchBackBtn;
 
-        mToolbar = mBinding.unionsearchToolbar;
-        mListView = mBinding.unionsearchList;
+        mToolbar = mBinding.unionsearchTitle;
         mListResultCategory = getIntent().getIntExtra("ListResultCategory", 0);
         if (mListResultCategory == 0) {
-            mToolbar.setTitle("전체 프로필 검색결과");
-            mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+            mToolbar.setText("전체 프로필 검색결과");
             mProfiles = (ArrayList<UserInfoData>) getIntent().getSerializableExtra("Items");
-            mListView.setAdapter(new AllProfileSearchAdapter(this, mProfiles));
-            mListView.setOnItemClickListener((adapterView, view, i, l) -> {
-                Intent intent = new Intent(this, UserProfileDetailActivity.class);
-                intent.putExtra("UserInfo", (UserInfoData) adapterView.getItemAtPosition(i));
-                startActivity(intent);
-            });
+
+            if(mProfiles.size() > 0) {
+                mListView = mBinding.unionsearchList;
+                mListView.setAdapter(new AllProfileSearchAdapter(this, mProfiles));
+                mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+                    Intent intent = new Intent(this, UserProfileDetailActivity.class);
+                    intent.putExtra("UserInfo", (UserInfoData) adapterView.getItemAtPosition(i));
+                    startActivity(intent);
+                });
+            } else {
+                mBinding.unionsearchPlaceLayout.setVisibility(View.VISIBLE);
+            }
+
         } else {
-            mToolbar.setTitle("전체 모임 검색결과");
-            mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+            mToolbar.setText("전체 모임 검색결과");
             mParties = (ArrayList<PartyData>) getIntent().getSerializableExtra("Items");
-            mListView.setAdapter(new AllPartySearchAdapter(this, mParties));
-            mListView.setOnItemClickListener((adapterView, view, i, l) -> {
-                Intent intent = new Intent(this, PartyDetailActivity.class);
-                intent.putExtra("PartyData", (PartyData) adapterView.getItemAtPosition(i));
-                startActivity(intent);
-            });
+
+            if (mParties.size() > 0) {
+                mListView = mBinding.unionsearchList;
+                mListView.setAdapter(new AllPartySearchAdapter(this, mParties));
+                mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+                    Intent intent = new Intent(this, PartyDetailActivity.class);
+                    intent.putExtra("PartyData", (PartyData) adapterView.getItemAtPosition(i));
+                    startActivity(intent);
+                });
+            } else {
+                mBinding.unionsearchPlaceLayout.setVisibility(View.VISIBLE);
+            }
         }
+
+        mBackButton.setOnClickListener(view -> finish());
     }
 
     private class AllProfileSearchAdapter extends BaseAdapter {
@@ -115,7 +133,7 @@ public class UnionSearchListActivity extends AppCompatActivity {
             }
             viewHolder.profileNameText.setText(userData.getName());
             if (userData.getIntro() != null) {
-                viewHolder.profileIntroduce.setText("Bio : " + userData.getIntro());
+                viewHolder.profileIntroduce.setText("소개 : " + userData.getIntro());
             }
             viewHolder.profileEmailText.setText("Email : " + userData.getEmail());
 
@@ -161,20 +179,31 @@ public class UnionSearchListActivity extends AppCompatActivity {
 
             if (view == null) {
                 viewHolder = new ViewHolder();
-                view = mInflater.inflate(R.layout.layout_party_row, null);
-                viewHolder.partyTitleText = view.findViewById(R.id.party_row_title);
+                view = mInflater.inflate(R.layout.item_party, null);
+                viewHolder.titleText = view.findViewById(R.id.party_item_title_txt);
+                viewHolder.memberText = view.findViewById(R.id.party_item_member_num_txt);
+                viewHolder.categoryText = view.findViewById(R.id.party_item_category_txt);
+                viewHolder.tagList = view.findViewById(R.id.party_item_tag_layout);
 
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
             }
 
-            viewHolder.partyTitleText.setText(mParties.get(i).getTitle());
+            viewHolder.titleText.setText(mParties.get(i).getTitle());
+            viewHolder.memberText.setText(mParties.get(i).getCurrentMemberNum() + "/" + mParties.get(i).getMaxMemberNum());
+            viewHolder.categoryText.setText(mParties.get(i).getCategory());
+
+            if (mParties.get(i).getTags() != null)
+                viewHolder.tagList.setTags(mParties.get(i).getTags());
+
             return view;
         }
 
         class ViewHolder {
-            TextView partyTitleText = null;
+            public TextView titleText, memberText, categoryText;
+            public TagGroup tagList;
         }
     }
+
 }

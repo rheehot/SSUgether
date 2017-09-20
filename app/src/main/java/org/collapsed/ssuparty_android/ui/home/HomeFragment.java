@@ -213,6 +213,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void setupProfileList(ArrayList<UserInfoData> profiles) {
         ListView listView = mBinding.homeProfileList;
         LinearLayout profilePlaceLayout = mBinding.homeProfilePlaceLayout;
+        mProfileAdapter = new ProfileSearchAdapter(getActivity(), profiles);
 
         if (profiles.size() == 0) {
             listView.setVisibility(View.GONE);
@@ -221,7 +222,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             listView.setVisibility(View.VISIBLE);
             profilePlaceLayout.setVisibility(View.GONE);
 
-            mProfileAdapter = new ProfileSearchAdapter(getActivity(), profiles);
             listView.setAdapter(mProfileAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -235,9 +235,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     public void setupPartyList(ArrayList<PartyData> parties) {
-        Log.d(TAG ,"setupPartyList");
         ListView listView = mBinding.homePartyList;
         LinearLayout partyPlaceLayout = mBinding.homePartyPlaceLayout;
+        mPartyAdapter = new PartySearchAdapter(getActivity(), parties);
+
         if (parties.size() == 0) {
             listView.setVisibility(View.GONE);
             partyPlaceLayout.setVisibility(View.VISIBLE);
@@ -245,7 +246,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             listView.setVisibility(View.VISIBLE);
             partyPlaceLayout.setVisibility(View.GONE);
 
-            mPartyAdapter = new PartySearchAdapter(getActivity(), parties);
             listView.setAdapter(mPartyAdapter);
             listView.setOnItemClickListener((adapterView, view, i, l) -> {
                 Intent intent = new Intent(getActivity(), PartyDetailActivity.class);
@@ -308,7 +308,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             }
             viewHolder.profileNameText.setText(userData.getName());
             if (userData.getIntro() != null) {
-                viewHolder.profileIntroduce.setText("Bio : " + userData.getIntro());
+                viewHolder.profileIntroduce.setText("소개 : " + userData.getIntro());
             }
             viewHolder.profileEmailText.setText("Email : " + userData.getEmail());
 
@@ -370,9 +370,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             }
 
             viewHolder.titleText.setText(mParties.get(i).getTitle());
-            viewHolder.memberText.setText(mParties.get(i).getCurrentMemberNum()+"/"+mParties.get(i).getMaxMemberNum());
+            viewHolder.memberText.setText(mParties.get(i).getCurrentMemberNum() + "/" + mParties.get(i).getMaxMemberNum());
             viewHolder.categoryText.setText(mParties.get(i).getCategory());
-            viewHolder.tagList.setTags(mParties.get(i).getTags());
+
+            if (mParties.get(i).getTags() != null)
+                viewHolder.tagList.setTags(mParties.get(i).getTags());
 
             return view;
         }

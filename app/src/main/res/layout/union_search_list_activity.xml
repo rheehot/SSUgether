@@ -4,6 +4,7 @@
     android:focusableInTouchMode="true">
 
     <data>
+
         <variable
             name="view"
             type="org.collapsed.ssuparty_android.ui.unionsearchlist.UnionSearchListActivity" />
@@ -14,17 +15,73 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/unionsearch_toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:background="@color/colorPrimary"
-            android:titleTextColor="#ffffff" />
+            android:layout_height="56dp"
+            android:background="#a15ffb"
+            android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/unionsearch_list"
+            <ImageButton
+                android:id="@+id/unionsearch_back_btn"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/arrow" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/unionsearch_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="새 모임"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="17dp" />
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/unionsearch_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp" />
+
+            <LinearLayout
+                android:id="@+id/unionsearch_place_layout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="160dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/ic_priority_high_black_24px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="검색결과가 없습니다."
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
     </LinearLayout>
 </layout>

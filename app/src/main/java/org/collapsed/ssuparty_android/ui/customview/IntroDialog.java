@@ -90,7 +90,7 @@ public class IntroDialog extends Dialog {
                     mDialogConstraintText.setTextColor(Color.RED);
                 } else {
                     mDialogConstraintText.setText(String.valueOf(inputedText.length()) + "/100");
-                    mDialogConstraintText.setTextColor(Color.BLACK);
+                    mDialogConstraintText.setTextColor(Color.parseColor("#828282"));
                 }
             }
 

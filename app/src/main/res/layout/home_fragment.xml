@@ -73,19 +73,14 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo" />
 
-        <ScrollView
-            android:id="@+id/home_search_result_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:fillViewport="true"
-            android:visibility="gone">
-
-
             <LinearLayout
+                android:id="@+id/home_search_result_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
                 android:orientation="vertical"
+                android:fillViewport="true"
+                android:visibility="gone"
                 android:padding="17dp">
 
                 <RelativeLayout
@@ -106,8 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:drawablePadding="10dp"
-                        android:drawableRight="@drawable/more"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24px"
                         android:text="전체보기"
                         android:textColor="@color/titleTextPrimary"
                         android:textSize="@dimen/secondary_text_size" />
@@ -115,18 +109,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
 
                     <ListView
                         android:id="@+id/home_profile_list"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="165dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical" />
 
                     <LinearLayout
                         android:id="@+id/home_profile_place_layout"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
 
@@ -142,7 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="20dp"
-                            android:text="프로필 검색결과가 없습니다!"
+                            android:text="프로필 검색결과가 없습니다."
                             android:textSize="12sp" />
 
                     </LinearLayout>
@@ -153,7 +150,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -169,8 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:drawablePadding="10dp"
-                        android:drawableRight="@drawable/more"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24px"
                         android:text="전체보기"
                         android:textColor="@color/titleTextPrimary"
                         android:textSize="@dimen/secondary_text_size" />
@@ -184,6 +181,7 @@
                         android:id="@+id/home_party_list"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical" />
 
 
@@ -191,6 +189,7 @@
                         android:id="@+id/home_party_place_layout"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
 
@@ -206,13 +205,12 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="20dp"
-                            android:text="모임 검색결과가 없습니다!"
+                            android:text="모임 검색결과가 없습니다."
                             android:textSize="12sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
 
             </LinearLayout>
-        </ScrollView>
     </RelativeLayout>
 </layout>

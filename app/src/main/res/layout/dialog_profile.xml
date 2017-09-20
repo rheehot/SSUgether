@@ -30,7 +30,7 @@
             android:layout_marginTop="34dp"
             android:layout_marginRight="24dp"
             android:text="0/100"
-            android:textColor="#bcb5e1"
+            android:textColor="#828282"
             android:textSize="11sp" />
 
         <EditText
