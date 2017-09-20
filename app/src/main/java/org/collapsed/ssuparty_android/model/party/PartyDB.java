@@ -17,6 +17,7 @@ import com.google.firebase.storage.UploadTask;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailPresenter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -162,7 +163,13 @@ public class PartyDB {
         mAllPartyRef = mRootRef.child("testParty").child(partyData.getPartyID());
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        partyData.getApplyMemberStatus().add(new ApplyMemberStatus(uid, 2));
+        try {
+            partyData.getApplyMemberStatus().add(new ApplyMemberStatus(uid, 2));
+        } catch (Exception e) {
+            ArrayList<ApplyMemberStatus> memberStatuses = new ArrayList<>();
+            memberStatuses.add(new ApplyMemberStatus(uid, 2));
+            partyData.setApplyMemberStatus(memberStatuses);
+        }
         mAllPartyRef.setValue(partyData);
 
         listener.onApplyChanged(partyData);
@@ -183,6 +190,12 @@ public class PartyDB {
 
             }
         });
+    }
+
+    public static void requestDecideJoinParty(PartyData partyData) {
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        mAllPartyRef = mRootRef.child("testParty").child(partyData.getPartyID());
+        mAllPartyRef.setValue(partyData);
     }
 
     public interface OnPartyDataFetchedListener {

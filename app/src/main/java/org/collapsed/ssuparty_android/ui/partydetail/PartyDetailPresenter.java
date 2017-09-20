@@ -2,7 +2,9 @@ package org.collapsed.ssuparty_android.ui.partydetail;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.common.util.concurrent.ExecutionError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserInfo;
 
@@ -43,11 +45,15 @@ public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener
             }
         }
 
-        for (ApplyMemberStatus status : mPartyData.getApplyMemberStatus()) {
-            if (status.getUid().equals(currentUid)) {
-                setApplyBtnWithStatus(status.getStatus());
-                return;
+        try {
+            for (ApplyMemberStatus status : mPartyData.getApplyMemberStatus()) {
+                if (status.getUid().equals(currentUid)) {
+                    setApplyBtnWithStatus(status.getStatus());
+                    return;
+                }
             }
+        } catch (Exception e) {
+
         }
     }
 
@@ -78,15 +84,42 @@ public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener
         for (String uid : data.getParticipants()) {
             PartyDB.convertUidToUserInfo(this, uid);
         }
-        if (data.getFounder().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            for (ApplyMemberStatus status : data.getApplyMemberStatus()) {
-                PartyDB.convertUidToUserInfo(this, status.getUid());
+        try {
+            if (data.getFounder().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                for (ApplyMemberStatus status : data.getApplyMemberStatus()) {
+                    PartyDB.convertUidToUserInfo(this, status.getUid());
+                }
             }
+        } catch (Exception e) {
+            Log.d("PartyDetailPresenter", e.getMessage());
         }
     }
 
     @Override
     public void onConvertParticipant(UserInfoData info) {
         mView.addItemIntoAdapter(info);
+    }
+
+    public void allowJoinParty(PartyData partyData, UserInfoData data) {
+        partyData.getParticipants().add(data.getUid());
+        ApplyMemberStatus tempStatus = null;
+        for (ApplyMemberStatus status : partyData.getApplyMemberStatus()) {
+            if (status.getUid().contains(data.getUid())) {
+                tempStatus = status;
+            }
+        }
+        partyData.getApplyMemberStatus().remove(tempStatus);
+        PartyDB.requestDecideJoinParty(partyData);
+    }
+
+    public void denyJoinParty(PartyData partyData, UserInfoData data) {
+        ApplyMemberStatus tempStatus = null;
+        for (ApplyMemberStatus status : partyData.getApplyMemberStatus()) {
+            if (status.getUid().contains(data.getUid())) {
+                tempStatus = status;
+            }
+        }
+        partyData.getApplyMemberStatus().remove(tempStatus);
+        PartyDB.requestDecideJoinParty(partyData);
     }
 }

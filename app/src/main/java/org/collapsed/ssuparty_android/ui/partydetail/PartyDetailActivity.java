@@ -88,7 +88,7 @@ public class PartyDetailActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mMemberList.setLayoutManager(mLayoutManager);
 
-        mAdapter = new PartycipateAdapter(this, mPartyData, mPartyData.getParticipants().size());
+        mAdapter = new PartycipateAdapter(this, mPresenter, mPartyData, mPartyData.getParticipants().size());
         mMemberList.setAdapter(mAdapter);
 
         mPresenter.createAdapterItems(mPartyData);

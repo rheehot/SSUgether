@@ -10,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.party.ApplyMemberStatus;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
@@ -29,12 +27,14 @@ public class PartycipateAdapter extends RecyclerView.Adapter<PartycipateAdapter.
     private PartyData mPartyData;
     private Context mContext;
     private int mParticipateNum;
+    private PartyDetailPresenter mPresenter;
 
-    public PartycipateAdapter(Context context, PartyData partyData, int participateNum) {
+    public PartycipateAdapter(Context context, PartyDetailPresenter presenter, PartyData partyData, int participateNum) {
         this.mMembers = new ArrayList<>();
         this.mPartyData = partyData;
         this.mContext = context;
         this.mParticipateNum = participateNum;
+        this.mPresenter = presenter;
     }
 
     @Override
@@ -60,10 +60,10 @@ public class PartycipateAdapter extends RecyclerView.Adapter<PartycipateAdapter.
         viewHolder.nameText.setText(mMembers.get(i).getName());
         viewHolder.emailText.setText(mMembers.get(i).getEmail());
         viewHolder.allowBtn.setOnClickListener(v -> {
-            
+            mPresenter.allowJoinParty(mPartyData, mMembers.get(i));
         });
         viewHolder.denyBtn.setOnClickListener(v -> {
-
+            mPresenter.denyJoinParty(mPartyData, mMembers.get(i));
         });
 
         if (mPartyData.getFounder().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
