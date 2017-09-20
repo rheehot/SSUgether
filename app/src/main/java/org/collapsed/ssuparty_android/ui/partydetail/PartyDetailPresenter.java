@@ -78,6 +78,11 @@ public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener
         for (String uid : data.getParticipants()) {
             PartyDB.convertUidToUserInfo(this, uid);
         }
+        if (data.getFounder().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            for (ApplyMemberStatus status : data.getApplyMemberStatus()) {
+                PartyDB.convertUidToUserInfo(this, status.getUid());
+            }
+        }
     }
 
     @Override

@@ -218,7 +218,6 @@
                 android:textColor="#a15ffb"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <TextView
@@ -231,11 +230,10 @@
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/party_detail_member_list"
             android:layout_width="match_parent"
             android:layout_height="128dp"
             android:layout_marginTop="8dp"/>
     </LinearLayout>
-
 </RelativeLayout>

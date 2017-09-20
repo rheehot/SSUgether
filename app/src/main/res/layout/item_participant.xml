@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_participant"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp">
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp">
 
     <org.collapsed.ssuparty_android.ui.customview.CircleImageView
         android:id="@+id/item_participant_profile_img"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginStart="24dp" />
+        android:layout_marginStart="8dp"
+        android:src="@drawable/man" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="12dp"
+        android:layout_toEndOf="@id/item_participant_profile_img"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -36,20 +38,30 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/item_participant_status_txt"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true">
 
-    <Button
-        android:id="@+id/item_participant_consent_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:text="참가 수락"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/item_participant_deny_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="거절"
+            android:textColor="#ef5350"
+            android:visibility="gone" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/item_participant_consent_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_toLeftOf="@id/item_participant_deny_btn"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="수락"
+            android:textColor="#42a5f5"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

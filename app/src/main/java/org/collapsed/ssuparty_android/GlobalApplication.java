@@ -43,7 +43,6 @@ public class GlobalApplication extends Application {
     private void initNetworkClient() {
         Context BaseContext = getApplicationContext();
         mQueue = Volley.newRequestQueue(BaseContext);
-
     }
 
     public static RequestQueue getRequestQueue() {

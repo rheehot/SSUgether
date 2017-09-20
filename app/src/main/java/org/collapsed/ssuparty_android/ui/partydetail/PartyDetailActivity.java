@@ -5,16 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,15 +17,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.party.ApplyMemberStatus;
-import org.collapsed.ssuparty_android.model.party.PartyDB;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
-import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
-import org.collapsed.ssuparty_android.ui.home.HomeFragment;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +48,7 @@ public class PartyDetailActivity extends AppCompatActivity {
     @BindView(R.id.party_detail_apply_btn)
     Button mApplyBtn;
     @BindView(R.id.party_detail_member_list)
-    ListView mMemberList;
+    RecyclerView mMemberList;
 
     private PartyData mPartyData;
     private PartyDetailPresenter mPresenter;
@@ -67,7 +56,8 @@ public class PartyDetailActivity extends AppCompatActivity {
     private Uri imageUri;
     private String mFounderId, mMyId, mPartyId;
 
-    private ParticipantAdapter mAdapter;
+    private PartycipateAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,27 +84,19 @@ public class PartyDetailActivity extends AppCompatActivity {
         if (mPartyData.getTags() != null) {
             mTagLayout.setTags(mPartyData.getTags());
         }
-        mAdapter = new ParticipantAdapter(this);
+        mMemberList.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mMemberList.setLayoutManager(mLayoutManager);
+
+        mAdapter = new PartycipateAdapter(this, mPartyData, mPartyData.getParticipants().size());
         mMemberList.setAdapter(mAdapter);
-        mMemberList.setOnItemClickListener((adapterView, view, i, l) -> {
-            UserInfoData data = (UserInfoData) mAdapter.getItem(i);
-            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            emailIntent.setType("plain/text");
-            String[] address = {data.getEmail()};
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, address);
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SSUgether를 통해서 " + data.getName() + "님께 연락드립니다.");
-            startActivity(emailIntent);
-        });
 
         mPresenter.createAdapterItems(mPartyData);
-
         mMainImageView.setOnClickListener(view -> startCropActivity());
-
         mCancelButton.setOnClickListener(view -> finish());
 
         mApplyBtn.setOnClickListener(view -> {
             mPresenter.applyParty(mPartyData);
-            Log.d("onClick", "onClick");
         });
 
         mPresenter.syncApplyBtnWithStatus(mPartyData);
@@ -164,65 +146,5 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     public void addItemIntoAdapter(UserInfoData info) {
         mAdapter.addItem(info);
-    }
-
-    public class ParticipantAdapter extends BaseAdapter {
-
-        private ArrayList<UserInfoData> mMembers;
-        private LayoutInflater mInflater;
-        private ParticipantViewHolder viewHolder;
-
-        public ParticipantAdapter(Context context) {
-            this.mMembers = new ArrayList<>();
-            this.mInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public int getCount() {
-            return mMembers.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return mMembers.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View convertView, ViewGroup viewGroup) {
-            View view = convertView;
-
-            if (view == null) {
-                viewHolder = new ParticipantViewHolder();
-                view = mInflater.inflate(R.layout.item_participant, null);
-                viewHolder.profileImage = view.findViewById(R.id.item_participant_profile_img);
-                viewHolder.nameText = view.findViewById(R.id.item_participant_name_txt);
-                viewHolder.emailText = view.findViewById(R.id.item_participant_email_txt);
-                view.setTag(viewHolder);
-            } else {
-                viewHolder = (ParticipantViewHolder) view.getTag();
-            }
-
-            ImageUtil.loadUrlImage(viewHolder.profileImage, mMembers.get(i).getImgUrl());
-            viewHolder.nameText.setText(mMembers.get(i).getName());
-            viewHolder.emailText.setText(mMembers.get(i).getEmail());
-
-            return view;
-        }
-
-        public void addItem(UserInfoData info) {
-            mMembers.add(info);
-            notifyDataSetChanged();
-        }
-    }
-
-    private static class ParticipantViewHolder {
-        CircleImageView profileImage;
-        TextView emailText = null;
-        TextView nameText = null;
     }
 }
