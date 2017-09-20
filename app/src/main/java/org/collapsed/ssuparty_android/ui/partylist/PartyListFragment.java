@@ -1,6 +1,7 @@
 package org.collapsed.ssuparty_android.ui.partylist;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.collapsed.ssuparty_android.R;
-import org.collapsed.ssuparty_android.model.party.PartyDB;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.ui.BaseFragment;
 import org.collapsed.ssuparty_android.ui.createparty.CreatePartyActivity;
@@ -47,6 +46,7 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
     private PartyListAdapter mPartyAdapter;
     private ArrayList<PartyData> mPartyDataList = new ArrayList<>();
     private Unbinder mUnbinder;
+    private Context mContext;
 
     public static PartyListFragment newInstance() {
         PartyListFragment fragment = new PartyListFragment();
@@ -170,10 +170,6 @@ public class PartyListFragment extends BaseFragment implements PartyListContract
             if (tagList != null) {
                 ((CustomViewHolder) viewHolder).tagList.setTags(tagList);
             }
-            ((CustomViewHolder) viewHolder).tagList.setOnClickListener(view -> mPresenter.createPartyDetail(getActivity(), item));
-
-            ((CustomViewHolder) viewHolder).rootView.setOnClickListener(view -> mPresenter.createPartyDetail(getActivity(), item));
-
             viewHolder.itemView.setTag(item);
         }
 

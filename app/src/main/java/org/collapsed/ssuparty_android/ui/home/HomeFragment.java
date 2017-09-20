@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import me.gujun.android.taggroup.TagGroup;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -232,6 +235,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     public void setupPartyList(ArrayList<PartyData> parties) {
+        Log.d(TAG ,"setupPartyList");
         ListView listView = mBinding.homePartyList;
         LinearLayout partyPlaceLayout = mBinding.homePartyPlaceLayout;
         if (parties.size() == 0) {
@@ -354,20 +358,28 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
             if (view == null) {
                 viewHolder = new ViewHolder();
-                view = mInflater.inflate(R.layout.layout_party_row, null);
-                viewHolder.partyTitleText = view.findViewById(R.id.party_row_title);
+                view = mInflater.inflate(R.layout.item_party, null);
+                viewHolder.titleText = view.findViewById(R.id.party_item_title_txt);
+                viewHolder.memberText = view.findViewById(R.id.party_item_member_num_txt);
+                viewHolder.categoryText = view.findViewById(R.id.party_item_category_txt);
+                viewHolder.tagList = view.findViewById(R.id.party_item_tag_layout);
 
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
             }
 
-            viewHolder.partyTitleText.setText(mParties.get(i).getTitle());
+            viewHolder.titleText.setText(mParties.get(i).getTitle());
+            viewHolder.memberText.setText(mParties.get(i).getCurrentMemberNum()+"/"+mParties.get(i).getMaxMemberNum());
+            viewHolder.categoryText.setText(mParties.get(i).getCategory());
+            viewHolder.tagList.setTags(mParties.get(i).getTags());
+
             return view;
         }
 
         class ViewHolder {
-            TextView partyTitleText = null;
+            public TextView titleText, memberText, categoryText;
+            public TagGroup tagList;
         }
     }
 

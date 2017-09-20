@@ -13,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -153,7 +155,6 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
             }
         });
-
 
 
         mInfoEditText.addTextChangedListener(new TextWatcher() {
@@ -309,10 +310,10 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
                     }
                 } else {
 
-                    if(view.getId() == R.id.createparty_membernum_edt){
+                    if (view.getId() == R.id.createparty_membernum_edt) {
                         String numText = mMemberNumEditText.getText().toString();
 
-                        if(!numText.equals("")) {
+                        if (!numText.equals("")) {
                             mMemNumFilled = checkOverNumber(mMemberNumEditText.getText().toString());
                             checkCreateable();
                         }
@@ -326,7 +327,7 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
 
         setFocusListner(mTitleEditText);
         setFocusListner(mMemberNumEditText);
-        setFocusListner(mInfoEditText);
+        //setFocusListner(mInfoEditText);
         setFocusListner(mTagEditText);
     }
 
@@ -362,22 +363,22 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
     }
 
     public void showCancelDaialog() {
-        if(mTitleFilled || mMemNumFilled || mDeadlineSelected || mInfoFilled) {
+        if (mTitleFilled || mMemNumFilled || mDeadlineSelected || mInfoFilled) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("모임등록 취소").setMessage("아직 입력이 완료되지 않았습니다. \n\n모임 등록을 취소하시겠어요?")
-                    .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+            builder.setTitle("모임등록 취소").setMessage("입력되지 않은 항목이 남아있어요!\n\n모임 등록을 취소하시겠어요?")
+                    .setPositiveButton("취소할게요.", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            finish();
                         }
-                    }).setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    })
+                    .setNegativeButton("좀 더 작성해볼래요.", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
+
                 }
             }).show();
-        }
-        else {
+        } else {
             finish();
         }
     }
@@ -433,13 +434,17 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
         PartyData partyData = new PartyData(title, status, category, currentMemberNum, info, fouderId,
                 maxMemberNum, deadline, tagList);
 
-        mIntentForResult.putExtra("PartyData",partyData);
+        mIntentForResult.putExtra("PartyData", partyData);
         setResult(CreatePartyActivity.RESULT_OK, mIntentForResult);
     }
 
     public boolean checkOverNumber(String numberText) {
-
-        if (Integer.parseInt(numberText) <= 100) {
+        if (numberText.length() == 0) {
+            return false;
+        } else if (Integer.parseInt(numberText) < 2) {
+            setMemNumException("모집 인원수는 2명 이상 설정해주세요!");
+            return false;
+        } else if (Integer.parseInt(numberText) <= 100) {
             mMemberNumHelpText.setVisibility(View.GONE);
             return true;
         } else {

@@ -22,10 +22,9 @@
 
             <ImageButton
                 android:id="@+id/createparty_cancel_party_btn"
-                android:layout_width="60dp"
+                android:layout_width="48dp"
                 android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/arrow" />
@@ -48,10 +47,10 @@
 
             <Button
                 android:id="@+id/createparty_confirm_btn"
-                android:layout_width="60dp"
+                android:layout_width="52dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@android:color/transparent"
                 android:text="확인"
                 android:textColor="#ffffff"
@@ -64,8 +63,8 @@
             android:id="@+id/createparty_partycontent_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/createactivity_boudary_margin"
-            android:layout_marginRight="@dimen/createactivity_boudary_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="10dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -113,7 +112,7 @@
                 android:id="@+id/createparty_category_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -174,8 +173,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="20dp"
                         android:clickable="true"
                         android:drawablePadding="8dp"
                         android:drawableRight="@drawable/cal"
@@ -201,7 +200,7 @@
 
                     <TextView
                         style="@style/CreatePartyLabelTextTheme"
-                        android:text="모집인원수" />
+                        android:text="모집 인원수" />
 
                     <TextView
                         android:id="@+id/createparty_membernum_help_txt"
@@ -233,6 +232,7 @@
                         style="@style/SGEditTextTheme"
                         android:digits="0123456789"
                         android:hint="모집할 인원수를 입력해주세요!"
+                        android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="3" />
                 </LinearLayout>
@@ -247,7 +247,7 @@
 
                 <TextView
                     style="@style/CreatePartyLabelTextTheme"
-                    android:text="모임소개" />
+                    android:text="모임 소개" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -267,6 +267,7 @@
                         style="@style/SGEditTextTheme"
                         android:hint="모임에 대해 간단히 소개해주세요!"
                         android:inputType="text"
+                        android:imeOptions="actionNext"
                         android:maxLength="60"
                         android:maxLines="3" />
                 </LinearLayout>
@@ -277,12 +278,11 @@
                     android:text="0/60" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/createparty_tag_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/createactivity_content_marginTop"
+                android:layout_marginTop="4dp"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -291,7 +291,7 @@
 
                     <TextView
                         style="@style/CreatePartyLabelTextTheme"
-                        android:text="태그추가" />
+                        android:text="태그 추가" />
 
                     <TextView
                         android:id="@+id/createparty_tag_help_txt"
@@ -323,6 +323,7 @@
                         style="@style/SGEditTextTheme"
                         android:hint="태그를 추가해주세요!"
                         android:inputType="text"
+                        android:imeOptions="actionNone"
                         TagsEditText:allowSpaceInTag="true"
                         TagsEditText:tagsBackground="@drawable/tag_square"
                         TagsEditText:tagsCloseImageRight="@drawable/x"
@@ -348,7 +349,7 @@
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:background="#a75feb"
                 android:text="등록하기"
                 android:textColor="#ffffff"
