@@ -3,7 +3,6 @@ package org.collapsed.ssuparty_android.ui.partydetail;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.party.PartyData;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.customview.CircleImageView;
+import org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity;
 import org.collapsed.ssuparty_android.utils.ImageUtil;
 
 import java.util.ArrayList;
@@ -58,12 +58,9 @@ public class PartycipateAdapter extends RecyclerView.Adapter<PartycipateAdapter.
         }
         viewHolder.layout.setOnClickListener(view -> {
             UserInfoData data = mMembers.get(i);
-            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            emailIntent.setType("plain/text");
-            String[] address = {data.getEmail()};
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, address);
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SSUgether를 통해서 " + data.getName() + "님께 연락드립니다.");
-            mContext.startActivity(emailIntent);
+            Intent intent = new Intent(mContext, UserProfileDetailActivity.class);
+            intent.putExtra("UserInfo", data);
+            mContext.startActivity(intent);
         });
 
         viewHolder.nameText.setText(mMembers.get(i).getName());

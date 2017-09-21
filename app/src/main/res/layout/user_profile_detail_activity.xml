@@ -5,6 +5,7 @@
     android:focusableInTouchMode="true">
 
     <data>
+
         <variable
             name="view"
             type="org.collapsed.ssuparty_android.ui.userprofiledetail.UserProfileDetailActivity" />
@@ -44,6 +45,16 @@
                     android:textColor="#ffffff"
                     android:textSize="15dp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/userdetailprofile_email_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_email_black_24px" />
 
             </RelativeLayout>
 

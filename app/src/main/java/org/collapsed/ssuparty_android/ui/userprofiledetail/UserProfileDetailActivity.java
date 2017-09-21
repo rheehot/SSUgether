@@ -1,5 +1,6 @@
 package org.collapsed.ssuparty_android.ui.userprofiledetail;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,14 @@ public class UserProfileDetailActivity extends AppCompatActivity {
         if (mUserInfo.getTags() != null) {
             mTagLayout.setTags(mUserInfo.getTags());
         }
+        mBinding.userdetailprofileEmailBtn.setOnClickListener(view -> {
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("plain/text");
+            String[] address = {mUserInfo.getEmail()};
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, address);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SSUgether를 통해서 " + mUserInfo.getName() + "님께 연락드립니다.");
+            startActivity(emailIntent);
+        });
 
         mBinding.userdetailprofileCancelBtn.setOnClickListener(view -> finish());
     }
