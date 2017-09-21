@@ -29,7 +29,7 @@ public class UnionSearchRepository {
 
     public void fetch() {
         DatabaseReference profileRef = FirebaseDatabase.getInstance().getReference().child("users");
-        DatabaseReference partyRef = FirebaseDatabase.getInstance().getReference().child("allParty");
+        DatabaseReference partyRef = FirebaseDatabase.getInstance().getReference().child("testParty");
 
         profileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
