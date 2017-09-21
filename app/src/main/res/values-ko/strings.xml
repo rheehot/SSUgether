@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SSUParty</string>
+    <string name="app_name">SSUgether</string>
 
     <!-- Bottom Navigation Section -->
     <string name="section_home_title">메인</string>
