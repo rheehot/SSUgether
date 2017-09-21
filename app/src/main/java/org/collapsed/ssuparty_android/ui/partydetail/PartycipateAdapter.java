@@ -37,6 +37,11 @@ public class PartycipateAdapter extends RecyclerView.Adapter<PartycipateAdapter.
         this.mPresenter = presenter;
     }
 
+    public void setParticipateNum(int participateNum) {
+        this.mParticipateNum = participateNum;
+        mPresenter.setParticipateNum(participateNum);
+    }
+
     @Override
     public PartycipateAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_participant, null);
@@ -46,7 +51,11 @@ public class PartycipateAdapter extends RecyclerView.Adapter<PartycipateAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        ImageUtil.loadUrlImage(viewHolder.profileImage, mMembers.get(i).getImgUrl());
+        try {
+            ImageUtil.loadUrlImage(viewHolder.profileImage, mMembers.get(i).getImgUrl());
+        } catch (Exception e) {
+
+        }
         viewHolder.layout.setOnClickListener(view -> {
             UserInfoData data = mMembers.get(i);
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -85,6 +94,10 @@ public class PartycipateAdapter extends RecyclerView.Adapter<PartycipateAdapter.
     public void addItem(UserInfoData info) {
         mMembers.add(info);
         notifyDataSetChanged();
+    }
+
+    public void clearItems() {
+        mMembers.clear();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

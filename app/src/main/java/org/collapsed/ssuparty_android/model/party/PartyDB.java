@@ -3,7 +3,6 @@ package org.collapsed.ssuparty_android.model.party;
 import android.net.Uri;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,8 +17,6 @@ import org.collapsed.ssuparty_android.model.userinfo.UserInfoData;
 import org.collapsed.ssuparty_android.ui.partydetail.PartyDetailPresenter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PartyDB {
 
@@ -192,10 +189,15 @@ public class PartyDB {
         });
     }
 
-    public static void requestDecideJoinParty(PartyData partyData) {
+    public static void requestDecideJoinParty(PartyDetailPresenter partyDetailPresenter, PartyData partyData) {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mAllPartyRef = mRootRef.child("testParty").child(partyData.getPartyID());
-        mAllPartyRef.setValue(partyData);
+        mAllPartyRef.setValue(partyData, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                partyDetailPresenter.createAdapterItems(partyData);
+            }
+        });
     }
 
     public interface OnPartyDataFetchedListener {

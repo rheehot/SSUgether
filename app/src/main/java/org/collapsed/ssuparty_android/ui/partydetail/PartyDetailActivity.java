@@ -58,6 +58,7 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     private PartycipateAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private int participateNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,10 @@ public class PartyDetailActivity extends AppCompatActivity {
         });
 
         mPresenter.syncApplyBtnWithStatus(mPartyData);
+    }
+
+    public PartycipateAdapter getAdapter() {
+        return mAdapter;
     }
 
     public void startCropActivity() {
@@ -146,5 +151,9 @@ public class PartyDetailActivity extends AppCompatActivity {
 
     public void addItemIntoAdapter(UserInfoData info) {
         mAdapter.addItem(info);
+    }
+
+    public void setParticipateNum(int participateNum) {
+        mMemberNumText.setText(participateNum + "/" + mPartyData.getMaxMemberNum() + "명");
     }
 }
