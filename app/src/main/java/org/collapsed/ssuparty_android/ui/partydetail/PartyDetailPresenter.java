@@ -18,6 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener, PartyDB.OnConvertParticipantListener {
 
     PartyDetailActivity mView;
+    private int participateNum;
 
     public PartyDetailPresenter(@NonNull PartyDetailActivity view) {
         this.mView = checkNotNull(view);
@@ -81,6 +82,9 @@ public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener
     }
 
     public void createAdapterItems(PartyData data) {
+        mView.getAdapter().clearItems();
+        mView.getAdapter().setParticipateNum(data.getParticipants().size());
+
         for (String uid : data.getParticipants()) {
             PartyDB.convertUidToUserInfo(this, uid);
         }
@@ -109,7 +113,7 @@ public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener
             }
         }
         partyData.getApplyMemberStatus().remove(tempStatus);
-        PartyDB.requestDecideJoinParty(partyData);
+        PartyDB.requestDecideJoinParty(this, partyData);
     }
 
     public void denyJoinParty(PartyData partyData, UserInfoData data) {
@@ -120,6 +124,10 @@ public class PartyDetailPresenter implements PartyDB.OnApplyStatusChangeListener
             }
         }
         partyData.getApplyMemberStatus().remove(tempStatus);
-        PartyDB.requestDecideJoinParty(partyData);
+        PartyDB.requestDecideJoinParty(this, partyData);
+    }
+
+    public void setParticipateNum(int participateNum) {
+        mView.setParticipateNum(participateNum);
     }
 }
