@@ -238,7 +238,7 @@
                         android:padding="12dp"
                         app:atg_backgroundColor="#d7d0f9"
                         app:atg_borderColor="#d7d0f9"
-                        app:atg_inputHint="이곳을 클릭!"
+                        app:atg_inputHint="ex) JAVA"
                         app:atg_inputHintColor="#828282"
                         app:atg_inputTextColor="#000000"
                         app:atg_isAppendMode="true"

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.collapsed.ssuparty_android.R;
 import org.collapsed.ssuparty_android.model.userinfo.UserInfoDB;
@@ -229,6 +230,7 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         UserInfoDB userDB = new UserInfoDB();
         userDB.writeNewUser(data);
 
+        Toast.makeText(this, "회원가입이 완료되었습니다.",Toast.LENGTH_LONG);
         Intent moveIntent = new Intent(this, MainActivity.class);
         startActivity(moveIntent);
         finish();
