@@ -92,11 +92,11 @@ public class PartyDB {
     public static void readPartyImage(String partyId, PartyDetailPresenter presenter) {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mCreatedPartyRef = mRootRef.child(DB_ALL_PARTY_KEY).child(partyId);
+
         mCreatedPartyRef.child("imageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String imageUrl = dataSnapshot.getValue(String.class);
-
                 if (imageUrl != null) {
                     presenter.updatePartyImage(imageUrl);
                 }

@@ -269,6 +269,23 @@ public class CreatePartyActivity extends AppCompatActivity implements CreatePart
             }
         };
 
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                showDatePickerDialog();
+            }
+        };
+
+        Thread thread = new Thread(r);
+        thread.start();
+
+        mInfoConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog();
+            }
+        });
+
         setClickListner(mInfoConfirmBtn);
         setClickListner(mPartyCancelBtn);
         setClickListner(mDeadlineText);
